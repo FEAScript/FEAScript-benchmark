@@ -7,6 +7,8 @@ set boxwidth 0.315
 set xrange [-0.6:2.6]; set yrange [0:67.05]; set xtics scale 0
 set ylabel 'Speed-up (assembly + solve), × the first version'; set xlabel 'FEAScript version'
 set key top left box lc rgb '#cccccc' opaque
+set bmargin 5
+set label "Each version was run at a different time; differences of up to about 20% can come from variation in the machine's speed" at screen 0.5,0.03 center tc rgb '#777777' font ',11'
 set label "Relative to the first version each solver ran in: frontal vs 0.3.1; sparse LU vs 0.2.0" at graph 0.99,0.97 right tc rgb '#777777' font ',11'
 set arrow from graph 0, first 1 to graph 1, first 1 nohead dt 2 lc rgb '#999999'
 set label "Sparse matrix assembly (0.3.0, #99)" at 1.18,34.35 center offset 0,4.3 tc rgb '#2a78d6' font ',11'

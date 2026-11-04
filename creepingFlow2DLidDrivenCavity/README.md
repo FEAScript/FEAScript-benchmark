@@ -64,6 +64,7 @@ To keep the comparison fair, every timed process is pinned to one core (`taskset
 Notes on reading the times:
 
 - **Browsers:** the benchmark runs in Node, which uses the same V8 JavaScript engine as Chrome and other Chromium-based browsers. Browsers with other engines, such as Firefox, can be slower
+- **Comparing versions:** each version is benchmarked at a different time, and the speed of the machine varies over time, by up to about 20% on the Intel N100. Smaller differences between versions in the history plot are within this variation
 - **JIT warm-up:** each FEAScript time comes from a fresh process, so it includes JIT warm-up. Repeats inside the same process are in the `warmWall` column
 
 ## How to run the benchmark

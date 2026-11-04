@@ -37,6 +37,7 @@ To compare the two codes on the same terms, the benchmarks run Elmer the way FEA
 - **End-to-end time:** on small meshes FEAScript can finish first, because the Elmer build used here (an MPI-enabled build) spends about 2 s starting MPI at the beginning of every run, even with one process. This is a fixed start-up cost, not solver speed, and it becomes negligible for the larger problems Elmer is designed for
 - **Elmer settings:** the Elmer cases use standard settings and solvers (UMFPACK, MUMPS, BiCGStab with ILU0) chosen by the FEAScript team, not tuned by Elmer experts. Other settings may well make Elmer faster
 - **Timer resolution:** Elmer reports its solver time to 0.01 s, so its times on the smallest meshes are rounded
+- **Comparing FEAScript versions:** each version is benchmarked at a different time, and the speed of the machine varies over time (a low-power CPU such as the Intel N100 changes its clock speed with temperature and load). On the Intel N100, the same FEAScript build ran up to about 20% slower an hour later. Differences of that size between versions are within this variation; the speed-ups of 4 to 46 times in the history plots are not
 
 We are grateful to the Elmer developers for making such capable software freely available.
 

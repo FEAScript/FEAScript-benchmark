@@ -103,6 +103,8 @@ set boxwidth {width * 0.9:.3f}
 set xrange [-0.6:{len(rows) - 0.4}]; set yrange [0:{ymax:.4g}]; set xtics scale 0
 set ylabel 'Speed-up (assembly + solve), × the first version'; set xlabel 'FEAScript version'
 set key top left box lc rgb '#cccccc' opaque
+set bmargin 5
+set label "Each version was run at a different time; differences of up to about 20% can come from variation in the machine's speed" at screen 0.5,0.03 center tc rgb '#777777' font ',11'
 set label "Relative to the first version each solver ran in: {baselines}" at graph 0.99,0.97 right tc rgb '#777777' font ',11'
 set arrow from graph 0, first 1 to graph 1, first 1 nohead dt 2 lc rgb '#999999'
 {notes}plot {series}
