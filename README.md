@@ -24,14 +24,4 @@ This repository contains benchmarks for [FEAScript](https://feascript.com/), the
 
 ## License
 
-FEAScript-benchmark contains code and content, and each has its own terms:
-
-| What | License |
-|---|---|
-| Code: the scripts and input templates (`*.py`, `*.mjs`, `*.sif.in`) | [MIT](LICENSE) |
-| Content: the results, plots and READMEs | [CC BY 4.0](LICENSE-CONTENT) |
-| The FEAScript logo and the name "FEAScript" | Not licensed, all rights reserved |
-
-Credit CC BY material as: *"FEAScript-benchmark by FEAScript, CC BY 4.0"*, and note any changes you made.
-
-Third-party software that the benchmarks run is listed in [NOTICE.md](NOTICE.md). Note that the core library of FEAScript is distributed under the terms of the [MIT license](https://github.com/FEAScript/FEAScript-core/blob/main/LICENSE).
+The benchmarks in this repository are released under the [MIT license](LICENSE). Note that the core library of FEAScript is distributed under the terms of the [MIT license](https://github.com/FEAScript/FEAScript-core/blob/main/LICENSE).

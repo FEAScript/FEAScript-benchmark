@@ -164,4 +164,4 @@ The files in this folder:
 
 ## License
 
-The scripts are under the [MIT license](../LICENSE), and the results, plots and this README under [CC BY 4.0](../LICENSE-CONTENT). See the [repository README](../README.md#license) for details and [NOTICE.md](../NOTICE.md) for the third-party software the benchmark runs.
+This benchmark is released under the [MIT license](../LICENSE). Note that the core library of FEAScript is distributed under the terms of the [MIT license](https://github.com/FEAScript/FEAScript-core/blob/main/LICENSE).
