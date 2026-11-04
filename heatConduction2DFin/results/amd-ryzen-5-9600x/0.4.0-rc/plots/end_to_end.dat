@@ -1,0 +1,5 @@
+"FEAScript sparse LU" 0.180 0.116
+"FEAScript frontal" 0.126 0.120
+"Elmer BiCGStab+ILU0" 0.010 0.467
+"Elmer UMFPACK" 0.010 0.471
+"Elmer MUMPS" 0.010 0.472

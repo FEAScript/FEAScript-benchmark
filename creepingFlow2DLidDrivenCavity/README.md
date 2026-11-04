@@ -18,17 +18,17 @@ The results are in `results/<machine>/<version>/`:
 
 | Machine | FEAScript version | Results |
 |---|---|---|
-| Intel N100 | 0.2.0 | [results/intel-n100/0.2.0/](results/intel-n100/0.2.0/) |
-| Intel N100 | 0.3.1 | [results/intel-n100/0.3.1/](results/intel-n100/0.3.1/) |
-| Intel N100 | 0.4.0-rc | [results/intel-n100/0.4.0-rc/](results/intel-n100/0.4.0-rc/) |
+| AMD Ryzen 5 9600X | 0.2.0 | [results/amd-ryzen-5-9600x/0.2.0/](results/amd-ryzen-5-9600x/0.2.0/) |
+| AMD Ryzen 5 9600X | 0.3.1 | [results/amd-ryzen-5-9600x/0.3.1/](results/amd-ryzen-5-9600x/0.3.1/) |
+| AMD Ryzen 5 9600X | 0.4.0-rc | [results/amd-ryzen-5-9600x/0.4.0-rc/](results/amd-ryzen-5-9600x/0.4.0-rc/) |
 
-FEAScript's speed-up on the 32×32 mesh by version, with the assembly and solve time of each run, on the Intel N100:
+FEAScript's speed-up on the 32×32 mesh by version, with the assembly and solve time of each run, on the AMD Ryzen 5 9600X:
 
-<img src="history/intel-n100/32x32.png" width="600" alt="FEAScript speed-up by version">
+<img src="history/amd-ryzen-5-9600x/32x32.png" width="600" alt="FEAScript speed-up by version on the AMD Ryzen 5 9600X">
 
 📖 Each results folder has a README with the plots of that run, a table of all the numbers (`results_table.md`) and the details of the run (`meta.json`): the FEAScript version and commit, the versions of the other software, the machine and the date.
 
-> **About the comparison:** Elmer runs here on one core, as a single MPI process, on small 2D problems, so that both codes are compared on the same terms. Elmer is a parallel code built for much larger problems, and this setup does not show its parallel performance. Its end-to-end time includes about 2 s of MPI start-up in the build used here. See [About the comparison](../README.md#about-the-comparison).
+> **About the comparison:** Elmer runs here on one core, as a single MPI process, on small 2D problems, so that both codes are compared on the same terms. Elmer is a parallel code built for much larger problems, and this setup does not show its parallel performance. Its end-to-end time includes a fixed MPI start-up in the build used here, about 0.5 s on the AMD Ryzen 5 9600X. See [About the comparison](../README.md#about-the-comparison).
 
 ## The problem
 
@@ -56,6 +56,7 @@ And compares:
   - FEAScript: the time of `model.solve()`, which includes mesh generation
   - Elmer: the `Solver time` of the flow solver, at 0.01 s resolution
 - **End-to-end time:** the wall time of the whole process, from start to exit, on the 16 × 16 mesh
+- **Peak memory:** the largest resident memory of each process, as GNU time reports it. It is the memory of the whole process, so it includes Node and FEAScript, or Elmer, as well as the problem. Results from before this was measured have no memory
 
 The two codes apply the lid velocity differently next to the corners. FEAScript sets the full lid velocity at every lid node, including the mid-edge node of the corner element. Elmer, with hierarchic elements, interpolates the boundary values linearly along each element edge, so along the top edge of the corner element the lid velocity rises from 0 at the corner. This is part of the comparison: the codes differ near the two lid corners on every mesh, and agree away from them more closely as the mesh is refined.
 
@@ -64,12 +65,12 @@ To keep the comparison fair, every timed process is pinned to one core (`taskset
 Notes on reading the times:
 
 - **Browsers:** the benchmark runs in Node, which uses the same V8 JavaScript engine as Chrome and other Chromium-based browsers. Browsers with other engines, such as Firefox, can be slower
-- **Comparing versions:** each version is benchmarked at a different time, and the speed of the machine varies over time, by up to about 20% on the Intel N100. Smaller differences between versions in the history plot are within this variation
+- **Comparing versions:** each version is benchmarked at a different time, and the speed of a machine varies over time. On the AMD Ryzen 5 9600X, repeated runs of the same build agree to within about 3%; smaller differences between versions in the history plot are within this variation
 - **JIT warm-up:** each FEAScript time comes from a fresh process, so it includes JIT warm-up. Repeats inside the same process are in the `warmWall` column
 
 ## How to run the benchmark
 
-The benchmark needs Node.js, Python 3 with NumPy, gnuplot, and ElmerSolver and ElmerGrid on the `PATH`. It benchmarks the [FEAScript-core](https://github.com/FEAScript/FEAScript-core) checkout next to this repository (`../../FEAScript-core` from this folder). Build it first with `npm run build`, since the benchmark loads `dist/feascript.esm.js`.
+The benchmark needs Node.js, Python 3 with NumPy, gnuplot, GNU time (`/usr/bin/time`, the `time` package), and ElmerSolver and ElmerGrid on the `PATH`. It benchmarks the [FEAScript-core](https://github.com/FEAScript/FEAScript-core) checkout next to this repository (`../../FEAScript-core` from this folder). Build it first with `npm run build`, since the benchmark loads `dist/feascript.esm.js`.
 
 ```
 python3 benchmark.py                          # writes results/<machine>/<version>/
@@ -77,7 +78,7 @@ python3 make_report.py <machine> <version>    # writes the plots, results_table.
 python3 ../make_history.py creepingFlow2DLidDrivenCavity  # updates the plots of FEAScript's speed-up by version in history/<machine>/
 ```
 
-The machine defaults to a name made from the CPU model, e.g. `intel-n100`, and the version to the `version` field of `FEAScript-core/package.json`. These environment variables change the run:
+The machine defaults to a name made from the CPU model, e.g. `amd-ryzen-5-9600x`, and the version to the `version` field of `FEAScript-core/package.json`. These environment variables change the run:
 
 - **`FEASCRIPT_MACHINE`:** the name of the machine folder
 - **`FEASCRIPT_CORE`:** the path of another FEAScript-core checkout, e.g. a released version
