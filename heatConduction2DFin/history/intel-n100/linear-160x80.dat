@@ -1,0 +1,4 @@
+# version FEAScript_frontal_speedup FEAScript_frontal_seconds sparse_LU_speedup sparse_LU_seconds  (assembly + solve; NaN = not measured)
+0.2.0 NaN NaN 1 45.398
+0.3.1 1 40.923 34.35 1.322
+0.4.0-rc 46.24 0.885 35.88 1.265

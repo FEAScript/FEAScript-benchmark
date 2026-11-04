@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+# ════════════════════════════════════════════════════════════════
+#  FEAScript Benchmark
+#  Finite Element Simulation in JavaScript
+#  https://github.com/FEAScript/FEAScript-benchmark
+#  MIT License © 2026 FEAScript
+# ════════════════════════════════════════════════════════════════
+
 """FEAScript vs Elmer benchmark: 2D fin (heat conduction), 4 x 2 domain.
 
 BCs: T=200 bottom & right, symmetry left, convection (h=1, Tinf=20) top, k=1.
@@ -14,14 +21,18 @@ OUT = os.path.join(HERE, "results")  # shared ElmerGrid meshes
 CORE = os.path.abspath(os.environ.get("FEASCRIPT_CORE") or os.path.join(HERE, "..", "..", "FEAScript-core"))
 # Each FEAScript version gets its own results folder: results/<version>/ (override with FEASCRIPT_VERSION)
 VERSION = os.environ.get("FEASCRIPT_VERSION") or json.load(open(os.path.join(CORE, "package.json")))["version"]
-RUN = os.path.join(OUT, VERSION)
+CPU = subprocess.run(["bash", "-c", "lscpu | sed -n 's/^Model name: *//p'"], capture_output=True, text=True).stdout.strip()
+# Each machine and FEAScript version gets its own results folder: results/<machine>/<version>/
+MACHINE = os.environ.get("FEASCRIPT_MACHINE") or re.sub(r"[^a-z0-9]+", "-", re.sub(r"\((r|tm)\)", "", CPU.lower())).strip("-")
+RUN = os.path.join(OUT, MACHINE, VERSION)
 os.makedirs(RUN, exist_ok=True)
 
 # (order, nx, ny)
 CASES = [("linear", n, n // 2) for n in (20, 40, 80, 160, 320)] + [("linear", 77, 39)] + \
         [("quadratic", n, n // 2) for n in (10, 20, 40, 80, 160)]
-PIN = ["taskset", "-c", "0"]  # pin every timed process to one core
+PIN = ["taskset", "-c", os.environ.get("CORE_ID", "0")]  # pin every timed process to one core
 ENV = {**os.environ, "FEASCRIPT_CORE": CORE, "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1"}
+FEA_TIMEOUT = int(os.environ.get("FEA_TIMEOUT", 600))  # seconds per FEAScript process
 REPS = int(os.environ.get("REPS", 5))
 WARM = int(os.environ.get("WARM", 3))
 ONLY = os.environ.get("ONLY")  # e.g. "linear-20x10" for quick tests
@@ -147,7 +158,10 @@ def read_vtu(path):
 def run_fea(order, nx, ny, method, csv=None, warm=0):
     cmd = PIN + ["node", os.path.join(HERE, "run_feascript.mjs"), str(nx), str(ny), order, method, csv or "-", str(warm)]
     t0 = time.perf_counter()
-    p = subprocess.run(cmd, capture_output=True, text=True, env=ENV)
+    try:
+        p = subprocess.run(cmd, capture_output=True, text=True, env=ENV, timeout=FEA_TIMEOUT)
+    except subprocess.TimeoutExpired:
+        raise RuntimeError(f"timeout after {FEA_TIMEOUT} s")
     proc = time.perf_counter() - t0
     if p.returncode:
         raise RuntimeError(p.stderr[-3000:])
@@ -177,22 +191,29 @@ def write_meta():
     elmer = re.search(r"Version: (\S+)", sh("bash", "-c", "ElmerSolver -v 2>&1 </dev/null | head -20"))
     meta = {"feascriptVersion": VERSION,
             "feascriptPackageVersion": json.load(open(os.path.join(CORE, "package.json")))["version"],
-            "feascriptCommit": sh("git", "-C", CORE, "rev-parse", "--short", "HEAD"),
-            "feascriptUncommittedChanges": bool(sh("git", "-C", CORE, "status", "--porcelain", "src")),
+            "feascriptCommit": os.environ.get("FEASCRIPT_COMMIT") or sh("git", "-C", CORE, "rev-parse", "--short", "HEAD"),
+            "feascriptUncommittedChanges": False if os.environ.get("FEASCRIPT_COMMIT") else bool(sh("git", "-C", CORE, "status", "--porcelain", "src")),
+            "feascriptReleaseDate": os.environ.get("FEASCRIPT_RELEASE_DATE"),
             "elmerVersion": elmer.group(1) if elmer else None, "node": sh("node", "-v"),
-            "cpu": sh("bash", "-c", "lscpu | sed -n 's/^Model name: *//p'"), "date": time.strftime("%Y-%m-%d"),
+            "machine": MACHINE, "cpu": CPU, "os": sh("uname", "-sr"), "date": time.strftime("%Y-%m-%d"),
             "feascriptEntry": "src/index.js" if os.environ.get("FEASCRIPT_ENTRY") == "src" else "dist/feascript.esm.js",
-            "pinning": "taskset -c 0, OMP_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1", "reps": REPS, "warm": WARM}
+            "pinning": f"taskset -c {PIN[-1]}, OMP_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1", "reps": REPS, "warm": WARM}
     with open(os.path.join(RUN, "meta.json"), "w") as f:
         json.dump(meta, f, indent=1)
 
 
 def main():
     write_meta()
-    results = []
+    # RESUME=1 keeps the cases already in results.json and runs only the missing ones
+    out = os.path.join(RUN, os.environ.get("OUTNAME", "results.json"))
+    results = json.load(open(out)) if os.environ.get("RESUME") and os.path.exists(out) else []
+    done = {r["case"] for r in results}
     for order, nx, ny in CASES:
         name = f"{order}-{nx}x{ny}"
         if ONLY and name not in ONLY.split(","):
+            continue
+        if name in done:
+            print(f"== {name} (already done)", flush=True)
             continue
         mesh = make_mesh(order, nx, ny)
         print(f"== {name}", flush=True)
@@ -201,22 +222,25 @@ def main():
             csv = os.path.join(RUN, "work", f"fea_{method}_{name}.csv")
             os.makedirs(os.path.dirname(csv), exist_ok=True)
             try:
-                first = run_fea(order, nx, ny, method, csv, warm=WARM)
+                first = run_fea(order, nx, ny, method, csv)
             except RuntimeError as e:
-                why = "out of memory" if "heap out of memory" in str(e) else "failed"
+                why = ("out of memory" if "heap out of memory" in str(e) else
+                       f"timeout (> {FEA_TIMEOUT} s)" if "timeout after" in str(e) else "failed")
                 results.append({"case": name, "order": order, "nx": nx, "ny": ny, "code": cfg, "failed": why})
                 print(f"{cfg} {why}", flush=True); continue
+            # Slow cases (over 20 s) are timed once, without warm repeats
             if first["coldWall"] > 20:
-                first["warm"] = first["warm"][:1]
-            if first["coldWall"] > 20:   # very slow cases: one timed run only
                 runs = [first]
             else:
-                runs = [first] + [run_fea(order, nx, ny, method) for _ in range(REPS - 1)]
+                warm = run_fea(order, nx, ny, method, warm=WARM)  # one more cold run, then the warm repeats in the same process
+                first["warm"] = warm["warm"]
+                warm["process"] = None  # includes the warm repeats, so not an end-to-end time
+                runs = [first, warm] + [run_fea(order, nx, ny, method) for _ in range(REPS - 2)]
             fields[cfg] = first["field"]
             rec = {"case": name, "order": order, "nx": nx, "ny": ny, "nodes": first["nodes"], "code": cfg,
                    "wall": statistics.median(r["coldWall"] for r in runs),
                    "solve": statistics.median(r["coldWall"] for r in runs),
-                   "process": statistics.median(r["process"] for r in runs),
+                   "process": statistics.median(r["process"] for r in runs if r["process"] is not None),
                    "linsolve": statistics.median(r["coldSystem"] or 0 for r in runs),
                    "warmWall": statistics.median(first["warm"]) if first["warm"] else None,
                    "nruns": len(runs), **errors(first["field"])}

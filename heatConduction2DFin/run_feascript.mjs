@@ -1,5 +1,14 @@
+/**
+ * ════════════════════════════════════════════════════════════════
+ *  FEAScript Benchmark
+ *  Finite Element Simulation in JavaScript
+ *  https://github.com/FEAScript/FEAScript-benchmark
+ *  MIT License © 2026 FEAScript
+ * ════════════════════════════════════════════════════════════════
+ */
+
 // Run one FEAScript case: node run_feascript.mjs <nx> <ny> <order> <method> <outCsv|-> [warmRepeats]
-import { writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -7,6 +16,17 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 // Load the built bundle, as npm and browser users do (FEASCRIPT_ENTRY=src loads the source files instead)
 const core = process.env.FEASCRIPT_CORE ?? fileURLToPath(new URL("../../FEAScript-core", import.meta.url));
 const entry = process.env.FEASCRIPT_ENTRY === "src" ? "src/index.js" : "dist/feascript.esm.js";
+
+// Compatibility with older releases: before 0.3.0, FEAScript expected math.js as a global
+// and called the constant temperature condition "constantTemp"
+const [major, minor] = JSON.parse(readFileSync(resolve(core, "package.json"), "utf8")).version.split(".").map(Number);
+const legacy = major === 0 && minor < 3;
+if (legacy) {
+  const mathjs = process.env.FEASCRIPT_MATHJS ?? fileURLToPath(new URL("../../FEAScript-core/node_modules/mathjs/lib/esm/index.js", import.meta.url));
+  globalThis.math = await import(pathToFileURL(mathjs).href);
+}
+const constantTemperature = legacy ? "constantTemp" : "constantTemperature";
+
 const { FEAScriptModel } = await import(pathToFileURL(resolve(core, entry)).href);
 
 const [nx, ny] = [Number(process.argv[2]), Number(process.argv[3])];
@@ -26,10 +46,10 @@ function runOnce() {
   const model = new FEAScriptModel();
   model.setModelConfig("heatConductionScript");
   model.setMeshConfig({ meshDimension: "2D", elementOrder: order, numElementsX: nx, numElementsY: ny, maxX: 4, maxY: 2 });
-  model.addBoundaryCondition("0", ["constantTemperature", 200]); // Bottom
+  model.addBoundaryCondition("0", [constantTemperature, 200]); // Bottom
   model.addBoundaryCondition("1", ["symmetry"]); // Left
   model.addBoundaryCondition("2", ["convection", 1, 20]); // Top
-  model.addBoundaryCondition("3", ["constantTemperature", 200]); // Right
+  model.addBoundaryCondition("3", [constantTemperature, 200]); // Right
   model.setSolverMethod(method);
   const t0 = performance.now();
   const result = model.solve();

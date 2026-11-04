@@ -1,3 +1,10 @@
+! ════════════════════════════════════════════════════════════════
+!  FEAScript Benchmark
+!  Finite Element Simulation in JavaScript
+!  https://github.com/FEAScript/FEAScript-benchmark
+!  MIT License © 2026 FEAScript
+! ════════════════════════════════════════════════════════════════
+
 Header
   CHECK KEYWORDS Warn
   Mesh DB "." "@MESH@"
