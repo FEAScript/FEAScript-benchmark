@@ -22,6 +22,8 @@ CHANGES = {
     ("0.2.0", "0.3.0", "FEAScript sparse LU"): "Sparse matrix assembly (#99)",
     ("0.3.1", "0.4.0-rc", "FEAScript frontal"): "Frontal solver fix (0.4.0, #121)",
     ("0.3.1", "0.4.0", "FEAScript frontal"): "Frontal solver fix (#121)",
+    ("0.3.1", "0.4.0-rc", "FEAScript sparse LU"): "LU ordering for creeping flow (0.4.0, #132)",
+    ("0.3.1", "0.4.0", "FEAScript sparse LU"): "LU ordering for creeping flow (#132)",
 }
 # The mesh shown by default for each benchmark, and how to describe it
 BENCHMARKS = {
@@ -79,7 +81,8 @@ def plot(bench, machine, case, label):
             i0, i1 = versions.index(v0), versions.index(v1)
             t0, t1 = value(i0, c), value(i1, c)
             if t0 and t1 and t0 / t1 > 1.5:
-                notes += (f"set label \"{text}\" at {i1 + offset[c]:.2f},{speedup(i1, c):.4g} center offset 0,4.3 "
+                top = max(speedup(i1, cc) for cc in codes if value(i1, cc))  # centered above the bars of the version, clear of their labels
+                notes += (f"set label \"{text}\" at {i1},{top:.4g} center offset 0,4.3 "
                           f"tc rgb '{COLORS[c]}' font ',11'\n")
     # Runs that could not be measured get a note in place of the bar (e.g. "out of memory")
     for i, (_, _, recs) in enumerate(rows):
@@ -104,7 +107,7 @@ set xrange [-0.6:{len(rows) - 0.4}]; set yrange [0:{ymax:.4g}]; set xtics scale 
 set ylabel 'Speed-up (assembly + solve), × the first version'; set xlabel 'FEAScript version'
 set key top left box lc rgb '#cccccc' opaque
 set bmargin 5
-set label "Each version was run at a different time; differences of up to about 20% can come from variation in the machine's speed" at screen 0.5,0.03 center tc rgb '#777777' font ',11'
+set label "Each version was run at a different time; small differences can come from variation in the machine's speed" at screen 0.5,0.03 center tc rgb '#777777' font ',11'
 set label "Relative to the first version each solver ran in: {baselines}" at graph 0.99,0.97 right tc rgb '#777777' font ',11'
 set arrow from graph 0, first 1 to graph 1, first 1 nohead dt 2 lc rgb '#999999'
 {notes}plot {series}

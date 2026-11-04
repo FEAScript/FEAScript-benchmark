@@ -13,7 +13,7 @@ pressure fixed to 0 at (0, 0). Both codes use Taylor-Hood Q2-Q1 elements on the 
 There is no exact solution, so the codes are compared with each other: velocity at the shared nodes, the
 centerline velocity profile, and the strength of the primary vortex (the minimum of the stream function).
 """
-import json, os, re, statistics, subprocess, sys, time
+import json, os, re, statistics, subprocess, sys, tempfile, time
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -29,8 +29,9 @@ def sh(*cmd):
 
 CPU = sh("bash", "-c", "lscpu | sed -n 's/^Model name: *//p'")
 # Each machine and FEAScript version gets its own results folder: results/<machine>/<version>/
-MACHINE = os.environ.get("FEASCRIPT_MACHINE") or re.sub(r"[^a-z0-9]+", "-", re.sub(r"\((r|tm)\)", "", CPU.lower())).strip("-")
+MACHINE = os.environ.get("FEASCRIPT_MACHINE") or re.sub(r"[^a-z0-9]+", "-", re.sub(r"\((r|tm)\)|\d+-core processor", "", CPU.lower())).strip("-")
 RUN = os.path.join(OUT, MACHINE, VERSION)
+RAM_GB = round(int(re.search(r"MemTotal:\s+(\d+)", open("/proc/meminfo").read()).group(1)) / 1024 ** 2, 1)  # usable RAM
 os.makedirs(RUN, exist_ok=True)
 
 PIN = ["taskset", "-c", os.environ.get("CORE_ID", "0")]  # pin every timed process to one core
@@ -60,7 +61,7 @@ def write_meta():
             "feascriptReleaseDate": os.environ.get("FEASCRIPT_RELEASE_DATE"),
             "feascriptEntry": "src/index.js" if os.environ.get("FEASCRIPT_ENTRY") == "src" else "dist/feascript.esm.js",
             "elmerVersion": elmer.group(1) if elmer else None, "node": sh("node", "-v"),
-            "machine": MACHINE, "cpu": CPU, "os": sh("uname", "-sr"), "date": time.strftime("%Y-%m-%d"),
+            "machine": MACHINE, "cpu": CPU, "ramGB": RAM_GB, "os": sh("uname", "-sr"), "date": time.strftime("%Y-%m-%d"),
             "pinning": f"taskset -c {PIN[-1]}, OMP_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1", "reps": REPS, "warm": WARM}
     with open(os.path.join(RUN, "meta.json"), "w") as f:
         json.dump(meta, f, indent=1)
@@ -110,6 +111,29 @@ def read_vtu(path):
     return pts[:, 0], pts[:, 1], vel[:, 0], vel[:, 1], arr("pressure", 1)[:, 0]
 
 
+def run_measured(cmd, timeout=None, **kwargs):
+    """subprocess.run with captured text output that also returns the peak memory of the process, in MB.
+
+    The command runs under GNU time, which reports its maximum resident set size. Measuring it from Python
+    instead (wait4) would count the memory of this Python process, which a child inherits until it starts
+    the command. Raises subprocess.TimeoutExpired after `timeout` seconds, once the whole process group
+    has been stopped.
+    """
+    with tempfile.NamedTemporaryFile("r") as usage:
+        p = subprocess.Popen(["/usr/bin/time", "-f", "%M", "-o", usage.name] + cmd, stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE, text=True, start_new_session=True, **kwargs)
+        try:
+            out, err = p.communicate(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            os.killpg(p.pid, 9)
+            p.communicate()
+            raise
+        result = subprocess.CompletedProcess(cmd, p.returncode, out, err)
+        kb = usage.read().strip().splitlines()
+    result.peakMemory = int(kb[-1]) / 1024 if kb and kb[-1].isdigit() else None  # GNU time reports kB
+    return result
+
+
 def run_elmer(n, cfg, write_output):
     mesh, corners = make_mesh(n)
     tag = re.sub(r"\W+", "_", cfg)
@@ -122,7 +146,7 @@ def run_elmer(n, cfg, write_output):
     sif = os.path.join(work, f"{tag}.sif")
     open(sif, "w").write(s)
     t0 = time.perf_counter()
-    p = subprocess.run(PIN + ["ElmerSolver", os.path.basename(sif)], cwd=work, capture_output=True, text=True, env=ENV)
+    p = run_measured(PIN + ["ElmerSolver", os.path.basename(sif)], cwd=work, env=ENV)
     wall = time.perf_counter() - t0
     log = p.stdout
     if "ALL DONE" not in log:
@@ -130,7 +154,7 @@ def run_elmer(n, cfg, write_output):
     m = re.search(r"SOLVER TOTAL TIME\(CPU,REAL\):\s+(\S+)\s+(\S+)", log)
     lin = [float(a) for a in re.findall(r"Linear system time \(CPU,REAL\) for flow solution:\s+\S+\s+(\S+)", log)]
     slv = [float(a) for a in re.findall(r"Solver time \(CPU,REAL\) for navier-stokes:\s+\S+\s+(\S+)", log)]
-    res = {"wall": wall, "solverReal": float(m.group(2)), "solve": sum(slv), "linsolve": sum(lin)}
+    res = {"wall": wall, "peakMemory": p.peakMemory, "solverReal": float(m.group(2)), "solve": sum(slv), "linsolve": sum(lin)}
     if write_output:
         out_dir = os.path.join(work, os.path.basename(mesh))
         vtus = sorted(f for f in os.listdir(out_dir) if f.startswith(tag.lower()) and f.endswith(".vtu"))
@@ -144,7 +168,7 @@ def run_fea(n, csv=None, warm=0):
     cmd = PIN + ["node", os.path.join(HERE, "run_feascript.mjs"), str(n), csv or "-", str(warm)]
     t0 = time.perf_counter()
     try:
-        p = subprocess.run(cmd, capture_output=True, text=True, env=ENV, timeout=FEA_TIMEOUT)
+        p = run_measured(cmd, env=ENV, timeout=FEA_TIMEOUT)
     except subprocess.TimeoutExpired:
         raise RuntimeError(f"timeout after {FEA_TIMEOUT} s")
     proc = time.perf_counter() - t0
@@ -152,6 +176,7 @@ def run_fea(n, csv=None, warm=0):
         raise RuntimeError(p.stderr[-3000:])
     r = json.loads(p.stdout.strip().splitlines()[-1])
     r["process"] = proc
+    r["peakMemory"] = p.peakMemory
     if csv:
         d = np.loadtxt(csv, delimiter=",", skiprows=1)
         r["field"] = tuple(d[:, i] for i in range(5))
@@ -206,6 +231,7 @@ def main():
                             "solve": statistics.median(r["coldWall"] for r in runs),
                             "linsolve": statistics.median(r["coldSystem"] or 0 for r in runs),
                             "process": statistics.median(r["process"] for r in runs if r["process"] is not None),
+                            "peakMemoryMB": statistics.median(r["peakMemory"] for r in runs if r["process"] is not None),
                             "warmWall": statistics.median(first["warm"]) if first["warm"] else None,
                             "nruns": len(runs)})
         except RuntimeError as e:
@@ -220,7 +246,7 @@ def main():
             results.append({"case": name, "n": n, "nodes": (2 * n + 1) ** 2, "code": cfg,
                             "solve": statistics.median(r["solve"] for r in runs),
                             "linsolve": statistics.median(r["linsolve"] for r in runs),
-                            "process": statistics.median(r["wall"] for r in runs), "nruns": len(runs)})
+                            "process": statistics.median(r["wall"] for r in runs), "peakMemoryMB": statistics.median(r["peakMemory"] for r in runs), "nruns": len(runs)})
         # Compare every code with Elmer UMFPACK at the shared (vertex) nodes, and on the centerline
         ref = keyed(fields["Elmer UMFPACK"])
         for cfg, field in fields.items():

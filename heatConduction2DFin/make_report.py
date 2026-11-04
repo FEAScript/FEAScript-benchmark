@@ -18,9 +18,9 @@ TAG = f"FEAScript {VERSION}, {meta['cpu']}"
 R = [r for r in ALL if "failed" not in r]
 P = os.path.join(RUN, "plots"); os.makedirs(P, exist_ok=True)
 
-COLORS = {"FEAScript sparse LU": "#2a78d6", "FEAScript frontal": "#eb6834", "Elmer UMFPACK": "#1baf7a",
+COLORS = {"FEAScript sparse LU": "#2a78d6", "FEAScript frontal": "#eb6834", "FEAScript Jacobi": "#7b52c7", "Elmer UMFPACK": "#1baf7a",
           "Elmer BiCGStab+ILU0": "#eda100", "Elmer MUMPS": "#e87ba4"}
-PT = {"FEAScript sparse LU": 7, "FEAScript frontal": 5, "Elmer UMFPACK": 9, "Elmer BiCGStab+ILU0": 11, "Elmer MUMPS": 13}
+PT = {"FEAScript sparse LU": 7, "FEAScript frontal": 5, "FEAScript Jacobi": 15, "Elmer UMFPACK": 9, "Elmer BiCGStab+ILU0": 11, "Elmer MUMPS": 13}
 STYLE = """set terminal pngcairo size 900,620 font 'Arial,13'
 set border 3 lc rgb '#888888'; set tics nomirror tc rgb '#333333'
 set grid lc rgb '#e6e6e6' lw 1; set key top left box lc rgb '#cccccc' opaque
@@ -45,8 +45,9 @@ def plot(out, title, ylabel, lines, extra=""):
     subprocess.run(["gnuplot", name], cwd=P, check=True)
 
 # The curves of the two codes coincide when FEAScript matches Elmer at every node; say so only when it is true
+DIRECT = ("FEAScript frontal", "FEAScript sparse LU")  # Jacobi stops at a residual tolerance, so it is reported apart
 def matches(order):
-    fea = [r for r in R if r["order"] == order and r["code"].startswith("FEAScript")]
+    fea = [r for r in R if r["order"] == order and r["code"] in DIRECT]
     return fea and all((r.get("maxDiffVsElmerUMFPACK") or 0) < 1e-4 for r in fea)
 differ = [o for o in ("linear", "quadratic") if not matches(o)]
 ACCURACY_NOTE = ("set label 'FEAScript and Elmer curves coincide (difference < 1e-5 K)' at graph 0.98,0.95 right tc rgb '#777777'" if not differ
@@ -75,6 +76,18 @@ for order in ("linear", "quadratic"):
     plot(f"solve_time_{order}.png", f"Assembly + solve time ({order} quads)", "Time (s)", lines,
          "set label 'Elmer timer resolution 0.01 s' at graph 0.98,0.05 right tc rgb '#777777'")
 
+# 2b. Peak memory of each process (resident set size), when the run recorded it
+HAS_MEMORY = any(r.get("peakMemoryMB") for r in R)
+for order in ("linear", "quadratic") if HAS_MEMORY else ():
+    lines = []
+    for code in COLORS:
+        pts = series(code, order, "peakMemoryMB")
+        if pts:
+            d = write(f"memory_{order}_{code.replace(' ', '_').replace('+', '')}.dat", pts)
+            lines.append(f"'{d}' u 1:2 w lp lw 2 pt {PT[code]} ps 1.2 lc rgb '{COLORS[code]}' t '{code}'")
+    plot(f"memory_{order}.png", f"Peak memory ({order} quads)", "Peak memory (MB)", lines,
+         "set label 'Whole process: includes Node.js or Elmer itself' at graph 0.98,0.05 right tc rgb '#777777'")
+
 # 3. End-to-end time on the 77x39 linear mesh (3120 nodes), split into startup/IO and solve
 e2e = [r for r in R if r["nx"] == 77]
 order = ["FEAScript sparse LU", "FEAScript frontal", "Elmer BiCGStab+ILU0", "Elmer UMFPACK", "Elmer MUMPS"]
@@ -97,7 +110,7 @@ open(os.path.join(P, "end_to_end.gnuplot"), "w").write(gp.replace("@TAG@", TAG).
 subprocess.run(["gnuplot", "end_to_end.gnuplot"], cwd=P, check=True)
 
 # 4. Markdown table
-cols = ["case", "nodes", "code", "solve", "linsolve", "process", "warmWall", "rmsErr", "maxErr", "maxDiffVsElmerUMFPACK", "nruns"]
+cols = ["case", "nodes", "code", "solve", "linsolve", "process", "warmWall", "peakMemoryMB", "rmsErr", "maxErr", "maxDiffVsElmerUMFPACK", "nruns"]
 fmt = lambda v: "" if v is None else (f"{v:.3g}" if isinstance(v, float) else str(v))
 md = "| " + " | ".join(cols) + " |\n|" + "---|" * len(cols) + "\n"
 for r in ALL:
@@ -106,14 +119,16 @@ open(os.path.join(RUN, "results_table.md"), "w").write(md)
 print(md)
 
 # 5. README of the results folder, from meta.json and the results
-fea = [r for r in R if r["code"].startswith("FEAScript")]
+fea = [r for r in R if r["code"] in DIRECT]
 agree = max((r.get("maxDiffVsElmerUMFPACK") or 0) for r in fea)
+jacobi = [r for r in R if r["code"] == "FEAScript Jacobi"]
+JACOBI_NOTE = (f"\nWhere the Jacobi solver converged (residual tolerance 1e-8 within 10,000 iterations), its temperatures match Elmer's to within {max(r.get('maxDiffVsElmerUMFPACK') or 0 for r in jacobi):.1e}: it stops at a residual tolerance, so its error grows with the mesh.\n" if jacobi else "")
 failed = [r for r in ALL if "failed" in r]
 rows = [("FEAScript version", meta["feascriptVersion"]),
         ("FEAScript commit", meta["feascriptCommit"] + (" (with uncommitted changes)" if meta.get("feascriptUncommittedChanges") else "")),
         ("Released", meta.get("feascriptReleaseDate") or "not released"),
         ("Loaded from", f"`{meta.get('feascriptEntry', 'src/index.js')}`"),
-        ("Elmer", meta["elmerVersion"]), ("Node", meta["node"]), ("Machine", f"{meta['cpu']} ({meta.get('os', 'Linux')})"),
+        ("Elmer", meta["elmerVersion"]), ("Node", meta["node"]), ("Machine", f"{meta['cpu']}" + (f", {meta['ramGB']} GB RAM" if meta.get("ramGB") else "") + f" ({meta.get('os', 'Linux')})"),
         ("Cores", meta["pinning"]), ("Repeats", f"median of {meta['reps']} fresh processes"), ("Run on", meta["date"])]
 md = f"""# Results for FEAScript {VERSION} on {meta['cpu']}
 
@@ -122,8 +137,8 @@ md = f"""# Results for FEAScript {VERSION} on {meta['cpu']}
 """ + "".join(f"| {k} | {v} |\n" for k, v in rows) + (f"| Note | {meta['feascriptNote']} |\n" if meta.get("feascriptNote") else "") + f"""
 All the numbers are in [results_table.md](results_table.md) and [results.json](results.json).
 
-On every mesh it solved, FEAScript's nodal temperatures match Elmer's (UMFPACK) to within {agree:.1e}.
-""" + ("".join(f"\n- **{r['code']}, {r['case']}:** {r['failed']}" for r in failed) and
+On every mesh it solved, FEAScript's nodal temperatures match Elmer's (UMFPACK) to within {agree:.1e} with the direct solvers (`frontal` and `lusolve`).
+""" + JACOBI_NOTE + ("".join(f"\n- **{r['code']}, {r['case']}:** {r['failed']}" for r in failed) and
        "\nRuns that could not be measured:\n" + "".join(f"\n- **{r['code']}, {r['case']}:** {r['failed']}" for r in failed) + "\n") + """
 ## Accuracy
 
@@ -137,5 +152,10 @@ On every mesh it solved, FEAScript's nodal temperatures match Elmer's (UMFPACK) 
 ## End-to-end time
 
 <img src="plots/end_to_end.png" width="600" alt="End-to-end time on the 77×39 mesh">
-"""
+""" + ("""
+## Peak memory
+
+<img src="plots/memory_linear.png" width="600" alt="Peak memory with linear elements">
+<img src="plots/memory_quadratic.png" width="600" alt="Peak memory with quadratic elements">
+""" if HAS_MEMORY else "")
 open(os.path.join(RUN, "README.md"), "w").write(md)

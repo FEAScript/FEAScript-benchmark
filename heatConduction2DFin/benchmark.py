@@ -12,7 +12,7 @@ BCs: T=200 bottom & right, symmetry left, convection (h=1, Tinf=20) top, k=1.
 Runs both codes on identical structured meshes, compares nodal temperatures
 against each other and against the analytical series solution, and times them.
 """
-import json, os, re, statistics, subprocess, sys, time
+import json, os, re, statistics, subprocess, sys, tempfile, time
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -23,8 +23,9 @@ CORE = os.path.abspath(os.environ.get("FEASCRIPT_CORE") or os.path.join(HERE, ".
 VERSION = os.environ.get("FEASCRIPT_VERSION") or json.load(open(os.path.join(CORE, "package.json")))["version"]
 CPU = subprocess.run(["bash", "-c", "lscpu | sed -n 's/^Model name: *//p'"], capture_output=True, text=True).stdout.strip()
 # Each machine and FEAScript version gets its own results folder: results/<machine>/<version>/
-MACHINE = os.environ.get("FEASCRIPT_MACHINE") or re.sub(r"[^a-z0-9]+", "-", re.sub(r"\((r|tm)\)", "", CPU.lower())).strip("-")
+MACHINE = os.environ.get("FEASCRIPT_MACHINE") or re.sub(r"[^a-z0-9]+", "-", re.sub(r"\((r|tm)\)|\d+-core processor", "", CPU.lower())).strip("-")
 RUN = os.path.join(OUT, MACHINE, VERSION)
+RAM_GB = round(int(re.search(r"MemTotal:\s+(\d+)", open("/proc/meminfo").read()).group(1)) / 1024 ** 2, 1)  # usable RAM
 os.makedirs(RUN, exist_ok=True)
 
 # (order, nx, ny)
@@ -55,7 +56,7 @@ ELMER_CFGS = {
     "Elmer UMFPACK": ("umfpack", 1, 1),
     "Elmer MUMPS": ("mumps", 1, 1),
 }
-FEA_CFGS = {"FEAScript frontal": "frontal", "FEAScript sparse LU": "lusolve"}
+FEA_CFGS = {"FEAScript frontal": "frontal", "FEAScript sparse LU": "lusolve", "FEAScript Jacobi": "jacobi"}
 
 
 def analytic(x, y):
@@ -114,6 +115,29 @@ Element Divisions 2 = {ny}
     return d
 
 
+def run_measured(cmd, timeout=None, **kwargs):
+    """subprocess.run with captured text output that also returns the peak memory of the process, in MB.
+
+    The command runs under GNU time, which reports its maximum resident set size. Measuring it from Python
+    instead (wait4) would count the memory of this Python process, which a child inherits until it starts
+    the command. Raises subprocess.TimeoutExpired after `timeout` seconds, once the whole process group
+    has been stopped.
+    """
+    with tempfile.NamedTemporaryFile("r") as usage:
+        p = subprocess.Popen(["/usr/bin/time", "-f", "%M", "-o", usage.name] + cmd, stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE, text=True, start_new_session=True, **kwargs)
+        try:
+            out, err = p.communicate(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            os.killpg(p.pid, 9)
+            p.communicate()
+            raise
+        result = subprocess.CompletedProcess(cmd, p.returncode, out, err)
+        kb = usage.read().strip().splitlines()
+    result.peakMemory = int(kb[-1]) / 1024 if kb and kb[-1].isdigit() else None  # GNU time reports kB
+    return result
+
+
 def run_elmer(mesh, cfg, write_output):
     linsys, ss, nl = ELMER_CFGS[cfg]
     tag = re.sub(r"\W+", "_", cfg)
@@ -127,7 +151,7 @@ def run_elmer(mesh, cfg, write_output):
     with open(sif, "w") as f:
         f.write(s)
     t0 = time.perf_counter()
-    p = subprocess.run(PIN + ["ElmerSolver", os.path.basename(sif)], cwd=os.path.dirname(sif), capture_output=True, text=True, env=ENV)
+    p = run_measured(PIN + ["ElmerSolver", os.path.basename(sif)], cwd=os.path.dirname(sif), env=ENV)
     wall = time.perf_counter() - t0
     log = p.stdout
     if "ALL DONE" not in log:
@@ -135,7 +159,7 @@ def run_elmer(mesh, cfg, write_output):
     m = re.search(r"SOLVER TOTAL TIME\(CPU,REAL\):\s+(\S+)\s+(\S+)", log)
     lin = [float(a) for a in re.findall(r"Linear system time \(CPU,REAL\) for temperature:\s+\S+\s+(\S+)", log)]
     slv = [float(a) for a in re.findall(r"Solver time \(CPU,REAL\) for heat equation:\s+\S+\s+(\S+)", log)]
-    res = {"wall": wall, "solverReal": float(m.group(2)), "solve": sum(slv), "linsolve": sum(lin), "nsolves": len(lin)}
+    res = {"wall": wall, "peakMemory": p.peakMemory, "solverReal": float(m.group(2)), "solve": sum(slv), "linsolve": sum(lin), "nsolves": len(lin)}
     if write_output:
         mesh_dir = os.path.join(os.path.dirname(sif), os.path.basename(mesh))  # Elmer writes next to the run, lowercased
         vtus = sorted(f for f in os.listdir(mesh_dir) if f.startswith(tag.lower()) and f.endswith(".vtu"))
@@ -159,14 +183,17 @@ def run_fea(order, nx, ny, method, csv=None, warm=0):
     cmd = PIN + ["node", os.path.join(HERE, "run_feascript.mjs"), str(nx), str(ny), order, method, csv or "-", str(warm)]
     t0 = time.perf_counter()
     try:
-        p = subprocess.run(cmd, capture_output=True, text=True, env=ENV, timeout=FEA_TIMEOUT)
+        p = run_measured(cmd, env=ENV, timeout=FEA_TIMEOUT)
     except subprocess.TimeoutExpired:
         raise RuntimeError(f"timeout after {FEA_TIMEOUT} s")
     proc = time.perf_counter() - t0
     if p.returncode:
         raise RuntimeError(p.stderr[-3000:])
     r = json.loads(p.stdout.strip().splitlines()[-1])
+    if any("did not converge" in e for e in r.get("errors", [])):
+        raise RuntimeError(f"not converged: {r['errors'][0]}")
     r["process"] = proc
+    r["peakMemory"] = p.peakMemory
     if csv:
         d = np.loadtxt(csv, delimiter=",", skiprows=1)
         r["field"] = (d[:, 0], d[:, 1], d[:, 2])
@@ -195,7 +222,7 @@ def write_meta():
             "feascriptUncommittedChanges": False if os.environ.get("FEASCRIPT_COMMIT") else bool(sh("git", "-C", CORE, "status", "--porcelain", "src")),
             "feascriptReleaseDate": os.environ.get("FEASCRIPT_RELEASE_DATE"),
             "elmerVersion": elmer.group(1) if elmer else None, "node": sh("node", "-v"),
-            "machine": MACHINE, "cpu": CPU, "os": sh("uname", "-sr"), "date": time.strftime("%Y-%m-%d"),
+            "machine": MACHINE, "cpu": CPU, "ramGB": RAM_GB, "os": sh("uname", "-sr"), "date": time.strftime("%Y-%m-%d"),
             "feascriptEntry": "src/index.js" if os.environ.get("FEASCRIPT_ENTRY") == "src" else "dist/feascript.esm.js",
             "pinning": f"taskset -c {PIN[-1]}, OMP_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1", "reps": REPS, "warm": WARM}
     with open(os.path.join(RUN, "meta.json"), "w") as f:
@@ -225,7 +252,8 @@ def main():
                 first = run_fea(order, nx, ny, method, csv)
             except RuntimeError as e:
                 why = ("out of memory" if "heap out of memory" in str(e) else
-                       f"timeout (> {FEA_TIMEOUT} s)" if "timeout after" in str(e) else "failed")
+                       f"timeout (> {FEA_TIMEOUT} s)" if "timeout after" in str(e) else
+                       "not converged" if "not converged" in str(e) else "failed")
                 results.append({"case": name, "order": order, "nx": nx, "ny": ny, "code": cfg, "failed": why})
                 print(f"{cfg} {why}", flush=True); continue
             # Slow cases (over 20 s) are timed once, without warm repeats
@@ -241,6 +269,7 @@ def main():
                    "wall": statistics.median(r["coldWall"] for r in runs),
                    "solve": statistics.median(r["coldWall"] for r in runs),
                    "process": statistics.median(r["process"] for r in runs if r["process"] is not None),
+                   "peakMemoryMB": statistics.median(r["peakMemory"] for r in runs if r["process"] is not None),
                    "linsolve": statistics.median(r["coldSystem"] or 0 for r in runs),
                    "warmWall": statistics.median(first["warm"]) if first["warm"] else None,
                    "nruns": len(runs), **errors(first["field"])}
@@ -252,6 +281,7 @@ def main():
             rec = {"case": name, "order": order, "nx": nx, "ny": ny, "nodes": len(first["field"][0]), "code": cfg,
                    "wall": statistics.median(r["solverReal"] for r in runs),
                    "process": statistics.median(r["wall"] for r in runs),
+                   "peakMemoryMB": statistics.median(r["peakMemory"] for r in runs),
                    "solve": statistics.median(r["solve"] for r in runs),
                    "meshgen": MESHGEN.get(name),
                    "linsolve": statistics.median(r["linsolve"] for r in runs),

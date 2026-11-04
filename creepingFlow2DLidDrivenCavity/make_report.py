@@ -56,6 +56,21 @@ set xlabel 'Number of nodes (Q2 velocity nodes)'; set ylabel 'Time (s)'
 set label 'Elmer timer resolution 0.01 s' at graph 0.98,0.05 right tc rgb '#777777'
 plot """ + ", \\\n     ".join(lines) + "\n")
 
+# 1b. Peak memory of each process (resident set size), when the run recorded it
+HAS_MEMORY = any(r.get("peakMemoryMB") for r in R)
+if HAS_MEMORY:
+    lines = []
+    for code in COLORS:
+        pts = [(nodes, m) for nodes, m, _ in series(code, "peakMemoryMB")]
+        if pts:
+            np.savetxt(os.path.join(P, f"memory_{tag(code)}.dat"), pts)
+            lines.append(f"'memory_{tag(code)}.dat' u 1:2 w lp lw 2 pt {PT[code]} ps 1.2 lc rgb '{COLORS[code]}' t '{code}'")
+    gnuplot("memory", f"""set title 'Peak memory {TITLE}' font 'Arial,15'
+set logscale xy; set format x '10^{{%L}}'
+set xlabel 'Number of nodes (Q2 velocity nodes)'; set ylabel 'Peak memory (MB)'
+set label 'Whole process: includes Node.js or Elmer itself' at graph 0.98,0.05 right tc rgb '#777777'
+plot """ + ", \\\n     ".join(lines) + "\n")
+
 # 2. Primary vortex strength (minimum of the stream function) against the mesh
 lines = []
 for code in ["FEAScript sparse LU", "Elmer UMFPACK"]:
@@ -93,7 +108,7 @@ plot 'end_to_end.dat' u 2:xtic(1) t 'assembly + solve' lc rgb '#2a78d6', \\
 """)
 
 # 5. Results table
-cols = ["case", "nodes", "code", "solve", "linsolve", "process", "warmWall", "psiMin", "psiMinY",
+cols = ["case", "nodes", "code", "solve", "linsolve", "process", "warmWall", "peakMemoryMB", "psiMin", "psiMinY",
         "maxDiffVelocity", "maxDiffVelocityAwayFromCorners", "nruns"]
 fmt = lambda v: "" if v is None else (f"{v:.4g}" if isinstance(v, float) else str(v))
 md = "| " + " | ".join(cols) + " |\n|" + "---|" * len(cols) + "\n"
@@ -119,13 +134,13 @@ rows = [("FEAScript version", META["feascriptVersion"]),
         ("FEAScript commit", META["feascriptCommit"] + (" (with uncommitted changes)" if META.get("feascriptUncommittedChanges") else "")),
         ("Released", META.get("feascriptReleaseDate") or "not released"),
         ("Loaded from", f"`{META['feascriptEntry']}`"), ("Elmer", META["elmerVersion"]), ("Node", META["node"]),
-        ("Machine", f"{META['cpu']} ({META.get('os', '')})"), ("Cores", META["pinning"]),
+        ("Machine", f"{META['cpu']}" + (f", {META['ramGB']} GB RAM" if META.get("ramGB") else "") + f" ({META.get('os', '')})"), ("Cores", META["pinning"]),
         ("Repeats", f"median of {META['reps']} fresh processes"), ("Run on", META["date"])]
 md = f"""# Results for FEAScript {VERSION} on {META['cpu']}
 
 | | |
 |---|---|
-""" + "".join(f"| {k} | {v} |\n" for k, v in rows) + f"""
+""" + "".join(f"| {k} | {v} |\n" for k, v in rows) + (f"| Note | {META['feascriptNote']} |\n" if META.get("feascriptNote") else "") + f"""
 All the numbers are in [results_table.md](results_table.md) and [results.json](results.json).
 
 On every mesh it solved, FEAScript's primary vortex strength ψ_min matches Elmer's (UMFPACK) to within {psi_diff:.1e}.
@@ -147,6 +162,10 @@ At the nodes farther than 0.2 from the two lid corners, the velocities of the tw
 ## End-to-end time
 
 <img src="plots/end_to_end.png" width="600" alt="End-to-end time on the 16×16 mesh">
-"""
+""" + ("""
+## Peak memory
+
+<img src="plots/memory.png" width="600" alt="Peak memory against the number of nodes">
+""" if HAS_MEMORY else "")
 open(os.path.join(RUN, "README.md"), "w").write(md)
 print(RUN)

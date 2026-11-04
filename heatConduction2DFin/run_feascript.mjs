@@ -35,10 +35,15 @@ const method = process.argv[5];
 const outCsv = process.argv[6];
 const warmRepeats = Number(process.argv[7] ?? 0);
 
-// Silence library logging, but capture its internal console.time() splits
+// Silence library logging, but capture its error messages (e.g. a Jacobi solve that did not converge) and its
+// internal console.time() splits
 const timers = {};
 const starts = {};
-console.log = console.info = console.warn = () => {};
+const errors = [];
+console.log = (message, ...rest) => {
+  if (typeof message === "string" && message.includes("[ERROR]")) errors.push(message.replace(/^%c/, ""));
+};
+console.info = console.warn = () => {};
 console.time = (label) => (starts[label] = performance.now());
 console.timeEnd = (label) => (timers[label] = (performance.now() - starts[label]) / 1000);
 
@@ -69,5 +74,5 @@ if (outCsv && outCsv !== "-") {
   writeFileSync(outCsv, s);
 }
 process.stdout.write(
-  JSON.stringify({ nodes: cold.result.solutionVector.length, coldWall: cold.wall, coldSystem: cold.system, coldTotal: cold.total, warm }) + "\n",
+  JSON.stringify({ nodes: cold.result.solutionVector.length, coldWall: cold.wall, coldSystem: cold.system, coldTotal: cold.total, warm, errors }) + "\n",
 );
