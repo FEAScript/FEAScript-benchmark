@@ -11,7 +11,7 @@ This repository contains benchmarks for [FEAScript](https://feascript.com/), the
 | [heatConduction2DFin](heatConduction2DFin/) | [Elmer](https://www.elmerfem.org/) | 2D heat conduction in a fin with constant-temperature, symmetry and convection boundaries, on linear and quadratic quadrilateral meshes from 231 to 51,681 nodes |
 | [creepingFlow2DLidDrivenCavity](creepingFlow2DLidDrivenCavity/) | [Elmer](https://www.elmerfem.org/) | Stokes (creeping) flow in the lid-driven unit cavity, with Taylor–Hood Q2–Q1 elements on meshes from 289 to 16,641 velocity nodes |
 
-📖 Each benchmark folder has a README with the problem, the setup, the results on each machine, FEAScript's speed-up by version and the steps to run it.
+Each benchmark folder has a README with the problem, the setup, the results on each machine, FEAScript's speed-up by version and the steps to run it.
 
 ## How the benchmarks are run
 

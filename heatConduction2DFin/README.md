@@ -26,7 +26,7 @@ FEAScript's speed-up on the 160×80 linear mesh by version, with the assembly an
 
 <img src="history/amd-ryzen-5-9600x/linear-160x80.png" width="600" alt="FEAScript speed-up by version on the AMD Ryzen 5 9600X">
 
-📖 Each results folder has a README with the plots of that run, a table of all the numbers (`results_table.md`) and the details of the run (`meta.json`): the FEAScript version and commit, the versions of the other software, the machine and the date.
+Each results folder has a README with the plots of that run, a table of all the numbers (`results_table.md`) and the details of the run (`meta.json`): the FEAScript version and commit, the versions of the other software, the machine and the date.
 
 > **About the comparison:** Elmer runs here on one core, as a single MPI process, on small 2D problems, so that both codes are compared on the same terms. Elmer is a parallel code built for much larger problems, and this setup does not show its parallel performance. Its end-to-end time includes a fixed MPI start-up in the build used here, about 0.5 s on the AMD Ryzen 5 9600X. See [About the comparison](../README.md#about-the-comparison).
 
