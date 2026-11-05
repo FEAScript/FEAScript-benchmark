@@ -8,7 +8,7 @@
 
 """Plot FEAScript's speed-up by version (assembly and solve time), for each benchmark and machine.
 
-Reads every <benchmark>/results/<machine>/<version>/ folder and writes <benchmark>/history/<machine>/<case>.png.
+Reads every <benchmark>/comparison/<machine>/<version>/ folder and writes <benchmark>/history/<machine>/<case>.png.
 
 Usage: python3 make_history.py [benchmark ...] [--case CASE]
 """
@@ -39,7 +39,7 @@ def version_key(version):
 
 
 def plot(bench, machine, case, label):
-    root = os.path.join(HERE, bench, "results", machine)
+    root = os.path.join(HERE, bench, "comparison", machine)
     rows, metas = [], []
     for version in os.listdir(root):
         run = os.path.join(root, version)
@@ -126,9 +126,9 @@ def main():
         case, label = BENCHMARKS[bench]
         if args.case:
             case = args.case
-        results = os.path.join(HERE, bench, "results")
+        results = os.path.join(HERE, bench, "comparison")
         for machine in sorted(os.listdir(results)):
-            if machine == "meshes" or not os.path.isdir(os.path.join(results, machine)):
+            if not os.path.isdir(os.path.join(results, machine)):
                 continue
             png = plot(bench, machine, case, label if case == BENCHMARKS[bench][0] else case)
             if png:

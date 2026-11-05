@@ -1,8 +1,8 @@
 <img src="https://feascript.github.io/FEAScript-website/assets/feascript-logo.png" width="80" alt="FEAScript Logo">
 
-# FEAScript vs Elmer benchmark: lid-driven cavity
+# FEAScript vs Elmer and scikit-fem benchmark: lid-driven cavity
 
-This folder compares [FEAScript](https://feascript.com/) with the [Elmer](https://www.elmerfem.org/) finite element solver on Stokes (creeping) flow in the lid-driven cavity, a standard test of incompressible flow solvers and the problem of the [creeping flow example](https://github.com/FEAScript/FEAScript-core/tree/main/examples/creepingFlowScript) of FEAScript-core. Both codes solve it with the same elements on identical meshes and are compared on the flow they compute and on run time. Each machine and FEAScript version gets its own set of results, so the comparison can be repeated as FEAScript develops.
+This folder compares [FEAScript](https://feascript.com/) with the [Elmer](https://www.elmerfem.org/) finite element solver and the [scikit-fem](https://github.com/kinnala/scikit-fem) finite element library on Stokes (creeping) flow in the lid-driven cavity, a standard test of incompressible flow solvers and the problem of the [creeping flow example](https://github.com/FEAScript/FEAScript-core/tree/main/examples/creepingFlowScript) of FEAScript-core. The codes solve it with the same elements on identical meshes and are compared on the flow they compute and on run time. Each machine and FEAScript version gets its own set of results, so the comparison can be repeated as FEAScript develops.
 
 ## Contents
 
@@ -14,19 +14,19 @@ This folder compares [FEAScript](https://feascript.com/) with the [Elmer](https:
 
 ## Results
 
-The results are in `results/<machine>/<version>/`:
+The comparison of the codes is in `comparison/<machine>/<FEAScript version>/`. The results of each code are in `<code>/results/<machine>/<its version>/`:
 
 | Machine | FEAScript version | Results |
 |---|---|---|
-| AMD Ryzen 5 9600X | 0.2.0 | [results/amd-ryzen-5-9600x/0.2.0/](results/amd-ryzen-5-9600x/0.2.0/) |
-| AMD Ryzen 5 9600X | 0.3.1 | [results/amd-ryzen-5-9600x/0.3.1/](results/amd-ryzen-5-9600x/0.3.1/) |
-| AMD Ryzen 5 9600X | 0.4.0-rc | [results/amd-ryzen-5-9600x/0.4.0-rc/](results/amd-ryzen-5-9600x/0.4.0-rc/) |
+| AMD Ryzen 5 9600X | 0.2.0 | [comparison/amd-ryzen-5-9600x/0.2.0/](comparison/amd-ryzen-5-9600x/0.2.0/) |
+| AMD Ryzen 5 9600X | 0.3.1 | [comparison/amd-ryzen-5-9600x/0.3.1/](comparison/amd-ryzen-5-9600x/0.3.1/) |
+| AMD Ryzen 5 9600X | 0.4.0-rc | [comparison/amd-ryzen-5-9600x/0.4.0-rc/](comparison/amd-ryzen-5-9600x/0.4.0-rc/) |
 
 FEAScript's speed-up on the 32×32 mesh by version, with the assembly and solve time of each run, on the AMD Ryzen 5 9600X:
 
 <img src="history/amd-ryzen-5-9600x/32x32.png" width="600" alt="FEAScript speed-up by version on the AMD Ryzen 5 9600X">
 
-Each results folder has a README with the plots of that run, a table of all the numbers (`results_table.md`) and the details of the run (`meta.json`): the FEAScript version and commit, the versions of the other software, the machine and the date.
+Each results folder has a README with the plots of that run, a table of all the numbers (`results_table.md`) and the details of the run (`meta.json`): the FEAScript version and commit, the versions of the other software, the machine and the date. Runs on the AMD Ryzen 5 9600X with FEAScript 0.2.0 and 0.3.1 do not include scikit-fem, which was added with 0.4.0-rc.
 
 > **About the comparison:** Elmer runs here on one core, as a single MPI process, on small 2D problems, so that both codes are compared on the same terms. Elmer is a parallel code built for much larger problems, and this setup does not show its parallel performance. Its end-to-end time includes a fixed MPI start-up in the build used here, about 0.5 s on the AMD Ryzen 5 9600X. See [About the comparison](../README.md#about-the-comparison).
 
@@ -36,29 +36,32 @@ Each results folder has a README with the plots of that run, a table of all the 
 - **Lid:** velocity (1, 0) on the top edge
 - **Walls:** no-slip, velocity (0, 0), on the other three edges. The walls win at the two lid corners, so the lid moves only between them
 - **Pressure:** fixed to 0 at (0, 0), since an enclosed flow determines the pressure only up to a constant
-- **Elements:** Taylor–Hood Q2–Q1 quadrilaterals (quadratic velocity, linear pressure) in both codes. FEAScript uses nodal Q2 elements; Elmer uses hierarchic Q2 velocity on a bilinear mesh (`Element = "p:2"`)
+- **Elements:** Taylor–Hood Q2–Q1 quadrilaterals (quadratic velocity, linear pressure) in all the codes. FEAScript and scikit-fem use nodal Q2 elements; Elmer uses hierarchic Q2 velocity on a bilinear mesh (`Element = "p:2"`)
 
 The problem has no exact solution, and the velocity is discontinuous at the two lid corners, where the moving lid meets the fixed walls.
 
 ## What is measured
 
-Both codes solve the problem on n × n meshes with n = 8, 16, 24, 32, 48 and 64, from 289 to 16,641 velocity nodes. On each mesh, the benchmark runs:
+The codes solve the problem on n × n meshes with n = 8, 16, 24, 32, 48 and 64, from 289 to 16,641 velocity nodes. On each mesh, the benchmark runs:
 
 - **FEAScript:** the `lusolve` (math.js sparse LU) solver, the one that supports creeping flow, loaded from the built bundle `dist/feascript.esm.js` as npm and browser users load it, in Node
 - **Elmer:** the `IncompressibleNSVec` solver with `Stokes Flow = True`, with the UMFPACK and MUMPS direct solvers
+- **scikit-fem:** its default direct solver (SuperLU from SciPy), with the Stokes equations assembled in `scikit-fem/run_skfem.py`
 
 And compares:
 
-- **Primary vortex strength:** the minimum of the stream function, ψ_min, which lies on the vertical centerline x = 0.5 because Stokes flow in the cavity is symmetric. It is computed the same way for both codes, from the velocity at the mesh vertices on the centerline
-- **Velocity:** the difference between the two codes at the mesh vertices, which both codes share, over the whole cavity and away from the two lid corners
+- **Primary vortex strength:** the minimum of the stream function, ψ_min, which lies on the vertical centerline x = 0.5 because Stokes flow in the cavity is symmetric. It is computed the same way for all the codes, from the velocity at the mesh vertices on the centerline
+- **Velocity:** the difference from Elmer at the mesh vertices, which all the codes share, over the whole cavity and away from the two lid corners
+- **scikit-fem against FEAScript:** the difference in velocity at all their nodes, and in pressure at the mesh vertices
 - **Centerline profile:** the velocity u along x = 0.5
 - **Assembly and solve time:**
   - FEAScript: the time of `model.solve()`, which includes mesh generation
   - Elmer: the `Solver time` of the flow solver, at 0.01 s resolution
+  - scikit-fem: the time of mesh generation, assembly and solve, like FEAScript's `model.solve()`, without writing the results
 - **End-to-end time:** the wall time of the whole process, from start to exit, on the 16 × 16 mesh
-- **Peak memory:** the largest resident memory of each process, as GNU time reports it. It is the memory of the whole process, so it includes Node and FEAScript, or Elmer, as well as the problem. Results from before this was measured have no memory
+- **Peak memory:** the largest resident memory of each process, as GNU time reports it. It is the memory of the whole process, so it includes Node and FEAScript, Python and its libraries, or Elmer, as well as the problem. Results from before this was measured have no memory
 
-The two codes apply the lid velocity differently next to the corners. FEAScript sets the full lid velocity at every lid node, including the mid-edge node of the corner element. Elmer, with hierarchic elements, interpolates the boundary values linearly along each element edge, so along the top edge of the corner element the lid velocity rises from 0 at the corner. This is part of the comparison: the codes differ near the two lid corners on every mesh, and agree away from them more closely as the mesh is refined.
+FEAScript and Elmer apply the lid velocity differently next to the corners. FEAScript sets the full lid velocity at every lid node, including the mid-edge node of the corner element. Elmer, with hierarchic elements, interpolates the boundary values linearly along each element edge, so along the top edge of the corner element the lid velocity rises from 0 at the corner. This is part of the comparison: the two codes differ near the two lid corners on every mesh, and agree away from them more closely as the mesh is refined. scikit-fem sets the lid velocity the same way as FEAScript, so these two are expected to agree at every node, lid corners included.
 
 To keep the comparison fair, every timed process is pinned to one core (`taskset -c 0`, `OMP_NUM_THREADS=1`, `OPENBLAS_NUM_THREADS=1`), and each time is the median of several fresh processes. A run that runs out of memory or exceeds the time limit is recorded as such.
 
@@ -70,10 +73,19 @@ Notes on reading the times:
 
 ## How to run the benchmark
 
-The benchmark needs Node.js, Python 3 with NumPy, gnuplot, GNU time (`/usr/bin/time`, the `time` package), and ElmerSolver and ElmerGrid on the `PATH`. It benchmarks the [FEAScript-core](https://github.com/FEAScript/FEAScript-core) checkout next to this repository (`../../FEAScript-core` from this folder). Build it first with `npm run build`, since the benchmark loads `dist/feascript.esm.js`.
+The benchmark needs Node.js, Python 3 with NumPy, SciPy and scikit-fem, gnuplot, GNU time (`/usr/bin/time`, the `time` package), and ElmerSolver and ElmerGrid on the `PATH`. It benchmarks the [FEAScript-core](https://github.com/FEAScript/FEAScript-core) checkout next to this repository (`../../FEAScript-core` from this folder). Build it first with `npm run build`, since the benchmark loads `dist/feascript.esm.js`.
+
+The Python packages can go in a virtual environment, and `meta.json` records their versions:
 
 ```
-python3 benchmark.py                          # writes results/<machine>/<version>/
+python3 -m venv ~/.venvs/feascript-benchmark
+~/.venvs/feascript-benchmark/bin/pip install scikit-fem scipy numpy
+```
+
+Then run the benchmark with that Python:
+
+```
+~/.venvs/feascript-benchmark/bin/python benchmark.py   # writes <code>/results/ and comparison/
 python3 make_report.py <machine> <version>    # writes the plots, results_table.md and README.md
 python3 ../make_history.py creepingFlow2DLidDrivenCavity  # updates the plots of FEAScript's speed-up by version in history/<machine>/
 ```
@@ -91,16 +103,18 @@ The machine defaults to a name made from the CPU model, e.g. `amd-ryzen-5-9600x`
 - **`RESUME=1`:** keeps the meshes already in `results.json` and runs only the missing ones
 - **`ONLY`:** runs only some meshes, e.g. `ONLY=8,16`
 
-After a run, add a row to [Results](#results) and run `make_history.py`, which picks up every folder in `results/`.
+After a run, add a row to [Results](#results) and run `make_history.py`, which picks up every folder in `comparison/`.
 
 The files in this folder:
 
-- **`benchmark.py`:** runs both codes, compares them and writes the results
+- **`benchmark.py`:** runs all the codes, compares them and writes the results
 - **`make_report.py`:** draws the plots and writes the results table and README of a run
-- **`run_feascript.mjs`:** runs one FEAScript case
-- **`case.sif.in`:** the Elmer input template
-- **`results/meshes/`:** ElmerGrid meshes, shared by all runs and not committed
-- **`results/<machine>/<version>/work/`:** Elmer `.sif` files, centerline profiles and FEAScript nodal results (the nodal results are not committed)
+- **`feascript/run_feascript.mjs`:** runs one FEAScript case
+- **`elmer/case.sif.in`:** the Elmer input template
+- **`scikit-fem/run_skfem.py`:** runs one scikit-fem case
+- **`elmer/meshes/`:** ElmerGrid meshes, shared by all runs and not committed
+- **`<code>/results/<machine>/<its version>/`:** the latest results of each code: its `results.json`, centerline profiles, nodal results (not committed) and, for Elmer, the `.sif` files of the run
+- **`comparison/<machine>/<FEAScript version>/`:** the comparison of the codes in one run: the combined `results.json`, plots, results table and README
 
 ## License
 

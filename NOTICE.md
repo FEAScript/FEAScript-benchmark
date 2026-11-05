@@ -29,3 +29,13 @@ The benchmarks run the following third-party software. None of it is included in
    - License: gnuplot license (https://sourceforge.net/p/gnuplot/gnuplot-main/ci/master/tree/Copyright)
    - Source: http://www.gnuplot.info
    - Draws the plots
+
+6. **scikit-fem**
+   - License: BSD 3-Clause (https://github.com/kinnala/scikit-fem/blob/master/LICENSE), Copyright scikit-fem developers
+   - Source: https://github.com/kinnala/scikit-fem
+   - A second reference finite element library; installed separately and run as an external program
+
+7. **SciPy**
+   - License: BSD 3-Clause (https://github.com/scipy/scipy/blob/main/LICENSE.txt)
+   - Source: https://github.com/scipy/scipy
+   - Sparse matrices and the SuperLU direct solver used by scikit-fem

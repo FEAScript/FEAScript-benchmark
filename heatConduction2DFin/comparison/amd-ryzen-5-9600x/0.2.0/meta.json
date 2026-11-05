@@ -1,0 +1,20 @@
+{
+ "feascriptVersion": "0.2.0",
+ "feascriptPackageVersion": "0.2.0",
+ "feascriptCommit": "f526095",
+ "feascriptUncommittedChanges": false,
+ "feascriptReleaseDate": "2026-02-25",
+ "elmerVersion": "26.2",
+ "elmerCommit": "56b16bd49",
+ "elmerBuildDate": "2026-11-02",
+ "node": "v18.19.1",
+ "machine": "amd-ryzen-5-9600x",
+ "cpu": "AMD Ryzen 5 9600X 6-Core Processor",
+ "ramGB": 14.7,
+ "os": "Linux 7.0.0-38-generic",
+ "date": "2026-11-04",
+ "feascriptEntry": "dist/feascript.esm.js",
+ "pinning": "taskset -c 0, OMP_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1",
+ "reps": 5,
+ "warm": 3
+}

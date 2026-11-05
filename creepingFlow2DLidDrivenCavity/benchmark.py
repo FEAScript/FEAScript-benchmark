@@ -6,18 +6,19 @@
 #  MIT License © 2026 FEAScript
 # ════════════════════════════════════════════════════════════════
 
-"""FEAScript vs Elmer benchmark: Stokes flow in the lid-driven unit cavity.
+"""FEAScript vs Elmer and scikit-fem benchmark: Stokes flow in the lid-driven unit cavity.
 
 Lid velocity 1 on the top edge, no-slip on the other edges (the walls win at the two lid corners), viscosity 1,
-pressure fixed to 0 at (0, 0). Both codes use Taylor-Hood Q2-Q1 elements on the same n x n meshes.
+pressure fixed to 0 at (0, 0). All the codes use Taylor-Hood Q2-Q1 elements on the same n x n meshes.
 There is no exact solution, so the codes are compared with each other: velocity at the shared nodes, the
 centerline velocity profile, and the strength of the primary vortex (the minimum of the stream function).
 """
-import json, os, re, statistics, subprocess, sys, tempfile, time
+import json, os, platform, re, statistics, subprocess, sys, tempfile, time
+from importlib.metadata import version
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "results")
+MESHES = os.path.join(HERE, "elmer", "meshes")  # shared ElmerGrid meshes
 # FEAScript-core checkout to benchmark (default: the sibling folder next to this repository)
 CORE = os.path.abspath(os.environ.get("FEASCRIPT_CORE") or os.path.join(HERE, "..", "..", "FEAScript-core"))
 VERSION = os.environ.get("FEASCRIPT_VERSION") or json.load(open(os.path.join(CORE, "package.json")))["version"]
@@ -28,11 +29,20 @@ def sh(*cmd):
 
 
 CPU = sh("bash", "-c", "lscpu | sed -n 's/^Model name: *//p'")
-# Each machine and FEAScript version gets its own results folder: results/<machine>/<version>/
+# Each machine and FEAScript version gets its own folders: the comparison of the codes in comparison/<machine>/<version>/
 MACHINE = os.environ.get("FEASCRIPT_MACHINE") or re.sub(r"[^a-z0-9]+", "-", re.sub(r"\((r|tm)\)|\d+-core processor", "", CPU.lower())).strip("-")
-RUN = os.path.join(OUT, MACHINE, VERSION)
+RUN = os.path.join(HERE, "comparison", MACHINE, VERSION)
 RAM_GB = round(int(re.search(r"MemTotal:\s+(\d+)", open("/proc/meminfo").read()).group(1)) / 1024 ** 2, 1)  # usable RAM
-os.makedirs(RUN, exist_ok=True)
+# Each code keeps its results in its own folder, under its own version: they do not change with the FEAScript version
+ELMER_VERSION = (re.search(r"Version: (\d[\d.]*)", subprocess.run("ElmerSolver -v 2>&1 </dev/null | head -20", shell=True, capture_output=True, text=True).stdout) or [None, "unknown"])[1]
+# A nightly package of the Elmer PPA names the commit and date it was built from, e.g. 9.0-0ppa0-202611021648~56b16bd49~ubuntu24.04.1
+ELMER_BUILD = re.search(r"-(\d{4})(\d{2})(\d{2})\d{4}~([0-9a-f]+)~", subprocess.run(["dpkg-query", "-W", "-f", "${Version}", "elmerfem-csc"], capture_output=True, text=True).stdout)
+SKFEM_VERSION = version("scikit-fem")
+FEA_OUT = os.path.join(HERE, "feascript", "results", MACHINE, VERSION)
+ELMER_OUT = os.path.join(HERE, "elmer", "results", MACHINE, ELMER_VERSION)
+SKFEM_OUT = os.path.join(HERE, "scikit-fem", "results", MACHINE, SKFEM_VERSION)
+for d in (RUN, FEA_OUT, ELMER_OUT, SKFEM_OUT):
+    os.makedirs(d, exist_ok=True)
 
 PIN = ["taskset", "-c", os.environ.get("CORE_ID", "0")]  # pin every timed process to one core
 ENV = {**os.environ, "FEASCRIPT_CORE": CORE, "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1"}
@@ -41,6 +51,7 @@ REPS = int(os.environ.get("REPS", 5))
 WARM = int(os.environ.get("WARM", 3))
 ONLY = os.environ.get("ONLY")  # e.g. "16" for a quick test
 SIZES = [8, 16, 24, 32, 48, 64]
+SKFEM = "scikit-fem SuperLU"
 CORNER_RADIUS = 0.2  # "away from the lid corners": farther than this from (0, 1) and (1, 1)
 
 LINSYS = {
@@ -53,14 +64,14 @@ LINSYS = {
 
 def write_meta():
     """Record the versions and machine the results were produced with."""
-    elmer = re.search(r"Version: (\S+)", sh("bash", "-c", "ElmerSolver -v 2>&1 </dev/null | head -20"))
     meta = {"feascriptVersion": VERSION,
             "feascriptPackageVersion": json.load(open(os.path.join(CORE, "package.json")))["version"],
             "feascriptCommit": os.environ.get("FEASCRIPT_COMMIT") or sh("git", "-C", CORE, "rev-parse", "--short", "HEAD"),
             "feascriptUncommittedChanges": False if os.environ.get("FEASCRIPT_COMMIT") else bool(sh("git", "-C", CORE, "status", "--porcelain", "src")),
             "feascriptReleaseDate": os.environ.get("FEASCRIPT_RELEASE_DATE"),
             "feascriptEntry": "src/index.js" if os.environ.get("FEASCRIPT_ENTRY") == "src" else "dist/feascript.esm.js",
-            "elmerVersion": elmer.group(1) if elmer else None, "node": sh("node", "-v"),
+            "elmerVersion": ELMER_VERSION, "elmerCommit": ELMER_BUILD and ELMER_BUILD.group(4), "elmerBuildDate": ELMER_BUILD and "-".join(ELMER_BUILD.group(1, 2, 3)), "node": sh("node", "-v"),
+            "skfemVersion": SKFEM_VERSION, "scipyVersion": version("scipy"), "numpyVersion": version("numpy"), "python": platform.python_version(),
             "machine": MACHINE, "cpu": CPU, "ramGB": RAM_GB, "os": sh("uname", "-sr"), "date": time.strftime("%Y-%m-%d"),
             "pinning": f"taskset -c {PIN[-1]}, OMP_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1", "reps": REPS, "warm": WARM}
     with open(os.path.join(RUN, "meta.json"), "w") as f:
@@ -68,7 +79,7 @@ def write_meta():
 
 
 def make_mesh(n):
-    d = os.path.join(OUT, "meshes", f"cavity_{n}x{n}")
+    d = os.path.join(MESHES, f"cavity_{n}x{n}")
     if not os.path.exists(os.path.join(d, "mesh.header")):
         os.makedirs(os.path.dirname(d), exist_ok=True)
         grd = d + ".grd"
@@ -137,16 +148,14 @@ def run_measured(cmd, timeout=None, **kwargs):
 def run_elmer(n, cfg, write_output):
     mesh, corners = make_mesh(n)
     tag = re.sub(r"\W+", "_", cfg)
-    work = os.path.join(RUN, "work")
-    os.makedirs(work, exist_ok=True)
-    s = open(os.path.join(HERE, "case.sif.in")).read()
-    s = (s.replace("@MESH@", os.path.relpath(mesh, work)).replace("@CORNERS@", " ".join(map(str, corners)))
+    s = open(os.path.join(HERE, "elmer", "case.sif.in")).read()
+    s = (s.replace("@MESH@", os.path.relpath(mesh, ELMER_OUT)).replace("@CORNERS@", " ".join(map(str, corners)))
           .replace("@LINSYS@", LINSYS[cfg]).replace("@OUTPUT@", "Always" if write_output else "Never")
           .replace("@OUTNAME@", tag))
-    sif = os.path.join(work, f"{tag}.sif")
+    sif = os.path.join(ELMER_OUT, f"{tag}.sif")
     open(sif, "w").write(s)
     t0 = time.perf_counter()
-    p = run_measured(PIN + ["ElmerSolver", os.path.basename(sif)], cwd=work, env=ENV)
+    p = run_measured(PIN + ["ElmerSolver", os.path.basename(sif)], cwd=ELMER_OUT, env=ENV)
     wall = time.perf_counter() - t0
     log = p.stdout
     if "ALL DONE" not in log:
@@ -156,7 +165,7 @@ def run_elmer(n, cfg, write_output):
     slv = [float(a) for a in re.findall(r"Solver time \(CPU,REAL\) for navier-stokes:\s+\S+\s+(\S+)", log)]
     res = {"wall": wall, "peakMemory": p.peakMemory, "solverReal": float(m.group(2)), "solve": sum(slv), "linsolve": sum(lin)}
     if write_output:
-        out_dir = os.path.join(work, os.path.basename(mesh))
+        out_dir = os.path.join(ELMER_OUT, os.path.basename(mesh))
         vtus = sorted(f for f in os.listdir(out_dir) if f.startswith(tag.lower()) and f.endswith(".vtu"))
         res["field"] = read_vtu(os.path.join(out_dir, vtus[-1]))
         for v in vtus:
@@ -165,12 +174,27 @@ def run_elmer(n, cfg, write_output):
 
 
 def run_fea(n, csv=None, warm=0):
-    cmd = PIN + ["node", os.path.join(HERE, "run_feascript.mjs"), str(n), csv or "-", str(warm)]
+    cmd = PIN + ["node", os.path.join(HERE, "feascript", "run_feascript.mjs"), str(n), csv or "-", str(warm)]
     t0 = time.perf_counter()
     try:
         p = run_measured(cmd, env=ENV, timeout=FEA_TIMEOUT)
     except subprocess.TimeoutExpired:
         raise RuntimeError(f"timeout after {FEA_TIMEOUT} s")
+    proc = time.perf_counter() - t0
+    if p.returncode:
+        raise RuntimeError(p.stderr[-3000:])
+    r = json.loads(p.stdout.strip().splitlines()[-1])
+    r["process"] = proc
+    r["peakMemory"] = p.peakMemory
+    if csv:
+        d = np.loadtxt(csv, delimiter=",", skiprows=1)
+        r["field"] = tuple(d[:, i] for i in range(5))
+    return r
+
+
+def run_skfem(n, csv=None):
+    t0 = time.perf_counter()
+    p = run_measured(PIN + [sys.executable, os.path.join(HERE, "scikit-fem", "run_skfem.py"), str(n), csv or "-"], env=ENV)
     proc = time.perf_counter() - t0
     if p.returncode:
         raise RuntimeError(p.stderr[-3000:])
@@ -202,6 +226,16 @@ def centerline(D, n):
     return ys, u, float(psi[i]), float(ys[i])
 
 
+def write_code_results(results):
+    """Update the results of each code in its own folder, keeping the meshes that this run did not repeat."""
+    for folder, prefix in ((FEA_OUT, "FEAScript"), (ELMER_OUT, "Elmer"), (SKFEM_OUT, "scikit-fem")):
+        path = os.path.join(folder, "results.json")
+        rows = json.load(open(path)) if os.path.exists(path) else []
+        rows = {(r["case"], r["code"]): r for r in rows + [r for r in results if r["code"].startswith(prefix)]}
+        with open(path, "w") as f:
+            json.dump(list(rows.values()), f, indent=1)
+
+
 def main():
     write_meta()
     out = os.path.join(RUN, "results.json")
@@ -213,8 +247,7 @@ def main():
             continue
         print(f"== {name}", flush=True)
         fields = {}
-        csv = os.path.join(RUN, "work", f"fea_{name}.csv")
-        os.makedirs(os.path.dirname(csv), exist_ok=True)
+        csv = os.path.join(FEA_OUT, f"{name}.csv")
         try:
             # The first run writes the results; slow cases (over 20 s) are timed once, without warm repeats
             first = run_fea(n, csv)
@@ -239,10 +272,20 @@ def main():
                    f"timeout (> {FEA_TIMEOUT} s)" if "timeout after" in str(e) else "failed")
             results.append({"case": name, "n": n, "code": "FEAScript sparse LU", "failed": why})
             print(f"FEAScript sparse LU {why}", flush=True)
+        first = run_skfem(n, os.path.join(SKFEM_OUT, f"{name}.csv"))
+        runs = [run_skfem(n) for _ in range(REPS)]
+        fields[SKFEM] = first["field"]
+        results.append({"case": name, "n": n, "nodes": first["nodes"], "code": SKFEM,
+                        "solve": statistics.median(r["wall"] for r in runs),
+                        "linsolve": statistics.median(r["linsolve"] for r in runs),
+                        "process": statistics.median(r["process"] for r in runs),
+                        "peakMemoryMB": statistics.median(r["peakMemory"] for r in runs), "nruns": len(runs)})
         for cfg in LINSYS:
             first = run_elmer(n, cfg, True)
             runs = [run_elmer(n, cfg, False) for _ in range(REPS)]
             fields[cfg] = first["field"]
+            tag = re.sub(r"\W+", "_", cfg)
+            np.savetxt(os.path.join(ELMER_OUT, f"{tag}_{name}.csv"), np.column_stack(first["field"]), delimiter=",", header="x,y,u,v,p", comments="", fmt="%.17g")
             results.append({"case": name, "n": n, "nodes": (2 * n + 1) ** 2, "code": cfg,
                             "solve": statistics.median(r["solve"] for r in runs),
                             "linsolve": statistics.median(r["linsolve"] for r in runs),
@@ -255,7 +298,8 @@ def main():
             far = [k for k in common if min((k[0] - c) ** 2 + (k[1] - 1) ** 2 for c in (0, 1)) > CORNER_RADIUS ** 2]
             ys, u, psi, ypsi = centerline(D, n)
             tag = re.sub(r"\W+", "_", cfg)
-            np.savetxt(os.path.join(RUN, "work", f"centerline_{tag}_{name}.dat"), np.c_[ys, u],
+            folder = FEA_OUT if cfg.startswith("FEAScript") else SKFEM_OUT if cfg == SKFEM else ELMER_OUT
+            np.savetxt(os.path.join(folder, f"centerline_{tag}_{name}.dat"), np.c_[ys, u],
                        header="y u(0.5, y)")
             for r in results:
                 if r["case"] == name and r["code"] == cfg:
@@ -263,10 +307,20 @@ def main():
                               "maxDiffVelocity": max(max(abs(D[k][0] - ref[k][0]), abs(D[k][1] - ref[k][1])) for k in common),
                               "maxDiffVelocityAwayFromCorners": max(max(abs(D[k][0] - ref[k][0]), abs(D[k][1] - ref[k][1])) for k in far),
                               "matchedNodes": len(common)})
+        # scikit-fem sets the lid velocity like FEAScript, so the two are compared directly, at all their nodes
+        if "FEAScript sparse LU" in fields:
+            A, B = keyed(fields[SKFEM]), keyed(fields["FEAScript sparse LU"])
+            common = A.keys() & B.keys()
+            for r in results:
+                if r["case"] == name and r["code"] == SKFEM:
+                    r["maxDiffVelocityVsFEAScript"] = max(max(abs(A[k][0] - B[k][0]), abs(A[k][1] - B[k][1])) for k in common)
+                    r["matchedNodesVsFEAScript"] = len(common)
+                    r["maxDiffPressureVsFEAScript"] = float(np.nanmax([abs(A[k][2] - B[k][2]) for k in common]))  # at the mesh vertices
         for r in results:
             if r["case"] == name:
                 print(json.dumps({k: v for k, v in r.items()}), flush=True)
         json.dump(results, open(out, "w"), indent=1)
+    write_code_results(results)
 
 
 if __name__ == "__main__":
