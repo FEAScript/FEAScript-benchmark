@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>FEAScript benchmark</title>
+  </head>
+  <body>
+    <!-- Runs the case in the query string on the main thread and posts the result to the benchmark server -->
+    <script type="module">
+      const query = new URLSearchParams(location.search);
+      const report = (body) => fetch("/result", { method: "POST", body: JSON.stringify(body) });
+      try {
+        const lib = await import("/core/feascript.esm.js");
+        const { makeModel, solutionField } = await import("/case.mjs");
+        const params = JSON.parse(query.get("params"));
+        const readMesh = async (name) => (await fetch(`/mesh/${name}`)).text();
+        console.log = console.info = console.warn = () => {};
+
+        async function runOnce() {
+          const model = await makeModel(lib, params, readMesh);
+          const t0 = performance.now();
+          const result = model.solve();
+          return { result, wall: (performance.now() - t0) / 1000 };
+        }
+
+        const cold = await runOnce();
+        const warm = [];
+        for (let i = 0; i < Number(query.get("warm")); i++) warm.push((await runOnce()).wall);
+        await report({
+          coldWall: cold.wall,
+          warm,
+          solution: Array.from(solutionField(cold.result)),
+          crossOriginIsolated,
+          userAgent: navigator.userAgent,
+        });
+      } catch (error) {
+        await report({ error: String(error?.stack ?? error) });
+      }
+    </script>
+  </body>
+</html>

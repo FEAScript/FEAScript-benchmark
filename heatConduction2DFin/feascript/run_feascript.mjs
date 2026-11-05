@@ -11,6 +11,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { makeModel } from "./case.mjs";
 
 // FEAScript-core checkout (FEASCRIPT_CORE, default: the sibling folder next to this repository).
 // Load the built bundle, as npm and browser users do (FEASCRIPT_ENTRY=src loads the source files instead)
@@ -27,7 +28,7 @@ if (legacy) {
 }
 const constantTemperature = legacy ? "constantTemp" : "constantTemperature";
 
-const { FEAScriptModel } = await import(pathToFileURL(resolve(core, entry)).href);
+const lib = await import(pathToFileURL(resolve(core, entry)).href);
 
 const [nx, ny] = [Number(process.argv[2]), Number(process.argv[3])];
 const order = process.argv[4];
@@ -48,14 +49,7 @@ console.time = (label) => (starts[label] = performance.now());
 console.timeEnd = (label) => (timers[label] = (performance.now() - starts[label]) / 1000);
 
 function runOnce() {
-  const model = new FEAScriptModel();
-  model.setModelConfig("heatConductionScript");
-  model.setMeshConfig({ meshDimension: "2D", elementOrder: order, numElementsX: nx, numElementsY: ny, maxX: 4, maxY: 2 });
-  model.addBoundaryCondition("0", [constantTemperature, 200]); // Bottom
-  model.addBoundaryCondition("1", ["symmetry"]); // Left
-  model.addBoundaryCondition("2", ["convection", 1, 20]); // Top
-  model.addBoundaryCondition("3", [constantTemperature, 200]); // Right
-  model.setSolverMethod(method);
+  const model = makeModel(lib, { nx, ny, order, method, constantTemperature });
   const t0 = performance.now();
   const result = model.solve();
   const wall = (performance.now() - t0) / 1000;

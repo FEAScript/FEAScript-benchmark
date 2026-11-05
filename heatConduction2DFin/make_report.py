@@ -6,12 +6,15 @@
 #  MIT License © 2026 FEAScript
 # ════════════════════════════════════════════════════════════════
 
-"""Turn comparison/<machine>/<version>/results.json into gnuplot data files, plots and a markdown summary table."""
+"""Turn reports/<machine>/<version>/results.json into gnuplot data files, plots and a markdown summary table."""
 import json, os, subprocess, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
-# Usage: python3 make_report.py <machine> <version>   (a folder comparison/<machine>/<version>/)
+sys.path.insert(0, os.path.join(HERE, ".."))
+from browser import report as browser_report
+
+# Usage: python3 make_report.py <machine> <version>   (a folder reports/<machine>/<version>/)
 MACHINE, VERSION = sys.argv[1], sys.argv[2]
-RUN = os.path.join(HERE, "comparison", MACHINE, VERSION)
+RUN = os.path.join(HERE, "reports", MACHINE, VERSION)
 ALL = json.load(open(os.path.join(RUN, "results.json")))
 meta = json.load(open(os.path.join(RUN, "meta.json")))
 TAG = f"FEAScript {VERSION}, {meta['cpu']}"
@@ -133,7 +136,7 @@ rows = [("FEAScript version", meta["feascriptVersion"]),
         ("Released", meta.get("feascriptReleaseDate") or "not released"),
         ("Loaded from", f"`{meta.get('feascriptEntry', 'src/index.js')}`"),
         ("Elmer", meta["elmerVersion"] + (f" (build of commit `{meta['elmerCommit']}`, {meta['elmerBuildDate']})" if meta.get("elmerCommit") else "")), *([("scikit-fem", f"{meta['skfemVersion']} (SciPy {meta['scipyVersion']}, NumPy {meta['numpyVersion']}, Python {meta['python']})")] if meta.get("skfemVersion") else []),
-        ("Node", meta["node"]), ("Machine", f"{meta['cpu']}" + (f", {meta['ramGB']} GB RAM" if meta.get("ramGB") else "") + f" ({meta.get('os', 'Linux')})"),
+        ("Node", meta["node"]), ("Machine", f"{meta['cpu']}" + (f", {meta['ramGB']} GB RAM" if meta.get("ramGB") else "") + f" ({meta.get('distribution', 'Linux')}, {meta.get('os', 'Linux')})"),
         ("Cores", meta["pinning"]), ("Repeats", f"median of {meta['reps']} fresh processes"), ("Run on", meta["date"])]
 md = f"""# Results for FEAScript {VERSION} on {meta['cpu']}
 
@@ -163,4 +166,5 @@ On every mesh it solved, FEAScript's nodal temperatures match Elmer's (UMFPACK) 
 <img src="plots/memory_linear.png" width="600" alt="Peak memory with linear elements">
 <img src="plots/memory_quadratic.png" width="600" alt="Peak memory with quadratic elements">
 """ if HAS_MEMORY else "")
+md += browser_report.section(RUN, P, ALL, TAG, "Browsers")
 open(os.path.join(RUN, "README.md"), "w").write(md)

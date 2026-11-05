@@ -6,7 +6,7 @@
 #  MIT License © 2026 FEAScript
 # ════════════════════════════════════════════════════════════════
 
-"""Turn comparison/<machine>/<version>/results.json into plots, a results table and a README.
+"""Turn reports/<machine>/<version>/results.json into plots, a results table and a README.
 
 Usage: python3 make_report.py <machine> <version>
 """
@@ -14,8 +14,11 @@ import json, os, re, subprocess, sys
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(HERE, ".."))
+from browser import report as browser_report
+
 MACHINE, VERSION = sys.argv[1], sys.argv[2]
-RUN = os.path.join(HERE, "comparison", MACHINE, VERSION)
+RUN = os.path.join(HERE, "reports", MACHINE, VERSION)
 ALL = json.load(open(os.path.join(RUN, "results.json")))
 R = [r for r in ALL if "failed" not in r]
 META = json.load(open(os.path.join(RUN, "meta.json")))
@@ -91,7 +94,7 @@ nmax = both[-1]
 # code: (its folder, its version folder, line style)
 CENTERLINE = {"Elmer UMFPACK": ("elmer", META["elmerVersion"], "l lw 3"),
               SKFEM: ("scikit-fem", META.get("skfemVersion"), "p pt 4 ps 1.2"),
-              "FEAScript sparse LU": ("feascript", VERSION, "p pt 7 ps 0.6")}
+              "FEAScript sparse LU": ("feascript", f"{VERSION}/node/{META['node'].lstrip('v')}", "p pt 7 ps 0.6")}
 lines = [f"'../../../../{folder}/results/{MACHINE}/{code_version}/centerline_{tag(code)}_{nmax}x{nmax}.dat' u 2:1 w {style} lc rgb '{COLORS[code]}' t '{code.split()[0]}'"
          for code, (folder, code_version, style) in CENTERLINE.items() if code != SKFEM or HAS_SKFEM]
 gnuplot("centerline", f"""set title 'Velocity u along the vertical centerline, {nmax}×{nmax} mesh {TITLE}' font 'Arial,14'
@@ -147,7 +150,7 @@ rows = [("FEAScript version", META["feascriptVersion"]),
         ("Loaded from", f"`{META['feascriptEntry']}`"), ("Elmer", META["elmerVersion"] + (f" (build of commit `{META['elmerCommit']}`, {META['elmerBuildDate']})" if META.get("elmerCommit") else "")),
         *([("scikit-fem", f"{META['skfemVersion']} (SciPy {META['scipyVersion']}, NumPy {META['numpyVersion']}, Python {META['python']})")] if META.get("skfemVersion") else []),
         ("Node", META["node"]),
-        ("Machine", f"{META['cpu']}" + (f", {META['ramGB']} GB RAM" if META.get("ramGB") else "") + f" ({META.get('os', '')})"), ("Cores", META["pinning"]),
+        ("Machine", f"{META['cpu']}" + (f", {META['ramGB']} GB RAM" if META.get("ramGB") else "") + f" ({META.get('distribution', 'Linux')}, {META.get('os', '')})"), ("Cores", META["pinning"]),
         ("Repeats", f"median of {META['reps']} fresh processes"), ("Run on", META["date"])]
 md = f"""# Results for FEAScript {VERSION} on {META['cpu']}
 
@@ -180,5 +183,6 @@ At the nodes farther than 0.2 from the two lid corners, the velocities of the tw
 
 <img src="plots/memory.png" width="600" alt="Peak memory against the number of nodes">
 """ if HAS_MEMORY else "")
+md += browser_report.section(RUN, P, ALL, f"FEAScript {VERSION}, {META['cpu']}", "Browsers")
 open(os.path.join(RUN, "README.md"), "w").write(md)
 print(RUN)

@@ -2,3 +2,4 @@
 **/elmer/meshes/
 **/results/**/*.csv
 __pycache__/
+**/gmsh/meshes/

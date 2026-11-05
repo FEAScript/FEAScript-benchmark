@@ -9,13 +9,14 @@ This repository contains benchmarks for [FEAScript](https://feascript.com/), the
 | Benchmark | Compared with | Problem |
 |---|---|---|
 | [heatConduction2DFin](heatConduction2DFin/) | [Elmer](https://www.elmerfem.org/), [scikit-fem](https://github.com/kinnala/scikit-fem) | 2D heat conduction in a fin with constant-temperature, symmetry and convection boundaries, on linear and quadratic quadrilateral meshes from 231 to 51,681 nodes |
+| [heatConduction2DFinGmsh](heatConduction2DFinGmsh/) | [Elmer](https://www.elmerfem.org/), [scikit-fem](https://github.com/kinnala/scikit-fem) | The same fin on unstructured Gmsh meshes, with linear and quadratic triangles and distorted quadrilaterals |
 | [creepingFlow2DLidDrivenCavity](creepingFlow2DLidDrivenCavity/) | [Elmer](https://www.elmerfem.org/), [scikit-fem](https://github.com/kinnala/scikit-fem) | Stokes (creeping) flow in the lid-driven unit cavity, with Taylor–Hood Q2–Q1 elements on meshes from 289 to 16,641 velocity nodes |
 
 Each benchmark folder has a README with the problem, the setup, the results on each machine, FEAScript's speed-up by version and the steps to run it.
 
 ## Layout
 
-Every benchmark folder has the same layout. Each code has its own folder with its input and its results, and `comparison/` holds what brings the codes together:
+Every benchmark folder has the same layout, shown here for the fin. Each code has a folder with its input and its results, and `reports/` holds the reports that bring them together:
 
 ```
 heatConduction2DFin/
@@ -23,8 +24,11 @@ heatConduction2DFin/
   benchmark.py        runs all the codes and compares them
   make_report.py      writes the plots, results table and README of a run
   feascript/
-    run_feascript.mjs
+    case.mjs, run_feascript.mjs
     results/<machine>/<FEAScript version>/
+      node/<version>/
+      chromium/<version>/
+      firefox/<version>/
   elmer/
     case.sif.in
     meshes/           ElmerGrid meshes, not committed
@@ -32,13 +36,19 @@ heatConduction2DFin/
   scikit-fem/
     run_skfem.py
     results/<machine>/<scikit-fem version>/
-  comparison/<machine>/<FEAScript version>/
-    README.md, results.json, results_table.md, meta.json, run.log
-    plots/
-  history/<machine>/  FEAScript's speed-up by version
+  reports/<machine>/
+    <FEAScript version>/   README, plots, results table, meta.json, results.json, run.log
+    by-version/            FEAScript's speed-up by version
+browser/              runs the cases of any benchmark in headless browsers
 ```
 
-The results of each code are kept under its own version, since Elmer and scikit-fem do not change with the FEAScript version. Every run measures all the codes again, so that their times come from the same session: the `results.json` in a code's folder holds its latest numbers, and the one in `comparison/` the numbers of all the codes in that run. Nodal results (`.csv`) are not committed.
+The results of each code are kept under its own version, since Elmer and scikit-fem do not change with the FEAScript version. Every run measures all the codes again, so that their times come from the same session: the `results.json` in a code's folder holds its latest numbers, and the one in `reports/` the numbers of all the codes in that run. Machines come first because times can only be compared on the same machine. Nodal results (`.csv`) are not committed.
+
+To run every benchmark for a FEAScript version, build FEAScript-core and run `run_all.py` with the Python that has the benchmark packages:
+
+```
+FEASCRIPT_VERSION=0.4.0 ~/.venvs/feascript-benchmark/bin/python run_all.py
+```
 
 ## How the benchmarks are run
 
@@ -46,9 +56,27 @@ The results of each code are kept under its own version, since Elmer and scikit-
 - **One core:** every timed process is pinned to one core, so neither code gains from multithreading
 - **Fresh processes:** each timing is the median of several fresh processes
 - **FEAScript as users load it:** the benchmarks load the built bundle `dist/feascript.esm.js` from a [FEAScript-core](https://github.com/FEAScript/FEAScript-core) checkout, by default the sibling folder `../FEAScript-core`
-- **Recorded setup:** each run writes a `meta.json` with the FEAScript version and commit, the versions of the other software, the machine and its memory, and the date
+- **Recorded setup:** each run writes a `meta.json` with the FEAScript version and commit, the versions of the other software, the machine and its memory, the operating system, and the date
+- **Machine:** the results so far were measured on an AMD Ryzen 5 9600X with 14.7 GB of usable RAM, on Linux Mint 22.3. Chromium and Firefox are the builds that it packages
 - **Elmer build:** the results so far use a nightly build of Elmer from the [Elmer PPA](https://launchpad.net/~elmer-csc-ubuntu/+archive/ubuntu/elmer-csc-ppa), version 26.2, built from commit [`56b16bd49`](https://github.com/ElmerCSC/elmerfem/commit/56b16bd49564d5b16fdc57862ccda024043b0f39) of 2026-11-02, which is newer than the 26.2.1 release
 - **One folder per machine and version:** results are kept by machine, and by the version of each code, so runs on different machines are never mixed. `make_history.py` plots FEAScript's speed-up by version for each benchmark and machine
+
+## Browsers
+
+The comparison of the codes runs in Node.js, which shares its V8 JavaScript engine with Chrome and other Chromium-based browsers. Every benchmark also runs FEAScript in Chromium and in Firefox, with its own SpiderMonkey engine, on some of its meshes:
+
+- **Same code:** `feascript/case.mjs` builds the model for both Node.js and the page, from the built bundle `dist/feascript.esm.js`, and no JavaScript packages are needed
+- **Fresh browsers:** every run starts a headless browser with a new, empty profile, and each time is the median of several runs
+- **One core:** every process, including the helper processes of a browser, is pinned to one core
+- **Main thread:** FEAScript runs on the main thread of the page, without a web worker
+- **First and repeated solves:** the first solve in a fresh process includes JIT warm-up, as a user sees it when a page opens. The repeated solves come after it, in the same process
+- **Timers:** browsers coarsen `performance.now()`, so the server sends the headers that isolate the page and give it their finest timers
+
+Keep in mind when reading the results:
+
+- **Engine versions:** Node.js and Chromium both use V8, in different versions, so differences between them come from the version and from the browser around it
+- **Memory:** a browser has many processes, so its memory is not comparable with that of Node.js, and it is not measured
+- **Start-up:** a browser with an empty profile takes much longer to start than Node.js, so end-to-end times are not what a user of an open browser waits for
 
 ## About the comparison
 

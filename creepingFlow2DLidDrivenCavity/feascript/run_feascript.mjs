@@ -12,6 +12,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { makeModel } from "./case.mjs";
 
 // FEAScript-core checkout (FEASCRIPT_CORE, default: the sibling folder next to this repository).
 // Load the built bundle, as npm and browser users do (FEASCRIPT_ENTRY=src loads the source files instead)
@@ -24,7 +25,7 @@ if (major === 0 && minor < 3) {
   globalThis.math = await import(pathToFileURL(mathjs).href);
 }
 
-const { FEAScriptModel } = await import(pathToFileURL(resolve(core, entry)).href);
+const lib = await import(pathToFileURL(resolve(core, entry)).href);
 
 const n = Number(process.argv[2]);
 const outCsv = process.argv[3];
@@ -38,14 +39,7 @@ console.time = (label) => (starts[label] = performance.now());
 console.timeEnd = (label) => (timers[label] = (performance.now() - starts[label]) / 1000);
 
 function runOnce() {
-  const model = new FEAScriptModel();
-  model.setModelConfig("creepingFlowScript", { coefficientFunctions: { viscosity: 1 } });
-  model.setMeshConfig({ meshDimension: "2D", elementOrder: "quadratic", numElementsX: n, numElementsY: n, maxX: 1, maxY: 1 });
-  model.addBoundaryCondition("0", ["constantVelocity", 0, 0]); // Bottom
-  model.addBoundaryCondition("1", ["constantVelocity", 0, 0]); // Left
-  model.addBoundaryCondition("2", ["constantVelocity", 1, 0]); // Top (lid)
-  model.addBoundaryCondition("3", ["constantVelocity", 0, 0]); // Right
-  model.setSolverMethod("lusolve");
+  const model = makeModel(lib, { n });
   const t0 = performance.now();
   const result = model.solve();
   const wall = (performance.now() - t0) / 1000;

@@ -16,6 +16,9 @@ import json, os, platform, re, statistics, subprocess, sys, tempfile, time
 from importlib.metadata import version
 import numpy as np
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+from browser import runner as browser_runner
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 MESHES = os.path.join(HERE, "elmer", "meshes")  # shared ElmerGrid meshes
 # FEAScript-core checkout to benchmark (default: the sibling folder next to this repository)
@@ -23,16 +26,18 @@ CORE = os.path.abspath(os.environ.get("FEASCRIPT_CORE") or os.path.join(HERE, ".
 # Each FEAScript version gets its own results folders (override with FEASCRIPT_VERSION)
 VERSION = os.environ.get("FEASCRIPT_VERSION") or json.load(open(os.path.join(CORE, "package.json")))["version"]
 CPU = subprocess.run(["bash", "-c", "lscpu | sed -n 's/^Model name: *//p'"], capture_output=True, text=True).stdout.strip()
-# Each machine and FEAScript version gets its own folders: the comparison of the codes in comparison/<machine>/<version>/
+# Each machine and FEAScript version gets its own folders: the report of the run in reports/<machine>/<version>/
 MACHINE = os.environ.get("FEASCRIPT_MACHINE") or re.sub(r"[^a-z0-9]+", "-", re.sub(r"\((r|tm)\)|\d+-core processor", "", CPU.lower())).strip("-")
-RUN = os.path.join(HERE, "comparison", MACHINE, VERSION)
+RUN = os.path.join(HERE, "reports", MACHINE, VERSION)
 RAM_GB = round(int(re.search(r"MemTotal:\s+(\d+)", open("/proc/meminfo").read()).group(1)) / 1024 ** 2, 1)  # usable RAM
 # Each code keeps its results in its own folder, under its own version: they do not change with the FEAScript version
 ELMER_VERSION = (re.search(r"Version: (\d[\d.]*)", subprocess.run("ElmerSolver -v 2>&1 </dev/null | head -20", shell=True, capture_output=True, text=True).stdout) or [None, "unknown"])[1]
 # A nightly package of the Elmer PPA names the commit and date it was built from, e.g. 9.0-0ppa0-202611021648~56b16bd49~ubuntu24.04.1
 ELMER_BUILD = re.search(r"-(\d{4})(\d{2})(\d{2})\d{4}~([0-9a-f]+)~", subprocess.run(["dpkg-query", "-W", "-f", "${Version}", "elmerfem-csc"], capture_output=True, text=True).stdout)
 SKFEM_VERSION = version("scikit-fem")
-FEA_OUT = os.path.join(HERE, "feascript", "results", MACHINE, VERSION)
+NODE_VERSION = subprocess.run(["node", "-v"], capture_output=True, text=True).stdout.strip().lstrip("v")
+FEA_RESULTS = os.path.join(HERE, "feascript", "results", MACHINE, VERSION)  # By runtime: node/, chromium/ and firefox/
+FEA_OUT = os.path.join(FEA_RESULTS, "node", NODE_VERSION)
 ELMER_OUT = os.path.join(HERE, "elmer", "results", MACHINE, ELMER_VERSION)
 SKFEM_OUT = os.path.join(HERE, "scikit-fem", "results", MACHINE, SKFEM_VERSION)
 for d in (RUN, FEA_OUT, ELMER_OUT, SKFEM_OUT):
@@ -247,7 +252,7 @@ def write_meta():
             "feascriptReleaseDate": os.environ.get("FEASCRIPT_RELEASE_DATE"),
             "elmerVersion": ELMER_VERSION, "elmerCommit": ELMER_BUILD and ELMER_BUILD.group(4), "elmerBuildDate": ELMER_BUILD and "-".join(ELMER_BUILD.group(1, 2, 3)), "node": sh("node", "-v"),
             "skfemVersion": SKFEM_VERSION, "scipyVersion": version("scipy"), "numpyVersion": version("numpy"), "python": platform.python_version(),
-            "machine": MACHINE, "cpu": CPU, "ramGB": RAM_GB, "os": sh("uname", "-sr"), "date": time.strftime("%Y-%m-%d"),
+            "machine": MACHINE, "cpu": CPU, "ramGB": RAM_GB, "distribution": platform.freedesktop_os_release().get("PRETTY_NAME"), "os": sh("uname", "-sr"), "date": time.strftime("%Y-%m-%d"),
             "feascriptEntry": "src/index.js" if os.environ.get("FEASCRIPT_ENTRY") == "src" else "dist/feascript.esm.js",
             "pinning": f"taskset -c {PIN[-1]}, OMP_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1", "reps": REPS, "warm": WARM}
     with open(os.path.join(RUN, "meta.json"), "w") as f:
@@ -264,7 +269,7 @@ def write_code_results(results):
             json.dump(list(rows.values()), f, indent=1)
 
 
-def main():
+def run_codes():
     write_meta()
     # RESUME=1 keeps the cases already in results.json and runs only the missing ones
     out = os.path.join(RUN, os.environ.get("OUTNAME", "results.json"))
@@ -356,6 +361,27 @@ def main():
     with open(os.path.join(RUN, os.environ.get("OUTNAME", "results.json")), "w") as f:
         json.dump(results, f, indent=1)
     write_code_results(results)
+
+
+def browser_cases():
+    """The linear meshes in the browsers, against the nodal results of the Node.js run."""
+    for nx in (20, 80, 160, 320):
+        name = f"linear-{nx}x{nx // 2}"
+        for code, method in (("FEAScript frontal", "frontal"), ("FEAScript sparse LU", "lusolve")):
+            csv = os.path.join(FEA_OUT, f"{method}_{name}.csv")
+            if (ONLY and name not in ONLY.split(",")) or not os.path.exists(csv):
+                continue
+            T = np.loadtxt(csv, delimiter=",", skiprows=1)[:, 2]
+            yield {"name": name, "code": code, "group": f"{code}, linear quads", "nodes": len(T), "reference": T,
+                   "params": {"nx": nx, "ny": nx // 2, "order": "linear", "method": method}}
+
+
+def main():
+    # NO_BROWSERS=1 runs only the codes, e.g. for a release older than the browser benchmarks, and ONLY_BROWSERS=1 only the browsers
+    if not os.environ.get("ONLY_BROWSERS"):
+        run_codes()
+    if not os.environ.get("NO_BROWSERS"):
+        browser_runner.run_cases(list(browser_cases()), os.path.join(HERE, "feascript", "case.mjs"), CORE, RUN, FEA_RESULTS, PIN, REPS, WARM, None)
 
 
 if __name__ == "__main__":

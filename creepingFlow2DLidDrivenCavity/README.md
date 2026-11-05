@@ -14,19 +14,19 @@ This folder compares [FEAScript](https://feascript.com/) with the [Elmer](https:
 
 ## Results
 
-The comparison of the codes is in `comparison/<machine>/<FEAScript version>/`. The results of each code are in `<code>/results/<machine>/<its version>/`:
+The report of each run is in `reports/<machine>/<FEAScript version>/`. The results of each code are in `<code>/results/<machine>/<its version>/`, and those of FEAScript also by runtime, in `feascript/results/<machine>/<FEAScript version>/<runtime>/<its version>/`:
 
 | Machine | FEAScript version | Results |
 |---|---|---|
-| AMD Ryzen 5 9600X | 0.2.0 | [comparison/amd-ryzen-5-9600x/0.2.0/](comparison/amd-ryzen-5-9600x/0.2.0/) |
-| AMD Ryzen 5 9600X | 0.3.1 | [comparison/amd-ryzen-5-9600x/0.3.1/](comparison/amd-ryzen-5-9600x/0.3.1/) |
-| AMD Ryzen 5 9600X | 0.4.0-rc | [comparison/amd-ryzen-5-9600x/0.4.0-rc/](comparison/amd-ryzen-5-9600x/0.4.0-rc/) |
+| AMD Ryzen 5 9600X | 0.2.0 | [reports/amd-ryzen-5-9600x/0.2.0/](reports/amd-ryzen-5-9600x/0.2.0/) |
+| AMD Ryzen 5 9600X | 0.3.1 | [reports/amd-ryzen-5-9600x/0.3.1/](reports/amd-ryzen-5-9600x/0.3.1/) |
+| AMD Ryzen 5 9600X | 0.4.0-rc | [reports/amd-ryzen-5-9600x/0.4.0-rc/](reports/amd-ryzen-5-9600x/0.4.0-rc/) |
 
 FEAScript's speed-up on the 32×32 mesh by version, with the assembly and solve time of each run, on the AMD Ryzen 5 9600X:
 
-<img src="history/amd-ryzen-5-9600x/32x32.png" width="600" alt="FEAScript speed-up by version on the AMD Ryzen 5 9600X">
+<img src="reports/amd-ryzen-5-9600x/by-version/32x32.png" width="600" alt="FEAScript speed-up by version on the AMD Ryzen 5 9600X">
 
-Each results folder has a README with the plots of that run, a table of all the numbers (`results_table.md`) and the details of the run (`meta.json`): the FEAScript version and commit, the versions of the other software, the machine and the date. Runs on the AMD Ryzen 5 9600X with FEAScript 0.2.0 and 0.3.1 do not include scikit-fem, which was added with 0.4.0-rc.
+Each report has a README with the plots of that run, a table of all the numbers (`results_table.md`) and the details of the run (`meta.json`): the FEAScript version and commit, the versions of the other software, the machine and the date. Runs on the AMD Ryzen 5 9600X with FEAScript 0.2.0 and 0.3.1 do not include scikit-fem, which was added with 0.4.0-rc.
 
 > **About the comparison:** Elmer runs here on one core, as a single MPI process, on small 2D problems, so that both codes are compared on the same terms. Elmer is a parallel code built for much larger problems, and this setup does not show its parallel performance. Its end-to-end time includes a fixed MPI start-up in the build used here, about 0.5 s on the AMD Ryzen 5 9600X. See [About the comparison](../README.md#about-the-comparison).
 
@@ -47,6 +47,7 @@ The codes solve the problem on n × n meshes with n = 8, 16, 24, 32, 48 and 64, 
 - **FEAScript:** the `lusolve` (math.js sparse LU) solver, the one that supports creeping flow, loaded from the built bundle `dist/feascript.esm.js` as npm and browser users load it, in Node
 - **Elmer:** the `IncompressibleNSVec` solver with `Stokes Flow = True`, with the UMFPACK and MUMPS direct solvers
 - **scikit-fem:** its default direct solver (SuperLU from SciPy), with the Stokes equations assembled in `scikit-fem/run_skfem.py`
+- **FEAScript in browsers:** Chromium and Firefox, on the 8×8, 16×16, 32×32 and 64×64 meshes, with `lusolve`: see [Browsers](../README.md#browsers)
 
 And compares:
 
@@ -67,7 +68,7 @@ To keep the comparison fair, every timed process is pinned to one core (`taskset
 
 Notes on reading the times:
 
-- **Browsers:** the benchmark runs in Node, which uses the same V8 JavaScript engine as Chrome and other Chromium-based browsers. Browsers with other engines, such as Firefox, can be slower
+- **Browsers:** the codes are compared in Node, which uses the same V8 JavaScript engine as Chrome and other Chromium-based browsers. FEAScript also runs in Chromium and Firefox: see [Browsers](../README.md#browsers)
 - **Comparing versions:** each version is benchmarked at a different time, and the speed of a machine varies over time. On the AMD Ryzen 5 9600X, repeated runs of the same build agree to within about 3%; smaller differences between versions in the history plot are within this variation
 - **JIT warm-up:** each FEAScript time comes from a fresh process, so it includes JIT warm-up. Repeats inside the same process are in the `warmWall` column
 
@@ -85,9 +86,9 @@ python3 -m venv ~/.venvs/feascript-benchmark
 Then run the benchmark with that Python:
 
 ```
-~/.venvs/feascript-benchmark/bin/python benchmark.py   # writes <code>/results/ and comparison/
+~/.venvs/feascript-benchmark/bin/python benchmark.py   # writes <code>/results/ and reports/
 python3 make_report.py <machine> <version>    # writes the plots, results_table.md and README.md
-python3 ../make_history.py creepingFlow2DLidDrivenCavity  # updates the plots of FEAScript's speed-up by version in history/<machine>/
+python3 ../make_history.py creepingFlow2DLidDrivenCavity  # updates the plots of FEAScript's speed-up by version in reports/<machine>/by-version/
 ```
 
 The machine defaults to a name made from the CPU model, e.g. `amd-ryzen-5-9600x`, and the version to the `version` field of `FEAScript-core/package.json`. These environment variables change the run:
@@ -102,8 +103,11 @@ The machine defaults to a name made from the CPU model, e.g. `amd-ryzen-5-9600x`
 - **`FEA_TIMEOUT`:** the time limit of a FEAScript process, in seconds
 - **`RESUME=1`:** keeps the meshes already in `results.json` and runs only the missing ones
 - **`ONLY`:** runs only some meshes, e.g. `ONLY=8,16`
+- **`NO_BROWSERS=1`:** runs only the codes, not the browsers, e.g. for a release older than the browser cases
+- **`ONLY_BROWSERS=1`:** runs only the browsers, on the nodal results of the last Node.js run
+- **`CHROMIUM_PATH`, `FIREFOX_PATH` and `BROWSER_TIMEOUT`:** other browsers to run, and the time limit of a browser run in seconds
 
-After a run, add a row to [Results](#results) and run `make_history.py`, which picks up every folder in `comparison/`.
+After a run, add a row to [Results](#results) and run `make_history.py`, which picks up every folder in `reports/<machine>/`.
 
 The files in this folder:
 
@@ -113,8 +117,11 @@ The files in this folder:
 - **`elmer/case.sif.in`:** the Elmer input template
 - **`scikit-fem/run_skfem.py`:** runs one scikit-fem case
 - **`elmer/meshes/`:** ElmerGrid meshes, shared by all runs and not committed
-- **`<code>/results/<machine>/<its version>/`:** the latest results of each code: its `results.json`, centerline profiles, nodal results (not committed) and, for Elmer, the `.sif` files of the run
-- **`comparison/<machine>/<FEAScript version>/`:** the comparison of the codes in one run: the combined `results.json`, plots, results table and README
+- **`feascript/case.mjs`:** the FEAScript model, shared by Node.js and the browsers
+- **`feascript/results/<machine>/<FEAScript version>/<runtime>/<its version>/`:** the results of FEAScript in Node.js, Chromium and Firefox: `results.json`, and in Node.js centerline profiles, nodal results (not committed)
+- **`elmer/results/<machine>/<its version>/` and `scikit-fem/results/<machine>/<its version>/`:** the latest results of Elmer and scikit-fem: `results.json`, centerline profiles, nodal results (not committed) and the Elmer `.sif` files
+- **`reports/<machine>/<FEAScript version>/`:** the report of one run: README, plots, results table, `meta.json`, `results.json` and `browsers.json`
+- **`reports/<machine>/by-version/`:** FEAScript's speed-up by version
 
 ## License
 

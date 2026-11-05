@@ -8,7 +8,7 @@
 
 """Plot FEAScript's speed-up by version (assembly and solve time), for each benchmark and machine.
 
-Reads every <benchmark>/comparison/<machine>/<version>/ folder and writes <benchmark>/history/<machine>/<case>.png.
+Reads every <benchmark>/reports/<machine>/<version>/ folder and writes <benchmark>/reports/<machine>/by-version/<case>.png.
 
 Usage: python3 make_history.py [benchmark ...] [--case CASE]
 """
@@ -39,7 +39,7 @@ def version_key(version):
 
 
 def plot(bench, machine, case, label):
-    root = os.path.join(HERE, bench, "comparison", machine)
+    root = os.path.join(HERE, bench, "reports", machine)
     rows, metas = [], []
     for version in os.listdir(root):
         run = os.path.join(root, version)
@@ -62,7 +62,7 @@ def plot(bench, machine, case, label):
     base_version = {c: next((versions[i] for i in range(len(rows)) if value(i, c)), None) for c in codes}
     speedup = lambda i, c: base[c] / value(i, c) if value(i, c) else None
 
-    out = os.path.join(HERE, bench, "history", machine)
+    out = os.path.join(HERE, bench, "reports", machine, "by-version")
     os.makedirs(out, exist_ok=True)
     with open(os.path.join(out, f"{case}.dat"), "w") as f:
         f.write("# version " + " ".join(f"{c.split()[-2]}_{c.split()[-1]}_speedup {c.split()[-2]}_{c.split()[-1]}_seconds" for c in codes)
@@ -126,7 +126,7 @@ def main():
         case, label = BENCHMARKS[bench]
         if args.case:
             case = args.case
-        results = os.path.join(HERE, bench, "comparison")
+        results = os.path.join(HERE, bench, "reports")
         for machine in sorted(os.listdir(results)):
             if not os.path.isdir(os.path.join(results, machine)):
                 continue
