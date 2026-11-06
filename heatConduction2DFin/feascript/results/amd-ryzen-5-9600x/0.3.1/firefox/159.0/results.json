@@ -1,0 +1,93 @@
+[
+ {
+  "case": "linear-20x10",
+  "code": "FEAScript frontal",
+  "group": "FEAScript frontal, linear quads",
+  "runtime": "firefox",
+  "runtimeVersion": "159.0",
+  "nodes": 231,
+  "solve": 0.12590000000000004,
+  "process": 1.2729785880001145,
+  "warmWall": 0.06894000000000006,
+  "nruns": 5,
+  "maxDiffVsNode": 0.0
+ },
+ {
+  "case": "linear-20x10",
+  "code": "FEAScript sparse LU",
+  "group": "FEAScript sparse LU, linear quads",
+  "runtime": "firefox",
+  "runtimeVersion": "159.0",
+  "nodes": 231,
+  "solve": 0.05665999999999997,
+  "process": 1.1503699349996168,
+  "warmWall": 0.011900000000000034,
+  "nruns": 5,
+  "maxDiffVsNode": 0.0
+ },
+ {
+  "case": "linear-80x40",
+  "code": "FEAScript frontal",
+  "group": "FEAScript frontal, linear quads",
+  "runtime": "firefox",
+  "runtimeVersion": "159.0",
+  "nodes": 3321,
+  "solve": 0.5653599999999999,
+  "process": 1.7437454479986627,
+  "warmWall": 0.4579000000000001,
+  "nruns": 5,
+  "maxDiffVsNode": 0.0
+ },
+ {
+  "case": "linear-80x40",
+  "code": "FEAScript sparse LU",
+  "group": "FEAScript sparse LU, linear quads",
+  "runtime": "firefox",
+  "runtimeVersion": "159.0",
+  "nodes": 3321,
+  "solve": 1.2163199999999998,
+  "process": 2.3036385830000654,
+  "warmWall": 0.19870000000000027,
+  "nruns": 5,
+  "maxDiffVsNode": 0.0
+ },
+ {
+  "case": "linear-160x80",
+  "code": "FEAScript frontal",
+  "group": "FEAScript frontal, linear quads",
+  "runtime": "firefox",
+  "runtimeVersion": "159.0",
+  "nodes": 13041,
+  "solve": 4.11906,
+  "process": 5.315919456001211,
+  "warmWall": 2.6492999999999993,
+  "nruns": 5,
+  "maxDiffVsNode": 0.0
+ },
+ {
+  "case": "linear-160x80",
+  "code": "FEAScript sparse LU",
+  "group": "FEAScript sparse LU, linear quads",
+  "runtime": "firefox",
+  "runtimeVersion": "159.0",
+  "nodes": 13041,
+  "solve": 4.0494,
+  "process": 5.258100827999442,
+  "warmWall": 1.3960599999999994,
+  "nruns": 5,
+  "maxDiffVsNode": 0.0
+ },
+ {
+  "case": "linear-320x160",
+  "code": "FEAScript sparse LU",
+  "group": "FEAScript sparse LU, linear quads",
+  "runtime": "firefox",
+  "runtimeVersion": "159.0",
+  "nodes": 51681,
+  "solve": 22.45148,
+  "process": 23.578854997000235,
+  "warmWall": 21.282639999999997,
+  "nruns": 1,
+  "maxDiffVsNode": 0.0
+ }
+]

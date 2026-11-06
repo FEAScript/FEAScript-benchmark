@@ -1,0 +1,198 @@
+{
+ "versions": {
+  "chromium": "156.0.8078.79",
+  "firefox": "159.0"
+ },
+ "userAgents": {
+  "chromium": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+  "firefox": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0"
+ },
+ "crossOriginIsolated": {
+  "chromium": true,
+  "firefox": true
+ },
+ "rows": [
+  {
+   "case": "linear-20x10",
+   "code": "FEAScript frontal",
+   "group": "FEAScript frontal, linear quads",
+   "runtime": "chromium",
+   "runtimeVersion": "156.0.8078.79",
+   "nodes": 231,
+   "solve": 0.07213000000081957,
+   "process": 0.5055816389995016,
+   "warmWall": 0.04508500000089407,
+   "nruns": 5,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "linear-20x10",
+   "code": "FEAScript frontal",
+   "group": "FEAScript frontal, linear quads",
+   "runtime": "firefox",
+   "runtimeVersion": "159.0",
+   "nodes": 231,
+   "solve": 0.12590000000000004,
+   "process": 1.2729785880001145,
+   "warmWall": 0.06894000000000006,
+   "nruns": 5,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "linear-20x10",
+   "code": "FEAScript sparse LU",
+   "group": "FEAScript sparse LU, linear quads",
+   "runtime": "chromium",
+   "runtimeVersion": "156.0.8078.79",
+   "nodes": 231,
+   "solve": 0.06837999999895691,
+   "process": 0.5093840890003776,
+   "warmWall": 0.01768500000052154,
+   "nruns": 5,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "linear-20x10",
+   "code": "FEAScript sparse LU",
+   "group": "FEAScript sparse LU, linear quads",
+   "runtime": "firefox",
+   "runtimeVersion": "159.0",
+   "nodes": 231,
+   "solve": 0.05665999999999997,
+   "process": 1.1503699349996168,
+   "warmWall": 0.011900000000000034,
+   "nruns": 5,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "linear-80x40",
+   "code": "FEAScript frontal",
+   "group": "FEAScript frontal, linear quads",
+   "runtime": "chromium",
+   "runtimeVersion": "156.0.8078.79",
+   "nodes": 3321,
+   "solve": 0.2814550000000745,
+   "process": 0.718864610998935,
+   "warmWall": 0.110125,
+   "nruns": 5,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "linear-80x40",
+   "code": "FEAScript frontal",
+   "group": "FEAScript frontal, linear quads",
+   "runtime": "firefox",
+   "runtimeVersion": "159.0",
+   "nodes": 3321,
+   "solve": 0.5653599999999999,
+   "process": 1.7437454479986627,
+   "warmWall": 0.4579000000000001,
+   "nruns": 5,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "linear-80x40",
+   "code": "FEAScript sparse LU",
+   "group": "FEAScript sparse LU, linear quads",
+   "runtime": "chromium",
+   "runtimeVersion": "156.0.8078.79",
+   "nodes": 3321,
+   "solve": 0.24137000000104308,
+   "process": 0.6673764660008601,
+   "warmWall": 0.10694999999925495,
+   "nruns": 5,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "linear-80x40",
+   "code": "FEAScript sparse LU",
+   "group": "FEAScript sparse LU, linear quads",
+   "runtime": "firefox",
+   "runtimeVersion": "159.0",
+   "nodes": 3321,
+   "solve": 1.2163199999999998,
+   "process": 2.3036385830000654,
+   "warmWall": 0.19870000000000027,
+   "nruns": 5,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "linear-160x80",
+   "code": "FEAScript frontal",
+   "group": "FEAScript frontal, linear quads",
+   "runtime": "chromium",
+   "runtimeVersion": "156.0.8078.79",
+   "nodes": 13041,
+   "solve": 1.9786199999991805,
+   "process": 2.428668761998779,
+   "warmWall": 1.807120000001043,
+   "nruns": 5,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "linear-160x80",
+   "code": "FEAScript frontal",
+   "group": "FEAScript frontal, linear quads",
+   "runtime": "firefox",
+   "runtimeVersion": "159.0",
+   "nodes": 13041,
+   "solve": 4.11906,
+   "process": 5.315919456001211,
+   "warmWall": 2.6492999999999993,
+   "nruns": 5,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "linear-160x80",
+   "code": "FEAScript sparse LU",
+   "group": "FEAScript sparse LU, linear quads",
+   "runtime": "chromium",
+   "runtimeVersion": "156.0.8078.79",
+   "nodes": 13041,
+   "solve": 0.49976999999955296,
+   "process": 0.957445927999288,
+   "warmWall": 0.4896300000008196,
+   "nruns": 5,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "linear-160x80",
+   "code": "FEAScript sparse LU",
+   "group": "FEAScript sparse LU, linear quads",
+   "runtime": "firefox",
+   "runtimeVersion": "159.0",
+   "nodes": 13041,
+   "solve": 4.0494,
+   "process": 5.258100827999442,
+   "warmWall": 1.3960599999999994,
+   "nruns": 5,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "linear-320x160",
+   "code": "FEAScript sparse LU",
+   "group": "FEAScript sparse LU, linear quads",
+   "runtime": "chromium",
+   "runtimeVersion": "156.0.8078.79",
+   "nodes": 51681,
+   "solve": 1.598394999999553,
+   "process": 2.0800640519992157,
+   "warmWall": 2.7569350000005217,
+   "nruns": 5,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "linear-320x160",
+   "code": "FEAScript sparse LU",
+   "group": "FEAScript sparse LU, linear quads",
+   "runtime": "firefox",
+   "runtimeVersion": "159.0",
+   "nodes": 51681,
+   "solve": 22.45148,
+   "process": 23.578854997000235,
+   "warmWall": 21.282639999999997,
+   "nruns": 1,
+   "maxDiffVsNode": 0.0
+  }
+ ]
+}

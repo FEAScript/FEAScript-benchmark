@@ -1,0 +1,15 @@
+set terminal pngcairo size 900,620 font 'Arial,13'
+set border 3 lc rgb '#888888'; set tics nomirror tc rgb '#333333'
+set grid lc rgb '#e6e6e6' lw 1; set key top left box lc rgb '#cccccc' opaque
+set logscale xy; set format y '10^{%L}'; set format x '10^{%L}'
+set output 'accuracy_tri.png'
+set title 'RMS nodal error vs exact solution, triangles (FEAScript 0.4.0, Intel(R) N100)' font 'Arial,14'
+set xlabel 'Number of nodes'
+set ylabel 'RMS error (K)'
+set key bottom left
+plot 'err_tri_linear_FEAScript_sparse_LU.dat' u 1:2 w lp lw 2 dt 1 pt 7 ps 1.0 lc rgb '#2a78d6' t 'FEAScript (linear)', \
+     'err_tri_linear_Elmer_UMFPACK.dat' u 1:2 w lp lw 2 dt 1 pt 9 ps 1.6 lc rgb '#1baf7a' t 'Elmer (linear)', \
+     'err_tri_linear_scikit_fem_SuperLU.dat' u 1:2 w lp lw 2 dt 1 pt 4 ps 1.6 lc rgb '#c0392b' t 'scikit-fem (linear)', \
+     'err_tri_quadratic_FEAScript_sparse_LU.dat' u 1:2 w lp lw 2 dt 2 pt 7 ps 1.0 lc rgb '#2a78d6' t 'FEAScript (quadratic)', \
+     'err_tri_quadratic_Elmer_UMFPACK.dat' u 1:2 w lp lw 2 dt 2 pt 9 ps 1.6 lc rgb '#1baf7a' t 'Elmer (quadratic)', \
+     'err_tri_quadratic_scikit_fem_SuperLU.dat' u 1:2 w lp lw 2 dt 2 pt 4 ps 1.6 lc rgb '#c0392b' t 'scikit-fem (quadratic)'

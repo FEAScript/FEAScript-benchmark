@@ -18,10 +18,12 @@ The report of each run is in `reports/<machine>/<FEAScript version>/`. The resul
 
 | Machine | FEAScript version | Results |
 |---|---|---|
+| AMD Ryzen 5 9600X | 0.3.1 | [reports/amd-ryzen-5-9600x/0.3.1/](reports/amd-ryzen-5-9600x/0.3.1/) |
+| AMD Ryzen 5 9600X | 0.4.0 | [reports/amd-ryzen-5-9600x/0.4.0/](reports/amd-ryzen-5-9600x/0.4.0/) |
 | Intel N100 | 0.3.1 | [reports/intel-n100/0.3.1/](reports/intel-n100/0.3.1/) |
-| Intel N100 | 0.4.0-rc | [reports/intel-n100/0.4.0-rc/](reports/intel-n100/0.4.0-rc/) |
+| Intel N100 | 0.4.0 | [reports/intel-n100/0.4.0/](reports/intel-n100/0.4.0/) |
 
-Each report has a README with the plots of that run, a table of all the numbers (`results_table.md`) and the details of the run (`meta.json`): the versions of all the software, the machine and the date.
+Each report has a README with the plots of that run, a table of all the numbers (`results_table.md`) and the details of the run (`meta.json`): the versions of all the software, the machine and the date. The 0.4.0 results were measured before the release, on commit `fb17f89` (AMD Ryzen 5 9600X) and commit `367d095` (Intel N100) of the release candidate, whose solver code is the same.
 
 > **About the comparison:** Elmer runs here on one core, as a single MPI process, on small 2D problems, so that the codes are compared on the same terms. See [About the comparison](../README.md#about-the-comparison).
 

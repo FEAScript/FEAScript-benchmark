@@ -6,4 +6,5 @@ set title 'Primary vortex strength ψ_{min} (FEAScript 0.3.1, AMD Ryzen 5 9600X 
 set logscale x 2; set xlabel 'Elements per side n (n × n mesh)'; set ylabel 'ψ_{min}'
 set key top right
 plot 'psi_FEAScript_sparse_LU.dat' u 1:2 w lp lw 2 pt 7 ps 1.0 lc rgb '#2a78d6' t 'FEAScript', \
-     'psi_Elmer_UMFPACK.dat' u 1:2 w lp lw 2 pt 9 ps 1.6 lc rgb '#1baf7a' t 'Elmer'
+     'psi_Elmer_UMFPACK.dat' u 1:2 w lp lw 2 pt 9 ps 1.6 lc rgb '#1baf7a' t 'Elmer', \
+     'psi_scikit_fem_SuperLU.dat' u 1:2 w lp lw 2 pt 4 ps 1.6 lc rgb '#c0392b' t 'scikit-fem'

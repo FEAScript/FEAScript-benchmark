@@ -1,0 +1,54 @@
+[
+ {
+  "case": "8x8",
+  "code": "FEAScript sparse LU",
+  "group": "Lid-driven cavity, sparse LU",
+  "runtime": "chromium",
+  "runtimeVersion": "156.0.8078.79",
+  "nodes": 289,
+  "solve": 0.18718999999947847,
+  "process": 0.5939623520007444,
+  "warmWall": 0.05197999999858439,
+  "nruns": 5,
+  "maxDiffVsNode": 0.0
+ },
+ {
+  "case": "16x16",
+  "code": "FEAScript sparse LU",
+  "group": "Lid-driven cavity, sparse LU",
+  "runtime": "chromium",
+  "runtimeVersion": "156.0.8078.79",
+  "nodes": 1089,
+  "solve": 0.364054999999702,
+  "process": 0.7683535129999655,
+  "warmWall": 0.2879900000002235,
+  "nruns": 5,
+  "maxDiffVsNode": 0.0
+ },
+ {
+  "case": "32x32",
+  "code": "FEAScript sparse LU",
+  "group": "Lid-driven cavity, sparse LU",
+  "runtime": "chromium",
+  "runtimeVersion": "156.0.8078.79",
+  "nodes": 4225,
+  "solve": 1.4790200000014155,
+  "process": 1.9926134429988451,
+  "warmWall": 2.7728349999990316,
+  "nruns": 5,
+  "maxDiffVsNode": 0.0
+ },
+ {
+  "case": "64x64",
+  "code": "FEAScript sparse LU",
+  "group": "Lid-driven cavity, sparse LU",
+  "runtime": "chromium",
+  "runtimeVersion": "156.0.8078.79",
+  "nodes": 16641,
+  "solve": 7.838359999999404,
+  "process": 8.315097392000098,
+  "warmWall": 21.871484999999403,
+  "nruns": 5,
+  "maxDiffVsNode": 0.0
+ }
+]

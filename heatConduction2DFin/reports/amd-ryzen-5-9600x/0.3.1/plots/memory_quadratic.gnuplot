@@ -6,9 +6,11 @@ set output 'memory_quadratic.png'
 set title 'Peak memory (quadratic quads) (FEAScript 0.3.1, AMD Ryzen 5 9600X 6-Core Processor)' font 'Arial,15'
 set xlabel 'Number of nodes'
 set ylabel 'Peak memory (MB)'
-set label 'Whole process: includes Node.js or Elmer itself' at graph 0.98,0.05 right tc rgb '#777777'
+set label 'Whole process: includes Node.js, Python or Elmer itself' at graph 0.98,0.05 right tc rgb '#777777'
 plot 'memory_quadratic_FEAScript_sparse_LU.dat' u 1:2 w lp lw 2 pt 7 ps 1.2 lc rgb '#2a78d6' t 'FEAScript sparse LU', \
      'memory_quadratic_FEAScript_frontal.dat' u 1:2 w lp lw 2 pt 5 ps 1.2 lc rgb '#eb6834' t 'FEAScript frontal', \
+     'memory_quadratic_FEAScript_Jacobi.dat' u 1:2 w lp lw 2 pt 15 ps 1.2 lc rgb '#7b52c7' t 'FEAScript Jacobi', \
      'memory_quadratic_Elmer_UMFPACK.dat' u 1:2 w lp lw 2 pt 9 ps 1.2 lc rgb '#1baf7a' t 'Elmer UMFPACK', \
      'memory_quadratic_Elmer_BiCGStabILU0.dat' u 1:2 w lp lw 2 pt 11 ps 1.2 lc rgb '#eda100' t 'Elmer BiCGStab+ILU0', \
-     'memory_quadratic_Elmer_MUMPS.dat' u 1:2 w lp lw 2 pt 13 ps 1.2 lc rgb '#e87ba4' t 'Elmer MUMPS'
+     'memory_quadratic_Elmer_MUMPS.dat' u 1:2 w lp lw 2 pt 13 ps 1.2 lc rgb '#e87ba4' t 'Elmer MUMPS', \
+     'memory_quadratic_scikit-fem_SuperLU.dat' u 1:2 w lp lw 2 pt 4 ps 1.2 lc rgb '#c0392b' t 'scikit-fem SuperLU'
