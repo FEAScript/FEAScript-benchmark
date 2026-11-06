@@ -1,0 +1,82 @@
+[
+ {
+  "case": "8x8",
+  "n": 8,
+  "nodes": 289,
+  "code": "FEAScript sparse LU",
+  "solve": 0.3989780150000006,
+  "linsolve": 0.3381130179995671,
+  "process": 2.481798882000021,
+  "peakMemoryMB": 129.142578125,
+  "warmWall": 0.2938390770005062,
+  "nruns": 5,
+  "psiMin": -0.09937137151500047,
+  "psiMinY": 0.7318521843877981,
+  "maxDiffVelocity": 1.0,
+  "maxDiffVelocityAwayFromCorners": 0.109382631585408,
+  "matchedNodes": 81
+ },
+ {
+  "case": "16x16",
+  "n": 16,
+  "nodes": 1089,
+  "code": "FEAScript sparse LU",
+  "solve": 3.1669547460004686,
+  "linsolve": 2.9284588209996,
+  "process": 5.062080672999855,
+  "peakMemoryMB": 261.09375,
+  "warmWall": 3.274759351999499,
+  "nruns": 5,
+  "psiMin": -0.10032581349516256,
+  "psiMinY": 0.7546761623465316,
+  "maxDiffVelocity": 1.0,
+  "maxDiffVelocityAwayFromCorners": 0.06209892392095563,
+  "matchedNodes": 289
+ },
+ {
+  "case": "24x24",
+  "n": 24,
+  "nodes": 2401,
+  "code": "FEAScript sparse LU",
+  "solve": 22.951834743000568,
+  "linsolve": 21.72423254800029,
+  "process": 25.083333407999817,
+  "peakMemoryMB": 708.01953125,
+  "warmWall": null,
+  "nruns": 1,
+  "psiMin": -0.10045758168207941,
+  "psiMinY": 0.7599255218094358,
+  "maxDiffVelocity": 1.0,
+  "maxDiffVelocityAwayFromCorners": 0.06201531436722588,
+  "matchedNodes": 625
+ },
+ {
+  "case": "32x32",
+  "n": 32,
+  "nodes": 4225,
+  "code": "FEAScript sparse LU",
+  "solve": 82.51060469700023,
+  "linsolve": 79.56885295499954,
+  "process": 84.5212053769992,
+  "peakMemoryMB": 1539.609375,
+  "warmWall": null,
+  "nruns": 1,
+  "psiMin": -0.10045080440755044,
+  "psiMinY": 0.7620076382017156,
+  "maxDiffVelocity": 1.0,
+  "maxDiffVelocityAwayFromCorners": 0.062016882545047974,
+  "matchedNodes": 1089
+ },
+ {
+  "case": "48x48",
+  "n": 48,
+  "code": "FEAScript sparse LU",
+  "failed": "out of memory"
+ },
+ {
+  "case": "64x64",
+  "n": 64,
+  "code": "FEAScript sparse LU",
+  "failed": "out of memory"
+ }
+]

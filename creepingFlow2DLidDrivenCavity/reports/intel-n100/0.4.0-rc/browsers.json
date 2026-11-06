@@ -1,0 +1,120 @@
+{
+ "versions": {
+  "chromium": "156.0.8078.79",
+  "firefox": "159.0"
+ },
+ "userAgents": {
+  "chromium": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+  "firefox": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0"
+ },
+ "crossOriginIsolated": {
+  "chromium": true,
+  "firefox": true
+ },
+ "rows": [
+  {
+   "case": "8x8",
+   "code": "FEAScript sparse LU",
+   "group": "Lid-driven cavity, sparse LU",
+   "runtime": "chromium",
+   "runtimeVersion": "156.0.8078.79",
+   "nodes": 289,
+   "solve": 0.403695000000298,
+   "process": 1.2815639450018352,
+   "warmWall": 0.14641499999910593,
+   "nruns": 5,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "8x8",
+   "code": "FEAScript sparse LU",
+   "group": "Lid-driven cavity, sparse LU",
+   "runtime": "firefox",
+   "runtimeVersion": "159.0",
+   "nodes": 289,
+   "solve": 0.8254999999999999,
+   "process": 3.130556798001635,
+   "warmWall": 0.7342800000000002,
+   "nruns": 5,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "16x16",
+   "code": "FEAScript sparse LU",
+   "group": "Lid-driven cavity, sparse LU",
+   "runtime": "chromium",
+   "runtimeVersion": "156.0.8078.79",
+   "nodes": 1089,
+   "solve": 0.9154350000023842,
+   "process": 1.80538904399873,
+   "warmWall": 0.7195750000029802,
+   "nruns": 5,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "16x16",
+   "code": "FEAScript sparse LU",
+   "group": "Lid-driven cavity, sparse LU",
+   "runtime": "firefox",
+   "runtimeVersion": "159.0",
+   "nodes": 1089,
+   "solve": 7.605419999999999,
+   "process": 9.91014751900002,
+   "warmWall": 1.7246800000000002,
+   "nruns": 5,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "32x32",
+   "code": "FEAScript sparse LU",
+   "group": "Lid-driven cavity, sparse LU",
+   "runtime": "chromium",
+   "runtimeVersion": "156.0.8078.79",
+   "nodes": 4225,
+   "solve": 3.958890000000596,
+   "process": 4.918075942998257,
+   "warmWall": 6.752949999999255,
+   "nruns": 5,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "32x32",
+   "code": "FEAScript sparse LU",
+   "group": "Lid-driven cavity, sparse LU",
+   "runtime": "firefox",
+   "runtimeVersion": "159.0",
+   "nodes": 4225,
+   "solve": 64.3184,
+   "process": 66.75967355300236,
+   "warmWall": null,
+   "nruns": 1,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "64x64",
+   "code": "FEAScript sparse LU",
+   "group": "Lid-driven cavity, sparse LU",
+   "runtime": "chromium",
+   "runtimeVersion": "156.0.8078.79",
+   "nodes": 16641,
+   "solve": 20.519085000000896,
+   "process": 21.396738851999544,
+   "warmWall": null,
+   "nruns": 1,
+   "maxDiffVsNode": 0.0
+  },
+  {
+   "case": "64x64",
+   "code": "FEAScript sparse LU",
+   "group": "Lid-driven cavity, sparse LU",
+   "runtime": "firefox",
+   "runtimeVersion": "159.0",
+   "nodes": 16641,
+   "solve": 508.76508,
+   "process": 511.2223223959991,
+   "warmWall": null,
+   "nruns": 1,
+   "maxDiffVsNode": 0.0
+  }
+ ]
+}

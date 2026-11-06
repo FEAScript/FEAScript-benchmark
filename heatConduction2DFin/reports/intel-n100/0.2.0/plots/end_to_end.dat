@@ -1,0 +1,6 @@
+"FEAScript sparse LU" 1.102 1.875
+"FEAScript frontal" 0.883 1.866
+"scikit-fem SuperLU" 0.035 0.311
+"Elmer BiCGStab+ILU0" 0.020 2.043
+"Elmer UMFPACK" 0.020 2.035
+"Elmer MUMPS" 0.020 2.035

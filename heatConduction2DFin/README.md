@@ -20,13 +20,15 @@ The report of each run is in `reports/<machine>/<FEAScript version>/`. The resul
 |---|---|---|
 | AMD Ryzen 5 9600X | 0.2.0 | [reports/amd-ryzen-5-9600x/0.2.0/](reports/amd-ryzen-5-9600x/0.2.0/) |
 | AMD Ryzen 5 9600X | 0.3.1 | [reports/amd-ryzen-5-9600x/0.3.1/](reports/amd-ryzen-5-9600x/0.3.1/) |
-| AMD Ryzen 5 9600X | 0.4.0-rc | [reports/amd-ryzen-5-9600x/0.4.0-rc/](reports/amd-ryzen-5-9600x/0.4.0-rc/) |
+| Intel N100 | 0.2.0 | [reports/intel-n100/0.2.0/](reports/intel-n100/0.2.0/) |
+| Intel N100 | 0.3.1 | [reports/intel-n100/0.3.1/](reports/intel-n100/0.3.1/) |
+| Intel N100 | 0.4.0-rc | [reports/intel-n100/0.4.0-rc/](reports/intel-n100/0.4.0-rc/) |
 
 FEAScript's speed-up on the 160×80 linear mesh by version, with the assembly and solve time of each run, on the AMD Ryzen 5 9600X:
 
 <img src="reports/amd-ryzen-5-9600x/by-version/linear-160x80.png" width="600" alt="FEAScript speed-up by version on the AMD Ryzen 5 9600X">
 
-Each report has a README with the plots of that run, a table of all the numbers (`results_table.md`) and the details of the run (`meta.json`): the FEAScript version and commit, the versions of the other software, the machine and the date. Runs on the AMD Ryzen 5 9600X with FEAScript 0.2.0 and 0.3.1 do not include scikit-fem, which was added with 0.4.0-rc.
+Each report has a README with the plots of that run, a table of all the numbers (`results_table.md`) and the details of the run (`meta.json`): the FEAScript version and commit, the versions of the other software, the machine and the date. Runs on the AMD Ryzen 5 9600X do not include scikit-fem. Runs with FEAScript 0.2.0 do not include the browsers.
 
 > **About the comparison:** Elmer runs here on one core, as a single MPI process, on small 2D problems, so that both codes are compared on the same terms. Elmer is a parallel code built for much larger problems, and this setup does not show its parallel performance. Its end-to-end time includes a fixed MPI start-up in the build used here, about 0.5 s on the AMD Ryzen 5 9600X. See [About the comparison](../README.md#about-the-comparison).
 

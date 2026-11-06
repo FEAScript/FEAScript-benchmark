@@ -18,7 +18,8 @@ The report of each run is in `reports/<machine>/<FEAScript version>/`. The resul
 
 | Machine | FEAScript version | Results |
 |---|---|---|
-| AMD Ryzen 5 9600X | 0.4.0-rc | [reports/amd-ryzen-5-9600x/0.4.0-rc/](reports/amd-ryzen-5-9600x/0.4.0-rc/) |
+| Intel N100 | 0.3.1 | [reports/intel-n100/0.3.1/](reports/intel-n100/0.3.1/) |
+| Intel N100 | 0.4.0-rc | [reports/intel-n100/0.4.0-rc/](reports/intel-n100/0.4.0-rc/) |
 
 Each report has a README with the plots of that run, a table of all the numbers (`results_table.md`) and the details of the run (`meta.json`): the versions of all the software, the machine and the date.
 

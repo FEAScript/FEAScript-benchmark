@@ -57,7 +57,7 @@ FEASCRIPT_VERSION=0.4.0 ~/.venvs/feascript-benchmark/bin/python run_all.py
 - **Fresh processes:** each timing is the median of several fresh processes
 - **FEAScript as users load it:** the benchmarks load the built bundle `dist/feascript.esm.js` from a [FEAScript-core](https://github.com/FEAScript/FEAScript-core) checkout, by default the sibling folder `../FEAScript-core`
 - **Recorded setup:** each run writes a `meta.json` with the FEAScript version and commit, the versions of the other software, the machine and its memory, the operating system, and the date
-- **Machine:** the results so far were measured on an AMD Ryzen 5 9600X with 14.7 GB of usable RAM, on Linux Mint 22.3. Chromium and Firefox are the builds that it packages
+- **Machines:** the results so far were measured on an AMD Ryzen 5 9600X with 14.7 GB of usable RAM and on an Intel N100 with 7.5 GB, both on Linux Mint 22.3. Chromium and Firefox are the builds that it packages. The N100 is a low-power CPU whose speed varied by up to 20% between runs, so small differences on it mean little
 - **Elmer build:** the results so far use a nightly build of Elmer from the [Elmer PPA](https://launchpad.net/~elmer-csc-ubuntu/+archive/ubuntu/elmer-csc-ppa), version 26.2, built from commit [`56b16bd49`](https://github.com/ElmerCSC/elmerfem/commit/56b16bd49564d5b16fdc57862ccda024043b0f39) of 2026-11-02, which is newer than the 26.2.1 release
 - **One folder per machine and version:** results are kept by machine, and by the version of each code, so runs on different machines are never mixed. `make_history.py` plots FEAScript's speed-up by version for each benchmark and machine
 

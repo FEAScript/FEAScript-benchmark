@@ -1,0 +1,93 @@
+[
+ {
+  "case": "linear-20x10",
+  "code": "FEAScript frontal",
+  "group": "FEAScript frontal, linear quads",
+  "runtime": "firefox",
+  "runtimeVersion": "159.0",
+  "nodes": 231,
+  "solve": 0.3425200000000001,
+  "process": 2.7409048609997626,
+  "warmWall": 0.5390200000000002,
+  "nruns": 5,
+  "maxDiffVsNode": 0.0
+ },
+ {
+  "case": "linear-20x10",
+  "code": "FEAScript sparse LU",
+  "group": "FEAScript sparse LU, linear quads",
+  "runtime": "firefox",
+  "runtimeVersion": "159.0",
+  "nodes": 231,
+  "solve": 0.11975999999999999,
+  "process": 2.5061434769995685,
+  "warmWall": 0.02048000000000002,
+  "nruns": 5,
+  "maxDiffVsNode": 0.0
+ },
+ {
+  "case": "linear-80x40",
+  "code": "FEAScript frontal",
+  "group": "FEAScript frontal, linear quads",
+  "runtime": "firefox",
+  "runtimeVersion": "159.0",
+  "nodes": 3321,
+  "solve": 2.4428,
+  "process": 4.904477080999641,
+  "warmWall": 1.0117400000000007,
+  "nruns": 5,
+  "maxDiffVsNode": 0.0
+ },
+ {
+  "case": "linear-80x40",
+  "code": "FEAScript sparse LU",
+  "group": "FEAScript sparse LU, linear quads",
+  "runtime": "firefox",
+  "runtimeVersion": "159.0",
+  "nodes": 3321,
+  "solve": 2.22402,
+  "process": 5.142487060999883,
+  "warmWall": 0.39803999999999995,
+  "nruns": 5,
+  "maxDiffVsNode": 0.0
+ },
+ {
+  "case": "linear-160x80",
+  "code": "FEAScript frontal",
+  "group": "FEAScript frontal, linear quads",
+  "runtime": "firefox",
+  "runtimeVersion": "159.0",
+  "nodes": 13041,
+  "solve": 18.60012,
+  "process": 21.04342614199959,
+  "warmWall": 14.128540000000001,
+  "nruns": 5,
+  "maxDiffVsNode": 0.0
+ },
+ {
+  "case": "linear-160x80",
+  "code": "FEAScript sparse LU",
+  "group": "FEAScript sparse LU, linear quads",
+  "runtime": "firefox",
+  "runtimeVersion": "159.0",
+  "nodes": 13041,
+  "solve": 10.09958,
+  "process": 12.485482680000132,
+  "warmWall": 4.510379999999997,
+  "nruns": 5,
+  "maxDiffVsNode": 0.0
+ },
+ {
+  "case": "linear-320x160",
+  "code": "FEAScript sparse LU",
+  "group": "FEAScript sparse LU, linear quads",
+  "runtime": "firefox",
+  "runtimeVersion": "159.0",
+  "nodes": 51681,
+  "solve": 57.50628,
+  "process": 59.85995355100022,
+  "warmWall": null,
+  "nruns": 1,
+  "maxDiffVsNode": 0.0
+ }
+]
