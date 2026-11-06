@@ -57,6 +57,7 @@ def section(run_dir, plots_dir, results, tag, title):
         table += f"| {group} | {nodes:,} | " + " | ".join(cells) + " |\n"
     worst = max((r.get("maxDiffVsNode") or 0) for r in data["rows"])
     failed = [r for r in data["rows"] if "failed" in r]
+    no_repeat = [r for r in data["rows"] if "failed" not in r and r.get("warmWall") is None]
     versions = ", ".join(f"{NAMES[k]} {v}" for k, v in data["versions"].items())
     return f"""
 ## {title}
@@ -64,5 +65,6 @@ def section(run_dir, plots_dir, results, tag, title):
 {versions}, each run in a fresh headless browser on one core, with FEAScript on the main thread of the page. The first solve in a fresh process on the largest mesh of each case, with the slowdown against Node.js:
 
 {table}
-The solutions of the browsers differ from those of Node.js by at most {worst:.1e}.
-""" + ("\nRuns that could not be measured:\n" + "".join(f"\n- **{r['runtime']}, {r['case']}, {r['code']}:** {r['failed']}" for r in failed) + "\n" if failed else "") + "\n" + images
+The solutions of the browsers differ from those of Node.js by at most {worst:.1e}. Cases with a first solve over 20 s are timed once, with one repeated solve, instead of five times with three repeated solves. A case without a point on a plot was not measured.
+""" + ("\nRuns that could not be measured:\n" + "".join(f"\n- **{r['runtime']}, {r['case']}, {r['code']}:** {r['failed']}" for r in failed) + "\n" if failed else "") + \
+        ("\nRepeated solves that could not be measured:\n" + "".join(f"\n- **{r['runtime']}, {r['case']}, {r['code']}:** {r.get('noRepeat', 'not run')}" for r in no_repeat) + "\n" if no_repeat else "") + "\n" + images

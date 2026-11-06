@@ -31,7 +31,7 @@ for bench in sys.argv[1:] or BENCHMARKS:
     run = os.path.join(folder, "reports", machine, version)
     os.makedirs(run, exist_ok=True)
     print(f"=== {bench}: FEAScript {version} on {machine}", flush=True)
-    with open(os.path.join(run, "run.log"), "w") as log:
+    with open(os.path.join(run, "run.log"), "a" if os.environ.get("ONLY_BROWSERS") else "w") as log:  # A browser run adds to the log of the full run
         subprocess.run([sys.executable, "benchmark.py"], cwd=folder, env=env, stdout=log, stderr=subprocess.STDOUT, check=True)
     subprocess.run([sys.executable, "make_report.py", machine, version], cwd=folder, env=env, stdout=subprocess.DEVNULL, check=True)
     if bench in HISTORY:

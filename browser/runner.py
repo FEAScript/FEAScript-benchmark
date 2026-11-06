@@ -111,12 +111,18 @@ def run_cases(cases, case_file, core, run_dir, feascript_results, pin, reps, war
         for browser, version in found.items():
             base = {"case": case["name"], "code": case["code"], "group": case["group"], "runtime": browser, "runtimeVersion": version}
             try:
-                # Slow cases (over 20 s) are timed once, without warm repeats. They are in a run of their own, so as not to count against the time limit
+                # Slow cases (over 20 s) are timed once, with a single repeated solve. It is in a run of its own, so as not to count against the time limit
                 first = run_once(browser, port, case["params"], 0, pin)
                 runs = [first]
                 if first["coldWall"] <= 20:
                     first["warm"] = (repeated := run_once(browser, port, case["params"], warm, pin))["warm"]
                     runs += [repeated] + [run_once(browser, port, case["params"], 0, pin) for _ in range(reps - 2)]
+                else:
+                    try:
+                        first["warm"] = run_once(browser, port, case["params"], 1, pin)["warm"]
+                    except RuntimeError as e:  # The first solve is still a valid measurement
+                        base["noRepeat"] = str(e)[:200]
+                        print(f"{browser} {case['name']} {case['code']} no repeated solve: {str(e)[:300]}", flush=True)
             except RuntimeError as e:
                 rows.append({**base, "failed": str(e)[:200]})
                 print(f"{browser} {case['name']} {case['code']} failed: {str(e)[:300]}", flush=True)

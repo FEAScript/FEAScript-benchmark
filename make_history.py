@@ -20,9 +20,7 @@ COLORS = {"FEAScript frontal": "#eb6834", "FEAScript sparse LU": "#2a78d6"}
 CHANGES = {
     ("0.2.0", "0.3.1", "FEAScript sparse LU"): "Sparse matrix assembly (0.3.0, #99)",
     ("0.2.0", "0.3.0", "FEAScript sparse LU"): "Sparse matrix assembly (#99)",
-    ("0.3.1", "0.4.0-rc", "FEAScript frontal"): "Frontal solver fix (0.4.0, #121)",
     ("0.3.1", "0.4.0", "FEAScript frontal"): "Frontal solver fix (#121)",
-    ("0.3.1", "0.4.0-rc", "FEAScript sparse LU"): "LU ordering for creeping flow (0.4.0, #132)",
     ("0.3.1", "0.4.0", "FEAScript sparse LU"): "LU ordering for creeping flow (#132)",
 }
 # The mesh shown by default for each benchmark, and how to describe it
