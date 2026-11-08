@@ -1,4 +1,4 @@
-<img src="https://feascript.github.io/FEAScript-website/assets/feascript-logo.png" width="80" alt="FEAScript Logo">
+<img src="https://feascript.github.io/FEAScript-website/assets/feascript-creeping-flow.png" width="80" alt="FEAScript creeping flow logo">
 
 # FEAScript vs Elmer and scikit-fem benchmark: lid-driven cavity
 
