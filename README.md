@@ -8,9 +8,9 @@ This repository contains benchmarks for [FEAScript](https://feascript.com/), the
 
 | Benchmark | Compared with | Problem |
 |---|---|---|
-| [heatConduction2DFin](heatConduction2DFin/) | [Elmer](https://www.elmerfem.org/), [scikit-fem](https://github.com/kinnala/scikit-fem) | 2D heat conduction in a fin with constant-temperature, symmetry and convection boundaries, on linear and quadratic quadrilateral meshes from 231 to 51,681 nodes |
-| [heatConduction2DFinGmsh](heatConduction2DFinGmsh/) | [Elmer](https://www.elmerfem.org/), [scikit-fem](https://github.com/kinnala/scikit-fem) | The same fin on unstructured Gmsh meshes, with linear and quadratic triangles and distorted quadrilaterals |
-| [creepingFlow2DLidDrivenCavity](creepingFlow2DLidDrivenCavity/) | [Elmer](https://www.elmerfem.org/), [scikit-fem](https://github.com/kinnala/scikit-fem) | Stokes (creeping) flow in the lid-driven unit cavity, with Taylor–Hood Q2–Q1 elements on meshes from 289 to 16,641 velocity nodes |
+| [heatConduction2DFin](heatConduction2DFin/) | Elmer, scikit-fem | 2D heat conduction in a fin with constant-temperature, symmetry and convection boundaries, on linear and quadratic quadrilateral meshes from 231 to 51,681 nodes |
+| [heatConduction2DFinGmsh](heatConduction2DFinGmsh/) | Elmer, scikit-fem | The same fin on unstructured Gmsh meshes, with linear and quadratic triangles and distorted quadrilaterals |
+| [creepingFlow2DLidDrivenCavity](creepingFlow2DLidDrivenCavity/) | Elmer, scikit-fem | Stokes (creeping) flow in the lid-driven unit cavity, with Taylor–Hood Q2–Q1 elements on meshes from 289 to 16,641 velocity nodes |
 
 Each benchmark folder has a README with the problem, the setup, the results on each machine, FEAScript's speed-up by version and the steps to run it.
 
