@@ -54,14 +54,10 @@ Chromium 156.0.8078.79, Firefox 159.0, each run in a fresh headless browser on o
 
 | Case | Nodes | Node.js | Chromium | Firefox |
 |---|---|---|---|---|
-| FEAScript frontal, linear quads | 51,681 | 6.20 s | 5.00 s (0.8×) | 9.03 s (1.5×) |
-| FEAScript sparse LU, linear quads | 51,681 | 4.68 s | 3.69 s (0.8×) | 54.10 s (11.6×) |
+| FEAScript frontal, linear quads | 51,681 | 6.20 s | 5.32 s (0.9×) | 9.42 s (1.5×) |
+| FEAScript sparse LU, linear quads | 51,681 | 4.68 s | 4.29 s (0.9×) | 71.10 s (15.2×) |
 
 The solutions of the browsers differ from those of Node.js by at most 0.0e+00. Cases with a first solve over 20 s are timed once, with one repeated solve, instead of five times with three repeated solves. A case without a point on a plot was not measured.
-
-Repeated solves that could not be measured:
-
-- **firefox, linear-320x160, FEAScript sparse LU:** not run
 
 <img src="plots/browsers_FEAScript_frontal_linear_quads_first.png" width="600" alt="First solve: FEAScript frontal, linear quads">
 <img src="plots/browsers_FEAScript_frontal_linear_quads_repeated.png" width="600" alt="Repeated solves: FEAScript frontal, linear quads">

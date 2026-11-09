@@ -48,9 +48,9 @@ Chromium 156.0.8078.79, Firefox 159.0, each run in a fresh headless browser on o
 
 | Case | Nodes | Node.js | Chromium | Firefox |
 |---|---|---|---|---|
-| Lid-driven cavity, sparse LU | 16,641 | 401.49 s | 311.33 s (0.8×) | not measured |
+| Lid-driven cavity, sparse LU | 16,641 | 401.49 s | 309.85 s (0.8×) | not measured |
 
-The solutions of the browsers differ from those of Node.js by at most 0.0e+00.
+The solutions of the browsers differ from those of Node.js by at most 0.0e+00. Cases with a first solve over 20 s are timed once, with one repeated solve, instead of five times with three repeated solves. A case without a point on a plot was not measured.
 
 Runs that could not be measured:
 

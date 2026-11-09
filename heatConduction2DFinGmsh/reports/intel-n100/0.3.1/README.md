@@ -55,16 +55,18 @@ Chromium 156.0.8078.79, Firefox 159.0, each run in a fresh headless browser on o
 
 | Case | Nodes | Node.js | Chromium | Firefox |
 |---|---|---|---|---|
-| FEAScript frontal, quadratic triangles | 3,857 | 27.73 s | 26.75 s (1.0×) | 48.69 s (1.8×) |
-| FEAScript sparse LU, quadratic triangles | 59,885 | 12.43 s | 9.22 s (0.7×) | 175.13 s (14.1×) |
-| FEAScript frontal, quadratic quadrilaterals | 5,953 | 153.52 s | 142.81 s (0.9×) | 244.73 s (1.6×) |
-| FEAScript sparse LU, quadratic quadrilaterals | 89,209 | 8.43 s | 5.86 s (0.7×) | 81.77 s (9.7×) |
+| FEAScript frontal, quadratic triangles | 3,857 | 27.73 s | 45.41 s (1.6×) | 79.21 s (2.9×) |
+| FEAScript sparse LU, quadratic triangles | 59,885 | 12.43 s | 9.88 s (0.8×) | 191.02 s (15.4×) |
+| FEAScript frontal, quadratic quadrilaterals | 5,953 | 153.52 s | 146.44 s (1.0×) | 280.97 s (1.8×) |
+| FEAScript sparse LU, quadratic quadrilaterals | 89,209 | 8.43 s | 6.37 s (0.8×) | 111.87 s (13.3×) |
 
-The solutions of the browsers differ from those of Node.js by at most 0.0e+00.
+The solutions of the browsers differ from those of Node.js by at most 0.0e+00. Cases with a first solve over 20 s are timed once, with one repeated solve, instead of five times with three repeated solves. A case without a point on a plot was not measured.
 
 <img src="plots/browsers_FEAScript_frontal_quadratic_triangles_first.png" width="600" alt="First solve: FEAScript frontal, quadratic triangles">
+<img src="plots/browsers_FEAScript_frontal_quadratic_triangles_repeated.png" width="600" alt="Repeated solves: FEAScript frontal, quadratic triangles">
 <img src="plots/browsers_FEAScript_sparse_LU_quadratic_triangles_first.png" width="600" alt="First solve: FEAScript sparse LU, quadratic triangles">
 <img src="plots/browsers_FEAScript_sparse_LU_quadratic_triangles_repeated.png" width="600" alt="Repeated solves: FEAScript sparse LU, quadratic triangles">
 <img src="plots/browsers_FEAScript_frontal_quadratic_quadrilaterals_first.png" width="600" alt="First solve: FEAScript frontal, quadratic quadrilaterals">
+<img src="plots/browsers_FEAScript_frontal_quadratic_quadrilaterals_repeated.png" width="600" alt="Repeated solves: FEAScript frontal, quadratic quadrilaterals">
 <img src="plots/browsers_FEAScript_sparse_LU_quadratic_quadrilaterals_first.png" width="600" alt="First solve: FEAScript sparse LU, quadratic quadrilaterals">
 <img src="plots/browsers_FEAScript_sparse_LU_quadratic_quadrilaterals_repeated.png" width="600" alt="Repeated solves: FEAScript sparse LU, quadratic quadrilaterals">
