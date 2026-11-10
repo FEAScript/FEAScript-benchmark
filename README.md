@@ -100,4 +100,4 @@ We are grateful to the Elmer and scikit-fem developers for making such capable s
 
 ## License
 
-The benchmarks in this repository are released under the [MIT license](LICENSE). Note that the core library of FEAScript is distributed under the terms of the [MIT license](https://github.com/FEAScript/FEAScript-core/blob/main/LICENSE).
+The benchmarks in this repository are released under the [MIT license](LICENSE), the same license as the [FEAScript core library](https://github.com/FEAScript/FEAScript-core).

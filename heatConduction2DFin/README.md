@@ -130,4 +130,4 @@ The files in this folder:
 
 ## License
 
-This benchmark is released under the [MIT license](../LICENSE). Note that the core library of FEAScript is distributed under the terms of the [MIT license](https://github.com/FEAScript/FEAScript-core/blob/main/LICENSE).
+This benchmark is released under the [MIT license](../LICENSE), the same license as the [FEAScript core library](https://github.com/FEAScript/FEAScript-core).
