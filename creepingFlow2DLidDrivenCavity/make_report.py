@@ -162,7 +162,7 @@ All the numbers are in [results_table.md](results_table.md) and [results.json](r
 On every mesh it solved, FEAScript's primary vortex strength ψ_min matches Elmer's (UMFPACK) to within {psi_diff:.1e}.
 
 At the nodes farther than 0.2 from the two lid corners, the velocities of the two codes differ by at most {fine['maxDiffVelocityAwayFromCorners']:.1e} on the {fine['case'].replace('x', '×')} mesh, against {coarse['maxDiffVelocityAwayFromCorners']:.1e} on the {coarse['case'].replace('x', '×')} mesh{CONVERGENCE} Next to the lid corners they differ by up to {fine['maxDiffVelocity']:.2f} on every mesh: there FEAScript applies the full lid velocity along the top edge of the corner element, while Elmer interpolates it linearly from the corner, where the velocity is 0.
-""" + SKFEM_NOTE + ("\nRuns that could not be measured:\n" + "".join(f"\n- **{r['code']}, {r['case']}:** {r['failed']}" for r in failed) + "\n" if failed else "") + """
+""" + SKFEM_NOTE + ("\nRuns that could not be measured:\n" + "".join(f"\n- **{r['code']}, {r['case']}:** {r['failed']}" for r in failed) + "\n" if failed else "") + browser_report.no_repeat(ALL) + """
 ## Primary vortex strength
 
 <img src="plots/psi_min.png" width="600" alt="Primary vortex strength against the mesh">

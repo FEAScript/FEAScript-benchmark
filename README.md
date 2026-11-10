@@ -66,7 +66,7 @@ FEASCRIPT_VERSION=0.4.0 ~/.venvs/feascript-benchmark/bin/python run_all.py
 The comparison of the codes runs in Node.js, which shares its V8 JavaScript engine with Chrome and other Chromium-based browsers. Every benchmark also runs FEAScript in Chromium and in Firefox, with its own SpiderMonkey engine, on some of its meshes:
 
 - **Same code:** `feascript/case.mjs` builds the model for both Node.js and the page, from the built bundle `dist/feascript.esm.js`, and no JavaScript packages are needed
-- **Fresh browsers:** every run starts a headless browser with a new, empty profile, and each time is the median of several runs. A case with a first solve over 20 s is timed once, with one repeated solve
+- **Fresh browsers:** every run starts a headless browser with a new, empty profile, and each time is the median of several runs. A case with a first solve over 20 s is timed once, with one repeated solve in the browsers and none in Node.js, and each report lists those cases
 - **One core:** every process, including the helper processes of a browser, is pinned to one core
 - **Main thread:** FEAScript runs on the main thread of the page, without a web worker
 - **First and repeated solves:** the first solve in a fresh process includes JIT warm-up, as a user sees it when a page opens. The repeated solves come after it, in the same process

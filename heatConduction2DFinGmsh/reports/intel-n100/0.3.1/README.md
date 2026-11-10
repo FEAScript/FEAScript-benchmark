@@ -30,6 +30,12 @@ Runs that could not be measured:
 - **FEAScript frontal, quad-quadratic-h0.1:** out of memory
 - **FEAScript frontal, quad-quadratic-h0.05:** out of memory
 
+Repeated solves that were not run, because the first solve took over 20 s and the case was timed once:
+
+- **FEAScript frontal, tri-linear-h0.05**
+- **FEAScript frontal, tri-quadratic-h0.1**
+- **FEAScript frontal, quad-quadratic-h0.2**
+
 ## Accuracy
 
 <img src="plots/accuracy_tri.png" width="600" alt="RMS error against the exact solution on triangles">
@@ -60,7 +66,7 @@ Chromium 156.0.8078.79, Firefox 159.0, each run in a fresh headless browser on o
 | FEAScript frontal, quadratic quadrilaterals | 5,953 | 153.52 s | 146.44 s (1.0×) | 280.97 s (1.8×) |
 | FEAScript sparse LU, quadratic quadrilaterals | 89,209 | 8.43 s | 6.37 s (0.8×) | 111.87 s (13.3×) |
 
-The solutions of the browsers differ from those of Node.js by at most 0.0e+00. Cases with a first solve over 20 s are timed once, with one repeated solve, instead of five times with three repeated solves. A case without a point on a plot was not measured.
+The browsers give the same solutions as Node.js, bit for bit. Cases with a first solve over 20 s are timed once, with one repeated solve in the browsers and none in Node.js, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
 
 <img src="plots/browsers_FEAScript_frontal_quadratic_triangles_first.png" width="600" alt="First solve: FEAScript frontal, quadratic triangles">
 <img src="plots/browsers_FEAScript_frontal_quadratic_triangles_repeated.png" width="600" alt="Repeated solves: FEAScript frontal, quadratic triangles">

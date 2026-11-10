@@ -50,7 +50,7 @@ Chromium 156.0.8078.79, Firefox 159.0, each run in a fresh headless browser on o
 |---|---|---|---|---|
 | Lid-driven cavity, sparse LU | 16,641 | 9.64 s | 7.84 s (0.8×) | 217.60 s (22.6×) |
 
-The solutions of the browsers differ from those of Node.js by at most 0.0e+00. Cases with a first solve over 20 s are timed once, with one repeated solve, instead of five times with three repeated solves. A case without a point on a plot was not measured.
+The browsers give the same solutions as Node.js, bit for bit. Cases with a first solve over 20 s are timed once, with one repeated solve in the browsers and none in Node.js, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
 
 <img src="plots/browsers_Lid_driven_cavity_sparse_LU_first.png" width="600" alt="First solve: Lid-driven cavity, sparse LU">
 <img src="plots/browsers_Lid_driven_cavity_sparse_LU_repeated.png" width="600" alt="Repeated solves: Lid-driven cavity, sparse LU">

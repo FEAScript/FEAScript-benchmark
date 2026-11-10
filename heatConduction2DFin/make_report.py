@@ -146,8 +146,7 @@ md = f"""# Results for FEAScript {VERSION} on {meta['cpu']}
 All the numbers are in [results_table.md](results_table.md) and [results.json](results.json).
 
 On every mesh it solved, FEAScript's nodal temperatures match Elmer's (UMFPACK) to within {agree:.1e} with the direct solvers (`frontal` and `lusolve`).
-""" + SKFEM_NOTE + JACOBI_NOTE + ("".join(f"\n- **{r['code']}, {r['case']}:** {r['failed']}" for r in failed) and
-       "\nRuns that could not be measured:\n" + "".join(f"\n- **{r['code']}, {r['case']}:** {r['failed']}" for r in failed) + "\n") + """
+""" + SKFEM_NOTE + JACOBI_NOTE + ("\nRuns that could not be measured:\n" + "".join(f"\n- **{r['code']}, {r['case']}:** {r['failed']}" for r in failed) + "\n" if failed else "") + browser_report.no_repeat(ALL) + """
 ## Accuracy
 
 <img src="plots/accuracy.png" width="600" alt="RMS error against the exact solution">

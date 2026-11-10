@@ -36,6 +36,14 @@ Runs that could not be measured:
 - **FEAScript sparse LU, quadratic-160x80:** out of memory
 - **FEAScript Jacobi, quadratic-160x80:** out of memory
 
+Repeated solves that were not run, because the first solve took over 20 s and the case was timed once:
+
+- **FEAScript Jacobi, linear-80x40**
+- **FEAScript sparse LU, linear-160x80**
+- **FEAScript frontal, quadratic-40x20**
+- **FEAScript Jacobi, quadratic-40x20**
+- **FEAScript sparse LU, quadratic-80x40**
+
 ## Accuracy
 
 <img src="plots/accuracy.png" width="600" alt="RMS error against the exact solution">

@@ -51,7 +51,7 @@ Chromium 156.0.8078.79, Firefox 159.0, each run in a fresh headless browser on o
 | FEAScript frontal, quadratic quadrilaterals | 89,209 | 18.10 s | 14.17 s (0.8×) | 27.32 s (1.5×) |
 | FEAScript sparse LU, quadratic quadrilaterals | 89,209 | 8.54 s | 5.88 s (0.7×) | 79.01 s (9.2×) |
 
-The solutions of the browsers differ from those of Node.js by at most 0.0e+00. Cases with a first solve over 20 s are timed once, with one repeated solve, instead of five times with three repeated solves. A case without a point on a plot was not measured.
+The browsers give the same solutions as Node.js, bit for bit. Cases with a first solve over 20 s are timed once, with one repeated solve in the browsers and none in Node.js, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
 
 <img src="plots/browsers_FEAScript_frontal_quadratic_triangles_first.png" width="600" alt="First solve: FEAScript frontal, quadratic triangles">
 <img src="plots/browsers_FEAScript_frontal_quadratic_triangles_repeated.png" width="600" alt="Repeated solves: FEAScript frontal, quadratic triangles">
