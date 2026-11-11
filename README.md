@@ -42,6 +42,8 @@ heatConduction2DFin/
 browser/              runs the cases of any benchmark in headless browsers
 elmer_vtu.py          reads Elmer's binary VTU results
 refresh_elmer.py      shared steps of REFRESH_ELMER=1
+fill_repeats.py       adds missing Node.js repeated solves to a report
+rerun_lu.py           reruns the sparse LU cases of a report
 ```
 
 The results of each code are kept under its own version, since Elmer and scikit-fem do not change with the FEAScript version. Every run measures all the codes again, so that their times come from the same session: the `results.json` in a code's folder holds its latest numbers, and the one in `reports/` the numbers of all the codes in that run. Machines come first because times can only be compared on the same machine. Nodal results (`.csv`) are not committed.
@@ -60,6 +62,11 @@ cd heatConduction2DFin && REFRESH_ELMER=1 FEASCRIPT_VERSION=0.4.0 ~/.venvs/feasc
 
 The timed Elmer runs write no results, so how Elmer writes them does not change any time.
 
+Two scripts rerun part of a report on the FEAScript-core commit it was measured with (`feascriptCommit` in its `meta.json`), passed as `FEASCRIPT_CORE`, then `make_report.py` writes the report again:
+
+- **`fill_repeats.py <benchmark>`:** times the repeated solve of every FEAScript case that has none. Until November 2026, a case with a first solve over 20 s was timed in Node.js without one
+- **`rerun_lu.py <benchmark>`:** times the sparse LU cases again in Node.js and the browsers, after a change that makes `lusolve` faster without changing its results ([FEAScript-core #136](https://github.com/FEAScript/FEAScript-core/issues/136)). It needs the nodal results of the run on that machine, and stops if a solution is not the same bit for bit. `FEASCRIPT_NOTE` adds a note to the report
+
 ## How the benchmarks are run
 
 - **Same problem, same meshes:** the codes solve identical meshes, so their nodal results can be compared one to one
@@ -77,7 +84,7 @@ The timed Elmer runs write no results, so how Elmer writes them does not change 
 The comparison of the codes runs in Node.js, which shares its V8 JavaScript engine with Chrome and other Chromium-based browsers. Every benchmark also runs FEAScript in Chromium and in Firefox, with its own SpiderMonkey engine, on some of its meshes:
 
 - **Same code:** `feascript/case.mjs` builds the model for both Node.js and the page, from the built bundle `dist/feascript.esm.js`, and no JavaScript packages are needed
-- **Fresh browsers:** every run starts a headless browser with a new, empty profile, and each time is the median of several runs. A case with a first solve over 20 s is timed once, with one repeated solve in the browsers and none in Node.js, and each report lists those cases
+- **Fresh browsers:** every run starts a headless browser with a new, empty profile, and each time is the median of several runs. A case with a first solve over 20 s is timed once, with one repeated solve
 - **One core:** every process, including the helper processes of a browser, is pinned to one core
 - **Main thread:** FEAScript runs on the main thread of the page, without a web worker
 - **First and repeated solves:** the first solve in a fresh process includes JIT warm-up, as a user sees it when a page opens. The repeated solves come after it, in the same process

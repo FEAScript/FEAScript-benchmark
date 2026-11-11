@@ -4,7 +4,7 @@ set title "FEAScript speed-up by version\n{/*0.75 2D fin heat conduction, 160×8
 set border 3 lc rgb '#888888'; set tics nomirror tc rgb '#333333'
 set grid ytics lc rgb '#e6e6e6'
 set boxwidth 0.315
-set xrange [-0.6:2.6]; set yrange [0:17.49]; set xtics scale 0
+set xrange [-0.6:2.6]; set yrange [0:17.6]; set xtics scale 0
 set ylabel 'Speed-up (assembly + solve), × the first version'; set xlabel 'FEAScript version'
 set key top left box lc rgb '#cccccc' opaque
 set bmargin 5
@@ -12,8 +12,8 @@ set label "Each version was run at a different time; small differences can come 
 set label "Relative to the first version each solver ran in: frontal vs 0.3.1; sparse LU vs 0.2.0" at graph 0.99,0.97 right tc rgb '#777777' font ',11'
 set arrow from graph 0, first 1 to graph 1, first 1 nohead dt 2 lc rgb '#999999'
 set label "Sparse matrix assembly (0.3.0, #99)" at 1,12.06 center offset 0,4.3 tc rgb '#2a78d6' font ',11'
-set label "Frontal solver fix (#121)" at 2,12.05 center offset 0,4.3 tc rgb '#eb6834' font ',11'
-set label 'out of memory' at -0.17,0.3498 rotate by 90 left tc rgb '#eb6834' font ',11'
+set label "Frontal solver fix (#121)" at 2,12.14 center offset 0,4.3 tc rgb '#eb6834' font ',11'
+set label 'out of memory' at -0.17,0.352 rotate by 90 left tc rgb '#eb6834' font ',11'
 plot 'linear-160x80.dat' u ($0-0.175):2:xtic(1) w boxes fs solid noborder lc rgb '#eb6834' t 'frontal', \
      'linear-160x80.dat' u ($0+0.175):4 w boxes fs solid noborder lc rgb '#2a78d6' t 'sparse LU', \
      '' u ($0-0.175):2:(sprintf($2 < 10 ? '{/:Bold %.1f×}\n%.2f s' : '{/:Bold %.0f×}\n%.2f s',$2,$3)) w labels offset 0,1.6 tc rgb '#333333' font ',11' notitle, \

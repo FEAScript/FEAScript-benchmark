@@ -6,5 +6,6 @@ set output 'browsers_FEAScript_frontal_quadratic_quadrilaterals_repeated.png'
 set title 'Repeated solves: FEAScript frontal, quadratic quadrilaterals (FEAScript 0.3.1, AMD Ryzen 5 9600X 6-Core Processor)' font 'Arial,12'
 set xlabel 'Number of nodes'
 set ylabel 'Time (s)'
-plot 'browsers_FEAScript_frontal_quadratic_quadrilaterals_repeated_chromium.dat' u 1:2 w lp lw 2 pt 7 ps 1.2 lc rgb '#2a78d6' t 'Chromium', \
+plot 'browsers_FEAScript_frontal_quadratic_quadrilaterals_repeated_node.dat' u 1:2 w lp lw 2 pt 9 ps 1.2 lc rgb '#1baf7a' t 'Node.js', \
+     'browsers_FEAScript_frontal_quadratic_quadrilaterals_repeated_chromium.dat' u 1:2 w lp lw 2 pt 7 ps 1.2 lc rgb '#2a78d6' t 'Chromium', \
      'browsers_FEAScript_frontal_quadratic_quadrilaterals_repeated_firefox.dat' u 1:2 w lp lw 2 pt 5 ps 1.2 lc rgb '#eb6834' t 'Firefox'

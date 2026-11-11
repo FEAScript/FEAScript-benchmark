@@ -364,9 +364,10 @@ def run_codes():
                        "not converged" if "not converged" in str(e) else "failed")
                 results.append({"case": name, "order": order, "nx": nx, "ny": ny, "code": cfg, "failed": why})
                 print(f"{cfg} {why}", flush=True); continue
-            # Slow cases (over 20 s) are timed once, without warm repeats
+            # Slow cases (over 20 s) are timed once, with a single repeated solve in a run of its own, as in the browsers
             if first["coldWall"] > 20:
                 runs = [first]
+                first["warm"] = run_fea(order, nx, ny, method, warm=1)["warm"]
             else:
                 warm = run_fea(order, nx, ny, method, warm=WARM)  # one more cold run, then the warm repeats in the same process
                 first["warm"] = warm["warm"]

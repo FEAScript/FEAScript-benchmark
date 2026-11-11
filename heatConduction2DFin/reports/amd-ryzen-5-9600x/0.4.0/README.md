@@ -13,6 +13,7 @@
 | Cores | taskset -c 0, OMP_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1 |
 | Repeats | median of 5 fresh processes |
 | Run on | 2026-11-06 |
+| Note | The sparse LU (`lusolve`) cases were rerun on 2026-11-11 with the fix of FEAScript-core issue #136 (af82e09) added to this commit's bundle. Their solutions are unchanged, bit for bit |
 
 All the numbers are in [results_table.md](results_table.md) and [results.json](results.json).
 
@@ -55,9 +56,9 @@ Chromium 156.0.8078.79, Firefox 159.0, each run in a fresh headless browser on o
 | Case | Nodes | Node.js | Chromium | Firefox |
 |---|---|---|---|---|
 | FEAScript frontal, linear quads | 51,681 | 2.40 s | 1.59 s (0.7×) | 3.21 s (1.3×) |
-| FEAScript sparse LU, linear quads | 51,681 | 1.96 s | 1.52 s (0.8×) | 20.98 s (10.7×) |
+| FEAScript sparse LU, linear quads | 51,681 | 1.84 s | 1.48 s (0.8×) | 3.92 s (2.1×) |
 
-The browsers give the same solutions as Node.js, bit for bit. Cases with a first solve over 20 s are timed once, with one repeated solve in the browsers and none in Node.js, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
+The browsers give the same solutions as Node.js, bit for bit. Cases with a first solve over 20 s are timed once, with one repeated solve, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
 
 <img src="plots/browsers_FEAScript_frontal_linear_quads_first.png" width="600" alt="First solve: FEAScript frontal, linear quads">
 <img src="plots/browsers_FEAScript_frontal_linear_quads_repeated.png" width="600" alt="Repeated solves: FEAScript frontal, linear quads">

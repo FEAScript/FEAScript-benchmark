@@ -22,11 +22,6 @@ At the nodes farther than 0.2 from the two lid corners, the velocities of the tw
 
 scikit-fem sets the lid velocity the same way as FEAScript, so the two are compared directly at all their nodes, lid corners included: on every mesh the velocities differ by at most 1.0e+00 and the pressures, at the mesh vertices, by at most 9.1e+02.
 
-Repeated solves that were not run, because the first solve took over 20 s and the case was timed once:
-
-- **FEAScript sparse LU, 48x48**
-- **FEAScript sparse LU, 64x64**
-
 ## Primary vortex strength
 
 <img src="plots/psi_min.png" width="600" alt="Primary vortex strength against the mesh">
@@ -55,7 +50,7 @@ Chromium 156.0.8078.79, Firefox 159.0, each run in a fresh headless browser on o
 |---|---|---|---|---|
 | Lid-driven cavity, sparse LU | 16,641 | 145.93 s | 148.60 s (1.0×) | not measured |
 
-The browsers give the same solutions as Node.js, bit for bit. Cases with a first solve over 20 s are timed once, with one repeated solve in the browsers and none in Node.js, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
+The browsers give the same solutions as Node.js, bit for bit. Cases with a first solve over 20 s are timed once, with one repeated solve, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
 
 Runs that could not be measured:
 

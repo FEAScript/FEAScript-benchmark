@@ -17,7 +17,7 @@
 
 All the numbers are in [results_table.md](results_table.md) and [results.json](results.json).
 
-On every mesh it solved, with triangles and quadrilaterals, FEAScript's nodal temperatures match scikit-fem's to within 1.2e-10 when scikit-fem uses the same Gauss rules, and Elmer's (UMFPACK) to within 5.0e-06, the rounding of the 8 significant digits that Elmer writes its results with. The `frontal` and `lusolve` solvers agree to within 2.2e-10.
+On every mesh it solved, with triangles and quadrilaterals, FEAScript's nodal temperatures match scikit-fem's to within 1.2e-10 when scikit-fem uses the same Gauss rules, and Elmer's (UMFPACK) to within 5.0e-06. The `frontal` and `lusolve` solvers agree to within 2.2e-10.
 
 On distorted quadrilaterals these Gauss rules are not exact. With a much finer rule, scikit-fem's RMS error is lower than FEAScript's by 1.2% to 2.1%. On triangles the rules are exact, so the finer rule changes nothing.
 
@@ -30,7 +30,7 @@ Runs that could not be measured:
 - **FEAScript frontal, quad-quadratic-h0.1:** out of memory
 - **FEAScript frontal, quad-quadratic-h0.05:** out of memory
 
-Repeated solves that were not run, because the first solve took over 20 s and the case was timed once:
+Repeated solves not measured yet (a case with a first solve over 20 s used to be timed without one):
 
 - **FEAScript frontal, tri-linear-h0.05**
 - **FEAScript frontal, tri-quadratic-h0.1**
@@ -66,7 +66,7 @@ Chromium 156.0.8078.79, Firefox 159.0, each run in a fresh headless browser on o
 | FEAScript frontal, quadratic quadrilaterals | 5,953 | 153.52 s | 146.44 s (1.0×) | 280.97 s (1.8×) |
 | FEAScript sparse LU, quadratic quadrilaterals | 89,209 | 8.43 s | 6.37 s (0.8×) | 111.87 s (13.3×) |
 
-The browsers give the same solutions as Node.js, bit for bit. Cases with a first solve over 20 s are timed once, with one repeated solve in the browsers and none in Node.js, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
+The browsers give the same solutions as Node.js, bit for bit. Cases with a first solve over 20 s are timed once, with one repeated solve, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
 
 <img src="plots/browsers_FEAScript_frontal_quadratic_triangles_first.png" width="600" alt="First solve: FEAScript frontal, quadratic triangles">
 <img src="plots/browsers_FEAScript_frontal_quadratic_triangles_repeated.png" width="600" alt="Repeated solves: FEAScript frontal, quadratic triangles">

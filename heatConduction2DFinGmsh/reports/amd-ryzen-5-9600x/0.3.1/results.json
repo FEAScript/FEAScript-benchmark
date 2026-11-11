@@ -1043,7 +1043,7 @@
   "nruns": 1,
   "maxErr": 0.1770174158805844,
   "rmsErr": 0.003649857042410742,
-  "warmWall": null,
+  "warmWall": 68.95416960000247,
   "maxDiffVsFEAScript": 2.2254198484006338e-10
  },
  {

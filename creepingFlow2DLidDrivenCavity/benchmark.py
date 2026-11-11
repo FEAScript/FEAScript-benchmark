@@ -313,10 +313,11 @@ def run_codes():
         fields = {}
         csv = os.path.join(FEA_OUT, f"{name}.csv")
         try:
-            # The first run writes the results; slow cases (over 20 s) are timed once, without warm repeats
+            # The first run writes the results. Slow cases (over 20 s) are timed once, with a single repeated solve in a run of its own, as in the browsers
             first = run_fea(n, csv)
             if first["coldWall"] > 20:
                 runs = [first]
+                first["warm"] = run_fea(n, warm=1)["warm"]
             else:
                 warm = run_fea(n, warm=WARM)  # one more cold run, followed by the warm repeats in the same process
                 first["warm"] = warm["warm"]

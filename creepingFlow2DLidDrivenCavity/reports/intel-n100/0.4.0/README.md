@@ -22,7 +22,7 @@ At the nodes farther than 0.2 from the two lid corners, the velocities of the tw
 
 scikit-fem sets the lid velocity the same way as FEAScript, so the two are compared directly at all their nodes, lid corners included: on every mesh the velocities differ by at most 3.7e-13 and the pressures, at the mesh vertices, by at most 4.9e-10.
 
-Repeated solves that were not run, because the first solve took over 20 s and the case was timed once:
+Repeated solves not measured yet (a case with a first solve over 20 s used to be timed without one):
 
 - **FEAScript sparse LU, 64x64**
 
@@ -54,7 +54,7 @@ Chromium 156.0.8078.79, Firefox 159.0, each run in a fresh headless browser on o
 |---|---|---|---|---|
 | Lid-driven cavity, sparse LU | 16,641 | 24.11 s | 43.37 s (1.8×) | 603.04 s (25.0×) |
 
-The browsers give the same solutions as Node.js, bit for bit. Cases with a first solve over 20 s are timed once, with one repeated solve in the browsers and none in Node.js, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
+The browsers give the same solutions as Node.js, bit for bit. Cases with a first solve over 20 s are timed once, with one repeated solve, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
 
 <img src="plots/browsers_Lid_driven_cavity_sparse_LU_first.png" width="600" alt="First solve: Lid-driven cavity, sparse LU">
 <img src="plots/browsers_Lid_driven_cavity_sparse_LU_repeated.png" width="600" alt="Repeated solves: Lid-driven cavity, sparse LU">

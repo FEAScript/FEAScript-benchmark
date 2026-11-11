@@ -65,7 +65,7 @@
 | quad-quadratic-h0.4 | 1597 | scikit-fem SuperLU | 0.00859 | 0.00293 | 0.199 |  | 65.6 | 0.0142 | 0.364 | 2.65e-11 | 5 |
 | quad-quadratic-h0.4 | 1597 | scikit-fem fine integration | 0.0117 | 0.00282 | 0.16 |  | 68.6 | 0.014 | 0.358 | 0.00615 | 5 |
 | quad-quadratic-h0.4 | 1597 | Elmer UMFPACK | 0 | 0 | 0.48 |  | 31.1 | 0.0142 | 0.364 | 1.76e-12 | 5 |
-| quad-quadratic-h0.2 | 5953 | FEAScript frontal | 60.8 | 60.8 | 61 |  | 1.86e+03 | 0.00365 | 0.177 | 2.23e-10 | 1 |
+| quad-quadratic-h0.2 | 5953 | FEAScript frontal | 60.8 | 60.8 | 61 | 69 | 1.86e+03 | 0.00365 | 0.177 | 2.23e-10 | 1 |
 | quad-quadratic-h0.2 | 5953 | FEAScript sparse LU | 0.248 | 0.207 | 0.403 | 0.274 | 125 | 0.00365 | 0.177 | 0 | 5 |
 | quad-quadratic-h0.2 | 5953 | scikit-fem SuperLU | 0.0283 | 0.0149 | 0.222 |  | 78.5 | 0.00365 | 0.177 | 1.3e-11 | 5 |
 | quad-quadratic-h0.2 | 5953 | scikit-fem fine integration | 0.0351 | 0.0144 | 0.229 |  | 90.6 | 0.00361 | 0.174 | 0.00318 | 5 |

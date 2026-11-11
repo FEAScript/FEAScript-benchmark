@@ -308,9 +308,10 @@ def run_codes():
                        f"timeout (> {FEA_TIMEOUT} s)" if "timeout after" in str(e) else "failed")
                 results.append({"case": name, "shape": shape, "order": order, "h": h, "code": cfg, "failed": why})
                 print(f"{cfg} {why}\n{str(e)[-400:]}", flush=True); continue
-            # Slow cases (over 20 s) are timed once, without warm repeats
+            # Slow cases (over 20 s) are timed once, with a single repeated solve in a run of its own, as in the browsers
             if first["wall"] > 20:
                 runs = [first]
+                first["warm"] = run_fea(msh, method, warm=1)["warm"]
             else:
                 warm = run_fea(msh, method, warm=WARM)
                 first["warm"] = warm["warm"]

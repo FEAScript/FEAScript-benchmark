@@ -27,7 +27,7 @@ Runs that could not be measured:
 - **FEAScript sparse LU, 48x48:** out of memory
 - **FEAScript sparse LU, 64x64:** out of memory
 
-Repeated solves that were not run, because the first solve took over 20 s and the case was timed once:
+Repeated solves not measured yet (a case with a first solve over 20 s used to be timed without one):
 
 - **FEAScript sparse LU, 24x24**
 - **FEAScript sparse LU, 32x32**

@@ -19,9 +19,9 @@ set logscale xy; set format y '10^{%L}'; set format x '10^{%L}'
 
 
 def no_repeat(results):
-    """Return the markdown list of the FEAScript cases that Node.js timed without repeated solves, or nothing."""
+    """Return the markdown list of the FEAScript cases that Node.js timed without a repeated solve, or nothing."""
     rows = [r for r in results if "failed" not in r and r["code"].startswith("FEAScript") and r.get("warmWall") is None]
-    return ("\nRepeated solves that were not run, because the first solve took over 20 s and the case was timed once:\n" +
+    return ("\nRepeated solves not measured yet (a case with a first solve over 20 s used to be timed without one):\n" +
             "".join(f"\n- **{r['code']}, {r['case']}**" for r in rows) + "\n") if rows else ""
 
 
@@ -73,6 +73,6 @@ def section(run_dir, plots_dir, results, tag, title):
 {versions}, each run in a fresh headless browser on one core, with FEAScript on the main thread of the page. The first solve in a fresh process on the largest mesh of each case, with the slowdown against Node.js:
 
 {table}
-{agree} Cases with a first solve over 20 s are timed once, with one repeated solve in the browsers and none in Node.js, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
+{agree} Cases with a first solve over 20 s are timed once, with one repeated solve, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
 """ + ("\nRuns that could not be measured:\n" + "".join(f"\n- **{r['runtime']}, {r['case']}, {r['code']}:** {r['failed']}" for r in failed) + "\n" if failed else "") + \
         ("\nRepeated solves that could not be measured:\n" + "".join(f"\n- **{r['runtime']}, {r['case']}, {r['code']}:** {r.get('noRepeat', 'not run')}" for r in no_repeat) + "\n" if no_repeat else "") + "\n" + images
