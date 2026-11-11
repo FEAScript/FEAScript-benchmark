@@ -128,7 +128,7 @@ print(md)
 fea = [r for r in R if r["code"] in DIRECT]
 agree = max((r.get("maxDiffVsElmerUMFPACK") or 0) for r in fea)
 jacobi = [r for r in R if r["code"] == "FEAScript Jacobi"]
-SKFEM_NOTE = (f"\nscikit-fem's nodal temperatures match FEAScript's (`lusolve`) to within {max(r['maxDiffVsFEAScript'] for r in R if r['code'] == SKFEM and 'maxDiffVsFEAScript' in r):.1e} and Elmer's (UMFPACK) to within {max(r['maxDiffVsElmerUMFPACK'] for r in R if r['code'] == SKFEM):.1e}, the rounding of the 8 significant digits that Elmer writes its results with.\n" if HAS_SKFEM else "")
+SKFEM_NOTE = (f"\nscikit-fem's nodal temperatures match FEAScript's (`lusolve`) to within {max(r['maxDiffVsFEAScript'] for r in R if r['code'] == SKFEM and 'maxDiffVsFEAScript' in r):.1e} and Elmer's (UMFPACK) to within {max(r['maxDiffVsElmerUMFPACK'] for r in R if r['code'] == SKFEM):.1e}.\n" if HAS_SKFEM else "")
 JACOBI_NOTE = (f"\nWhere the Jacobi solver converged (residual tolerance 1e-8 within 10,000 iterations), its temperatures match Elmer's to within {max(r.get('maxDiffVsElmerUMFPACK') or 0 for r in jacobi):.1e}: it stops at a residual tolerance, so its error grows with the mesh.\n" if jacobi else "")
 failed = [r for r in ALL if "failed" in r]
 rows = [("FEAScript version", meta["feascriptVersion"]),

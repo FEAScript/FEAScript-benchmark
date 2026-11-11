@@ -19,6 +19,8 @@ from scipy.spatial import cKDTree
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from browser import runner as browser_runner
+from elmer_vtu import read_vtu as read_elmer_vtu
+import refresh_elmer as refresh
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 GMSH_MESHES = os.path.join(HERE, "gmsh", "meshes")  # generated from gmsh/fin.geo
@@ -91,7 +93,26 @@ def make_meshes(shape, order, h, name):
         shutil.copy(msh, ELMER_MESHES)
         subprocess.run(["ElmerGrid", "14", "2", f"{name}.msh", "-autoclean"], check=True, capture_output=True, cwd=ELMER_MESHES)
         os.remove(os.path.join(ELMER_MESHES, f"{name}.msh"))
+    restore_coordinates(msh, elmer)
     return msh, elmer
+
+
+def restore_coordinates(msh, elmer):
+    """Give the ElmerGrid mesh the exact node coordinates of the Gmsh mesh.
+
+    ElmerGrid writes the coordinates with 12 significant digits, which moves the nodes of an unstructured mesh by
+    up to about 1e-11 and changes Elmer's temperatures by up to about 1e-9. With the exact coordinates, Elmer
+    solves on the same mesh as the other codes.
+    """
+    import meshio
+    exact = meshio.read(msh).points[:, :2]
+    path = os.path.join(elmer, "mesh.nodes")
+    rows = [line.split() for line in open(path)]
+    distance, nearest = cKDTree(exact).query(np.array([[float(r[2]), float(r[3])] for r in rows]))
+    if distance.max() > 1e-9:
+        raise RuntimeError(f"{path}: a node is {distance.max()} from the nearest Gmsh node")
+    with open(path, "w") as f:
+        f.writelines(f"{r[0]} {r[1]} {float(exact[k, 0])!r} {float(exact[k, 1])!r} {r[4]}\n" for r, k in zip(rows, nearest))
 
 
 def run_measured(cmd, timeout=None, **kwargs):
@@ -143,13 +164,8 @@ def run_elmer(mesh, write_output):
 
 
 def read_vtu(path):
-    txt = open(path).read()
-    def arr(name):
-        m = re.search(rf'<DataArray[^>]*Name="{name}"[^>]*>(.*?)</DataArray>', txt, re.S)
-        return np.array(m.group(1).split(), float)
-    pts = re.search(r"<Points>\s*<DataArray[^>]*>(.*?)</DataArray>", txt, re.S).group(1).split()
-    pts = np.array(pts, float).reshape(-1, 3)
-    return pts[:, 0], pts[:, 1], arr("temperature")
+    pts, data = read_elmer_vtu(path)
+    return pts[:, 0], pts[:, 1], data["temperature"]
 
 
 def run_timed(cmd, timeout=None):
@@ -191,7 +207,7 @@ def errors(field):
 
 
 def max_difference(field, ref):
-    """Largest difference at the same nodes. Unstructured coordinates are matched by distance, since Elmer rounds them."""
+    """Largest difference at the same nodes. Unstructured coordinates are matched by distance, since the codes may number them differently."""
     distance, nearest = cKDTree(np.c_[ref[0], ref[1]]).query(np.c_[field[0], field[1]])
     if distance.max() > 1e-5:
         raise RuntimeError(f"the nodes of two codes differ, by up to {distance.max()}")
@@ -231,6 +247,44 @@ def record(name, shape, order, h, code, runs, field, nodes):
             "solve": statistics.median(r["wall"] for r in runs), "linsolve": statistics.median(r["linsolve"] for r in runs),
             "process": statistics.median(r["process"] for r in keep), "peakMemoryMB": statistics.median(r["peakMemory"] for r in keep),
             "nruns": len(runs), **errors(field)}
+
+
+def compare(name, fields, results):
+    """Compare every code with FEAScript, at the same nodes."""
+    if "FEAScript sparse LU" in fields:
+        ref = fields["FEAScript sparse LU"]
+        for r in results:
+            if r["case"] == name and r["code"] in fields:
+                r["maxDiffVsFEAScript"] = max_difference(fields[r["code"]], ref)
+
+
+def refresh_elmer():
+    """REFRESH_ELMER=1: write Elmer's nodal results again, and recompute the accuracy of every report of this machine."""
+    for shape, order, h in CASES:
+        name = f"{shape}-{order}-h{h}"
+        if ONLY and name not in ONLY.split(","):
+            continue
+        _, elmer_mesh = make_meshes(shape, order, h, name)
+        field = run_elmer(elmer_mesh, True)["field"]
+        np.savetxt(os.path.join(ELMER_OUT, f"{name}.csv"), np.column_stack(field), delimiter=",", header="x,y,T", comments="", fmt="%.17g")
+        print(f"== {name}: Elmer results written", flush=True)
+    every = []
+    for version, path, results, meta in refresh.reports(HERE, MACHINE):
+        fea = os.path.join(HERE, "feascript", "results", MACHINE, version, "node", meta["node"].lstrip("v"))
+        skfem = os.path.join(SKFEM_OUT, "..", meta["skfemVersion"])
+        csvs = lambda name: {**{cfg: os.path.join(fea, f"{m}_{name}.csv") for cfg, m in FEA_CFGS.items()},
+                             **{cfg: os.path.join(skfem, f"{i}_{name}.csv") for cfg, i in SKFEM_CFGS.items()},
+                             ELMER: os.path.join(ELMER_OUT, "..", meta["elmerVersion"], f"{name}.csv")}
+        for name in dict.fromkeys(r["case"] for r in results):
+            rows = {r["code"]: r for r in results if r["case"] == name and "failed" not in r}
+            fields = {cfg: read_csv(csvs(name)[cfg]) for cfg in rows}
+            rows[ELMER].update(errors(fields[ELMER]))
+            compare(name, fields, results)
+        with open(path, "w") as f:
+            json.dump(results, f, indent=1)
+        print(f"== {version}: accuracy recomputed", flush=True)
+        every += results
+    refresh.sync_code_results(HERE, MACHINE, every, ["maxErr", "rmsErr", "maxDiffVsFEAScript"])
 
 
 def run_codes():
@@ -275,12 +329,7 @@ def run_codes():
         fields[ELMER] = first["field"]
         np.savetxt(os.path.join(ELMER_OUT, f"{name}.csv"), np.column_stack(first["field"]), delimiter=",", header="x,y,T", comments="", fmt="%.17g")
         results.append(record(name, shape, order, h, ELMER, [run_elmer(elmer_mesh, False) for _ in range(REPS)], fields[ELMER], len(first["field"][0])))
-        # Compare every code with FEAScript, at the same nodes
-        if "FEAScript sparse LU" in fields:
-            ref = fields["FEAScript sparse LU"]
-            for r in results:
-                if r["case"] == name and r["code"] in fields:
-                    r["maxDiffVsFEAScript"] = max_difference(fields[r["code"]], ref)
+        compare(name, fields, results)
         for r in results:
             if r["case"] == name:
                 print(json.dumps(r), flush=True)
@@ -303,6 +352,8 @@ def browser_cases():
 
 
 def main():
+    if os.environ.get("REFRESH_ELMER"):
+        return refresh_elmer()
     # NO_BROWSERS=1 runs only the codes, e.g. for a release older than the browser benchmarks, and ONLY_BROWSERS=1 only the browsers
     if not os.environ.get("ONLY_BROWSERS"):
         run_codes()

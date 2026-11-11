@@ -19,6 +19,8 @@ import numpy as np
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from browser import runner as browser_runner
+from elmer_vtu import read_vtu as read_elmer_vtu
+import refresh_elmer as refresh
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 MESHES = os.path.join(HERE, "elmer", "meshes")  # shared ElmerGrid meshes
@@ -118,13 +120,8 @@ Element Divisions 2 = {n}
 
 
 def read_vtu(path):
-    txt = open(path).read()
-    def arr(name, ncomp):
-        m = re.search(rf'<DataArray[^>]*Name="{name}"[^>]*>(.*?)</DataArray>', txt, re.S)
-        return np.array(m.group(1).split(), float).reshape(-1, ncomp)
-    pts = np.array(re.search(r"<Points>\s*<DataArray[^>]*>(.*?)</DataArray>", txt, re.S).group(1).split(), float).reshape(-1, 3)
-    vel = arr("velocity", 3)
-    return pts[:, 0], pts[:, 1], vel[:, 0], vel[:, 1], arr("pressure", 1)[:, 0]
+    pts, data = read_elmer_vtu(path)
+    return pts[:, 0], pts[:, 1], data["velocity"][:, 0], data["velocity"][:, 1], data["pressure"]
 
 
 def run_measured(cmd, timeout=None, **kwargs):
@@ -241,6 +238,68 @@ def write_code_results(results):
             json.dump(list(rows.values()), f, indent=1)
 
 
+def compare(name, n, fields, results, fea_out, skfem_out, elmer_out):
+    """Compare every code with Elmer UMFPACK at the shared (vertex) nodes and on the centerline, and scikit-fem with FEAScript."""
+    ref = keyed(fields["Elmer UMFPACK"])
+    for cfg, field in fields.items():
+        D = keyed(field)
+        common = list(ref.keys() & D.keys())
+        far = [k for k in common if min((k[0] - c) ** 2 + (k[1] - 1) ** 2 for c in (0, 1)) > CORNER_RADIUS ** 2]
+        ys, u, psi, ypsi = centerline(D, n)
+        tag = re.sub(r"\W+", "_", cfg)
+        folder = fea_out if cfg.startswith("FEAScript") else skfem_out if cfg == SKFEM else elmer_out
+        np.savetxt(os.path.join(folder, f"centerline_{tag}_{name}.dat"), np.c_[ys, u],
+                   header="y u(0.5, y)")
+        for r in results:
+            if r["case"] == name and r["code"] == cfg:
+                r.update({"psiMin": psi, "psiMinY": ypsi,
+                          "maxDiffVelocity": max(max(abs(D[k][0] - ref[k][0]), abs(D[k][1] - ref[k][1])) for k in common),
+                          "maxDiffVelocityAwayFromCorners": max(max(abs(D[k][0] - ref[k][0]), abs(D[k][1] - ref[k][1])) for k in far),
+                          "matchedNodes": len(common)})
+    # scikit-fem sets the lid velocity like FEAScript, so the two are compared directly, at all their nodes
+    if "FEAScript sparse LU" in fields and SKFEM in fields:
+        A, B = keyed(fields[SKFEM]), keyed(fields["FEAScript sparse LU"])
+        common = A.keys() & B.keys()
+        for r in results:
+            if r["case"] == name and r["code"] == SKFEM:
+                r["maxDiffVelocityVsFEAScript"] = max(max(abs(A[k][0] - B[k][0]), abs(A[k][1] - B[k][1])) for k in common)
+                r["matchedNodesVsFEAScript"] = len(common)
+                r["maxDiffPressureVsFEAScript"] = float(np.nanmax([abs(A[k][2] - B[k][2]) for k in common]))  # at the mesh vertices
+
+
+def refresh_elmer():
+    """REFRESH_ELMER=1: write Elmer's nodal results again, and recompute the accuracy of every report of this machine."""
+    for n in SIZES:
+        name = f"{n}x{n}"
+        if ONLY and str(n) not in ONLY.split(","):
+            continue
+        for cfg in LINSYS:
+            tag = re.sub(r"\W+", "_", cfg)
+            field = run_elmer(n, cfg, True)["field"]
+            np.savetxt(os.path.join(ELMER_OUT, f"{tag}_{name}.csv"), np.column_stack(field), delimiter=",", header="x,y,u,v,p", comments="", fmt="%.17g")
+        print(f"== {name}: Elmer results written", flush=True)
+    every = []
+    for version, path, results, meta in refresh.reports(HERE, MACHINE):
+        fea = os.path.join(HERE, "feascript", "results", MACHINE, version, "node", meta["node"].lstrip("v"))
+        skfem = os.path.join(SKFEM_OUT, "..", meta["skfemVersion"]) if meta.get("skfemVersion") else None
+        elmer = os.path.join(ELMER_OUT, "..", meta["elmerVersion"])
+        for name in dict.fromkeys(r["case"] for r in results):
+            rows = {r["code"]: r for r in results if r["case"] == name and "failed" not in r}
+            csvs = {"FEAScript sparse LU": os.path.join(fea, f"{name}.csv"), SKFEM: skfem and os.path.join(skfem, f"{name}.csv"),
+                    **{cfg: os.path.join(elmer, re.sub(r"\W+", "_", cfg) + f"_{name}.csv") for cfg in LINSYS}}
+            fields = {}
+            for cfg in rows:
+                d = np.loadtxt(csvs[cfg], delimiter=",", skiprows=1)
+                fields[cfg] = tuple(d[:, i] for i in range(5))
+            compare(name, rows["Elmer UMFPACK"]["n"], fields, results, fea, skfem, elmer)
+        with open(path, "w") as f:
+            json.dump(results, f, indent=1)
+        print(f"== {version}: accuracy recomputed", flush=True)
+        every += results
+    refresh.sync_code_results(HERE, MACHINE, every, ["psiMin", "psiMinY", "maxDiffVelocity", "maxDiffVelocityAwayFromCorners", "matchedNodes",
+                                                     "maxDiffVelocityVsFEAScript", "matchedNodesVsFEAScript", "maxDiffPressureVsFEAScript"])
+
+
 def run_codes():
     write_meta()
     out = os.path.join(RUN, "results.json")
@@ -295,32 +354,7 @@ def run_codes():
                             "solve": statistics.median(r["solve"] for r in runs),
                             "linsolve": statistics.median(r["linsolve"] for r in runs),
                             "process": statistics.median(r["wall"] for r in runs), "peakMemoryMB": statistics.median(r["peakMemory"] for r in runs), "nruns": len(runs)})
-        # Compare every code with Elmer UMFPACK at the shared (vertex) nodes, and on the centerline
-        ref = keyed(fields["Elmer UMFPACK"])
-        for cfg, field in fields.items():
-            D = keyed(field)
-            common = list(ref.keys() & D.keys())
-            far = [k for k in common if min((k[0] - c) ** 2 + (k[1] - 1) ** 2 for c in (0, 1)) > CORNER_RADIUS ** 2]
-            ys, u, psi, ypsi = centerline(D, n)
-            tag = re.sub(r"\W+", "_", cfg)
-            folder = FEA_OUT if cfg.startswith("FEAScript") else SKFEM_OUT if cfg == SKFEM else ELMER_OUT
-            np.savetxt(os.path.join(folder, f"centerline_{tag}_{name}.dat"), np.c_[ys, u],
-                       header="y u(0.5, y)")
-            for r in results:
-                if r["case"] == name and r["code"] == cfg:
-                    r.update({"psiMin": psi, "psiMinY": ypsi,
-                              "maxDiffVelocity": max(max(abs(D[k][0] - ref[k][0]), abs(D[k][1] - ref[k][1])) for k in common),
-                              "maxDiffVelocityAwayFromCorners": max(max(abs(D[k][0] - ref[k][0]), abs(D[k][1] - ref[k][1])) for k in far),
-                              "matchedNodes": len(common)})
-        # scikit-fem sets the lid velocity like FEAScript, so the two are compared directly, at all their nodes
-        if "FEAScript sparse LU" in fields:
-            A, B = keyed(fields[SKFEM]), keyed(fields["FEAScript sparse LU"])
-            common = A.keys() & B.keys()
-            for r in results:
-                if r["case"] == name and r["code"] == SKFEM:
-                    r["maxDiffVelocityVsFEAScript"] = max(max(abs(A[k][0] - B[k][0]), abs(A[k][1] - B[k][1])) for k in common)
-                    r["matchedNodesVsFEAScript"] = len(common)
-                    r["maxDiffPressureVsFEAScript"] = float(np.nanmax([abs(A[k][2] - B[k][2]) for k in common]))  # at the mesh vertices
+        compare(name, n, fields, results, FEA_OUT, SKFEM_OUT, ELMER_OUT)
         for r in results:
             if r["case"] == name:
                 print(json.dumps({k: v for k, v in r.items()}), flush=True)
@@ -340,6 +374,8 @@ def browser_cases():
 
 
 def main():
+    if os.environ.get("REFRESH_ELMER"):
+        return refresh_elmer()
     # NO_BROWSERS=1 runs only the codes, e.g. for a release older than the browser benchmarks, and ONLY_BROWSERS=1 only the browsers
     if not os.environ.get("ONLY_BROWSERS"):
         run_codes()

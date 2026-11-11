@@ -12,8 +12,8 @@
   "nruns": 5,
   "psiMin": -0.09647063492078783,
   "psiMinY": 0.738167952732325,
-  "maxDiffVelocity": 0.1736571879162581,
-  "maxDiffVelocityAwayFromCorners": 0.08007070355280743,
+  "maxDiffVelocity": 0.17365718847096034,
+  "maxDiffVelocityAwayFromCorners": 0.0800707010812842,
   "matchedNodes": 81
  },
  {
@@ -29,8 +29,8 @@
   "nruns": 5,
   "psiMin": -0.09901171672175868,
   "psiMinY": 0.7584487538843743,
-  "maxDiffVelocity": 0.1744165364637556,
-  "maxDiffVelocityAwayFromCorners": 0.011582168237232508,
+  "maxDiffVelocity": 0.1744165378981573,
+  "maxDiffVelocityAwayFromCorners": 0.011582168618974598,
   "matchedNodes": 289
  },
  {
@@ -46,8 +46,8 @@
   "nruns": 5,
   "psiMin": -0.0995917515853259,
   "psiMinY": 0.7625437077898954,
-  "maxDiffVelocity": 0.17442222971687626,
-  "maxDiffVelocityAwayFromCorners": 0.0052794530051282346,
+  "maxDiffVelocity": 0.17442223078038266,
+  "maxDiffVelocityAwayFromCorners": 0.0052794528261474565,
   "matchedNodes": 625
  },
  {
@@ -63,8 +63,8 @@
   "nruns": 5,
   "psiMin": -0.09980447971291367,
   "psiMinY": 0.764000257220297,
-  "maxDiffVelocity": 0.17442230774988507,
-  "maxDiffVelocityAwayFromCorners": 0.0010529375376903075,
+  "maxDiffVelocity": 0.17442230845953818,
+  "maxDiffVelocityAwayFromCorners": 0.0010529380030450536,
   "matchedNodes": 1089
  },
  {
@@ -80,8 +80,8 @@
   "nruns": 5,
   "psiMin": -0.09997461055604606,
   "psiMinY": 0.7644036549830241,
-  "maxDiffVelocity": 0.1744217300498679,
-  "maxDiffVelocityAwayFromCorners": 0.00010080148707633865,
+  "maxDiffVelocity": 0.1744217308261559,
+  "maxDiffVelocityAwayFromCorners": 0.00010080152392734961,
   "matchedNodes": 2401
  },
  {
@@ -97,8 +97,8 @@
   "nruns": 5,
   "psiMin": -0.10001588638171521,
   "psiMinY": 0.7645987924373518,
-  "maxDiffVelocity": 0.1744214149258146,
-  "maxDiffVelocityAwayFromCorners": 4.933339511836721e-05,
+  "maxDiffVelocity": 0.1744214122598686,
+  "maxDiffVelocityAwayFromCorners": 4.933449797206446e-05,
   "matchedNodes": 4225
  }
 ]

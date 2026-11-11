@@ -116,7 +116,7 @@ md = f"""# Results for FEAScript {VERSION} on {meta['cpu']}
 """ + "".join(f"| {k} | {v} |\n" for k, v in rows) + f"""
 All the numbers are in [results_table.md](results_table.md) and [results.json](results.json).
 
-On every mesh it solved, with triangles and quadrilaterals, FEAScript's nodal temperatures match scikit-fem's to within {matched:.1e} when scikit-fem uses the same Gauss rules, and Elmer's (UMFPACK) to within {elmer:.1e}, the rounding of the 8 significant digits that Elmer writes its results with. The `frontal` and `lusolve` solvers agree to within {direct:.1e}.
+On every mesh it solved, with triangles and quadrilaterals, FEAScript's nodal temperatures match scikit-fem's to within {matched:.1e} when scikit-fem uses the same Gauss rules, and Elmer's (UMFPACK) to within {elmer:.1e}. The `frontal` and `lusolve` solvers agree to within {direct:.1e}.
 
 On distorted quadrilaterals these Gauss rules are not exact. With a much finer rule, scikit-fem's RMS error is lower than FEAScript's by {min(gains):.1f}% to {max(gains):.1f}%. On triangles the rules are exact, so the finer rule changes nothing.
 """ + ("\nRuns that could not be measured:\n" + "".join(f"\n- **{r['code']}, {r['case']}:** {r['failed']}" for r in failed) + "\n" if failed else "") + browser_report.no_repeat(ALL) + """

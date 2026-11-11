@@ -45,7 +45,7 @@ Each report has a README with the plots of that run, a table of all the numbers 
 On each mesh, the benchmark runs:
 
 - **FEAScript:** the `frontal` and `lusolve` direct solvers, reading the `.msh` file with `importGmshMesh`
-- **Elmer:** the UMFPACK direct solver, on the mesh converted with ElmerGrid
+- **Elmer:** the UMFPACK direct solver, on the mesh converted with ElmerGrid. ElmerGrid writes the node coordinates with 12 significant digits, which changes Elmer's temperatures by up to about 1e-9, so the benchmark gives its mesh the exact coordinates of the Gmsh mesh
 - **scikit-fem:** its default direct solver (SuperLU from SciPy), reading the `.msh` file with [meshio](https://github.com/nschloe/meshio), once with the Gauss rules of FEAScript and once with a much finer rule
 
 FEAScript also runs in Chromium and Firefox on the three finest quadratic meshes of each shape, with `frontal` and `lusolve`: see [Browsers](../README.md#browsers).

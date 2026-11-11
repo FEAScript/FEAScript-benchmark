@@ -77,9 +77,9 @@
   "process": 0.43356313000003865,
   "peakMemoryMB": 29.05859375,
   "nruns": 5,
-  "maxErr": 0.681492197767966,
-  "rmsErr": 0.06597854060475994,
-  "maxDiffVsFEAScript": 4.990047756336935e-06
+  "maxErr": 0.681491170209199,
+  "rmsErr": 0.06597855869776506,
+  "maxDiffVsFEAScript": 4.263256414560601e-13
  },
  {
   "case": "tri-linear-h0.1",
@@ -159,9 +159,9 @@
   "process": 0.43583428300007654,
   "peakMemoryMB": 30.33203125,
   "nruns": 5,
-  "maxErr": 0.4206265953267234,
-  "rmsErr": 0.025575098339721748,
-  "maxDiffVsFEAScript": 4.9898598888376e-06
+  "maxErr": 0.420623096788205,
+  "rmsErr": 0.02557511080912702,
+  "maxDiffVsFEAScript": 7.389644451905042e-13
  },
  {
   "case": "tri-linear-h0.05",
@@ -241,9 +241,9 @@
   "process": 0.49296360899961655,
   "peakMemoryMB": 35.62890625,
   "nruns": 5,
-  "maxErr": 0.2815484151711871,
-  "rmsErr": 0.008791617731323538,
-  "maxDiffVsFEAScript": 4.999165653885029e-06
+  "maxErr": 0.28155294231979155,
+  "rmsErr": 0.00879164167010638,
+  "maxDiffVsFEAScript": 5.314859663485549e-12
  },
  {
   "case": "tri-linear-h0.025",
@@ -314,9 +314,9 @@
   "process": 0.5481033439996281,
   "peakMemoryMB": 59.59375,
   "nruns": 5,
-  "maxErr": 0.15259599628356568,
-  "rmsErr": 0.002678300381217312,
-  "maxDiffVsFEAScript": 4.999954398954287e-06
+  "maxErr": 0.15259577293366533,
+  "rmsErr": 0.0026782509275139568,
+  "maxDiffVsFEAScript": 2.0833113012486137e-11
  },
  {
   "case": "tri-quadratic-h0.2",
@@ -396,9 +396,9 @@
   "process": 0.4749756249998427,
   "peakMemoryMB": 30.26953125,
   "nruns": 5,
-  "maxErr": 0.481786595326696,
-  "rmsErr": 0.018526733787515483,
-  "maxDiffVsFEAScript": 4.9875347656325175e-06
+  "maxErr": 0.48178844059529524,
+  "rmsErr": 0.018526717163557277,
+  "maxDiffVsFEAScript": 1.3358203432289883e-12
  },
  {
   "case": "tri-quadratic-h0.1",
@@ -478,9 +478,9 @@
   "process": 0.495728223000242,
   "peakMemoryMB": 34.45703125,
   "nruns": 5,
-  "maxErr": 0.2681184151711875,
-  "rmsErr": 0.00525444188477687,
-  "maxDiffVsFEAScript": 4.999977647912601e-06
+  "maxErr": 0.26812148393076995,
+  "rmsErr": 0.005254554246199854,
+  "maxDiffVsFEAScript": 2.5011104298755527e-12
  },
  {
   "case": "tri-quadratic-h0.05",
@@ -551,9 +551,9 @@
   "process": 0.5492795530003605,
   "peakMemoryMB": 54.03125,
   "nruns": 5,
-  "maxErr": 0.14174599628356077,
-  "rmsErr": 0.0013960140252628642,
-  "maxDiffVsFEAScript": 4.998766485186934e-06
+  "maxErr": 0.14174176503757963,
+  "rmsErr": 0.0013959373345610645,
+  "maxDiffVsFEAScript": 1.0544454198679887e-11
  },
  {
   "case": "tri-quadratic-h0.025",
@@ -624,9 +624,9 @@
   "process": 0.9306852869999602,
   "peakMemoryMB": 140.26953125,
   "nruns": 5,
-  "maxErr": 0.07276832262255084,
-  "rmsErr": 0.00035867590716175606,
-  "maxDiffVsFEAScript": 4.999937431193757e-06
+  "maxErr": 0.07276516581126202,
+  "rmsErr": 0.0003586855872105548,
+  "maxDiffVsFEAScript": 1.6200374375330284e-11
  },
  {
   "case": "quad-linear-h0.4",
@@ -706,9 +706,9 @@
   "process": 0.46975000299971725,
   "peakMemoryMB": 29.1953125,
   "nruns": 5,
-  "maxErr": 1.7414683330032972,
-  "rmsErr": 0.11955564263707447,
-  "maxDiffVsFEAScript": 4.989690552292814e-06
+  "maxErr": 1.741471004965888,
+  "rmsErr": 0.11955589914797861,
+  "maxDiffVsFEAScript": 4.547473508864641e-13
  },
  {
   "case": "quad-linear-h0.2",
@@ -788,9 +788,9 @@
   "process": 0.47690134799995576,
   "peakMemoryMB": 30.9609375,
   "nruns": 5,
-  "maxErr": 0.8204534046732874,
-  "rmsErr": 0.035504165168739804,
-  "maxDiffVsFEAScript": 4.9966384096933325e-06
+  "maxErr": 0.8204554257469567,
+  "rmsErr": 0.035504268977202505,
+  "maxDiffVsFEAScript": 7.958078640513122e-13
  },
  {
   "case": "quad-linear-h0.1",
@@ -870,9 +870,9 @@
   "process": 0.49672007999970447,
   "peakMemoryMB": 36.82421875,
   "nruns": 5,
-  "maxErr": 0.3960215848288158,
-  "rmsErr": 0.01042156061816984,
-  "maxDiffVsFEAScript": 4.99920130891951e-06
+  "maxErr": 0.39602446813771053,
+  "rmsErr": 0.010421585044241732,
+  "maxDiffVsFEAScript": 1.8189894035458565e-12
  },
  {
   "case": "quad-linear-h0.05",
@@ -943,9 +943,9 @@
   "process": 0.5579416610003136,
   "peakMemoryMB": 66.19140625,
   "nruns": 5,
-  "maxErr": 0.19104400371642782,
-  "rmsErr": 0.0029596903256849153,
-  "maxDiffVsFEAScript": 4.998773988518224e-06
+  "maxErr": 0.19104533844765115,
+  "rmsErr": 0.0029596257904448793,
+  "maxDiffVsFEAScript": 1.5631940186722204e-11
  },
  {
   "case": "quad-quadratic-h0.4",
@@ -1025,9 +1025,9 @@
   "process": 0.4803537200000392,
   "peakMemoryMB": 31.06640625,
   "nruns": 5,
-  "maxErr": 0.36398166699672174,
-  "rmsErr": 0.0141724159687233,
-  "maxDiffVsFEAScript": 4.998544937961924e-06
+  "maxErr": 0.36398160818635006,
+  "rmsErr": 0.014172507818894292,
+  "maxDiffVsFEAScript": 1.7621459846850485e-12
  },
  {
   "case": "quad-quadratic-h0.2",
@@ -1107,9 +1107,9 @@
   "process": 0.4983947480000097,
   "peakMemoryMB": 38.65234375,
   "nruns": 5,
-  "maxErr": 0.17701659532670533,
-  "rmsErr": 0.0036498204634998112,
-  "maxDiffVsFEAScript": 4.999229958002616e-06
+  "maxErr": 0.17701741590263964,
+  "rmsErr": 0.0036498570425279844,
+  "maxDiffVsFEAScript": 2.4158453015843406e-12
  },
  {
   "case": "quad-quadratic-h0.1",
@@ -1180,9 +1180,9 @@
   "process": 0.5981268800001089,
   "peakMemoryMB": 67.21875,
   "nruns": 5,
-  "maxErr": 0.08716841517119178,
-  "rmsErr": 0.0009341067111745012,
-  "maxDiffVsFEAScript": 4.999489647161681e-06
+  "maxErr": 0.08717227579938935,
+  "rmsErr": 0.0009341434729278362,
+  "maxDiffVsFEAScript": 1.0345502232667059e-11
  },
  {
   "case": "quad-quadratic-h0.05",
@@ -1253,8 +1253,8 @@
   "process": 1.1408025450000423,
   "peakMemoryMB": 177.46875,
   "nruns": 5,
-  "maxErr": 0.04324599628355941,
-  "rmsErr": 0.00023525898554485077,
-  "maxDiffVsFEAScript": 4.999758871804261e-06
+  "maxErr": 0.043246186743999715,
+  "rmsErr": 0.00023522083577427378,
+  "maxDiffVsFEAScript": 2.7270630198472645e-11
  }
 ]

@@ -53,7 +53,7 @@ Solver 2
   Procedure = "ResultOutputSolve" "ResultOutputSolver"
   Output File Name = @OUTNAME@
   Output Format = Vtu
-  Ascii Output = True
+  Binary Output = True  ! full double precision (the ASCII output has 8 significant digits)
   Single Precision = False
 End
 

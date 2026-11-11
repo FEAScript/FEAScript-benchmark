@@ -18,6 +18,8 @@ import numpy as np
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from browser import runner as browser_runner
+from elmer_vtu import read_vtu as read_elmer_vtu
+import refresh_elmer as refresh
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 MESHES = os.path.join(HERE, "elmer", "meshes")  # shared ElmerGrid meshes
@@ -99,6 +101,7 @@ MESHGEN = {}
 def make_mesh(order, nx, ny):
     d = os.path.join(MESHES, f"{order}_{nx}x{ny}")
     if os.path.exists(os.path.join(d, "mesh.header")):
+        restore_coordinates(d, order, nx, ny)
         return d
     os.makedirs(os.path.dirname(d), exist_ok=True)
     grd = os.path.join(MESHES, f"{order}_{nx}x{ny}.grd")
@@ -128,7 +131,24 @@ Element Divisions 2 = {ny}
     t0 = time.perf_counter()
     subprocess.run(PIN + ["ElmerGrid", "1", "2", grd, "-out", d], check=True, capture_output=True, env=ENV)
     MESHGEN[f"{order}-{nx}x{ny}"] = time.perf_counter() - t0
+    restore_coordinates(d, order, nx, ny)
     return d
+
+
+def restore_coordinates(d, order, nx, ny):
+    """Give the ElmerGrid mesh the exact node coordinates of the grid, k * 4 / Nx and k * 2 / Ny.
+
+    ElmerGrid writes the coordinates with 12 significant digits. On a mesh such as 77 x 39, whose spacing has no
+    short decimal form, that moves the nodes by up to about 1e-12 and changes Elmer's temperatures by up to about
+    1e-9. With the exact coordinates, Elmer solves on the same mesh as the other codes.
+    """
+    Nx, Ny = (nx, ny) if order == "linear" else (2 * nx, 2 * ny)
+    path = os.path.join(d, "mesh.nodes")
+    rows = [line.split() for line in open(path)]
+    with open(path, "w") as f:
+        for r in rows:
+            i, j = round(float(r[2]) * Nx / 4), round(float(r[3]) * Ny / 2)
+            f.write(f"{r[0]} {r[1]} {i * 4 / Nx!r} {j * 2 / Ny!r} {r[4]}\n")
 
 
 def run_measured(cmd, timeout=None, **kwargs):
@@ -185,13 +205,8 @@ def run_elmer(mesh, cfg, write_output):
 
 
 def read_vtu(path):
-    txt = open(path).read()
-    def arr(name):
-        m = re.search(rf'<DataArray[^>]*Name="{name}"[^>]*>(.*?)</DataArray>', txt, re.S)
-        return np.array(m.group(1).split(), float)
-    pts = re.search(r"<Points>\s*<DataArray[^>]*>(.*?)</DataArray>", txt, re.S).group(1).split()
-    pts = np.array(pts, float).reshape(-1, 3)
-    return pts[:, 0], pts[:, 1], arr("temperature")
+    pts, data = read_elmer_vtu(path)
+    return pts[:, 0], pts[:, 1], data["temperature"]
 
 
 def run_fea(order, nx, ny, method, csv=None, warm=0):
@@ -269,6 +284,60 @@ def write_code_results(results):
             json.dump(list(rows.values()), f, indent=1)
 
 
+def compare(name, fields, results):
+    """Code-to-code agreement on identical nodes, with Elmer UMFPACK, and of scikit-fem with FEAScript."""
+    ref = keyed(*fields["Elmer UMFPACK"])
+    for cfg, f in fields.items():  # (failed runs have no field)
+        k = keyed(*f)
+        common = ref.keys() & k.keys()
+        diff = max(abs(k[c] - ref[c]) for c in common)
+        for r in results:
+            if r["case"] == name and r["code"] == cfg:
+                r["maxDiffVsElmerUMFPACK"] = diff; r["matchedNodes"] = len(common)
+    if "FEAScript sparse LU" in fields and SKFEM in fields:
+        A, B = keyed(*fields[SKFEM]), keyed(*fields["FEAScript sparse LU"])
+        for r in results:
+            if r["case"] == name and r["code"] == SKFEM:
+                r["maxDiffVsFEAScript"] = max(abs(A[c] - B[c]) for c in A.keys() & B.keys())
+
+
+def refresh_elmer():
+    """REFRESH_ELMER=1: write Elmer's nodal results again, and recompute the accuracy of every report of this machine."""
+    for order, nx, ny in CASES:
+        name = f"{order}-{nx}x{ny}"
+        if ONLY and name not in ONLY.split(","):
+            continue
+        mesh = make_mesh(order, nx, ny)
+        for cfg in ELMER_CFGS:
+            tag = re.sub(r"\W+", "_", cfg)
+            field = run_elmer(mesh, cfg, True)["field"]
+            np.savetxt(os.path.join(ELMER_OUT, f"{tag}_{name}.csv"), np.column_stack(field), delimiter=",", header="x,y,T", comments="", fmt="%.17g")
+        print(f"== {name}: Elmer results written", flush=True)
+    every = []
+    for version, path, results, meta in refresh.reports(HERE, MACHINE):
+        fea = os.path.join(HERE, "feascript", "results", MACHINE, version, "node", meta["node"].lstrip("v"))
+        skfem = os.path.join(SKFEM_OUT, "..", meta["skfemVersion"]) if meta.get("skfemVersion") else None
+        elmer = os.path.join(ELMER_OUT, "..", meta["elmerVersion"])
+        for name in dict.fromkeys(r["case"] for r in results):
+            rows = {r["code"]: r for r in results if r["case"] == name and "failed" not in r}
+            csvs = {**{cfg: os.path.join(fea, f"{m}_{name}.csv") for cfg, m in FEA_CFGS.items()},
+                    **{cfg: os.path.join(elmer, re.sub(r"\W+", "_", cfg) + f"_{name}.csv") for cfg in ELMER_CFGS}}
+            if skfem:
+                csvs[SKFEM] = os.path.join(skfem, f"{name}.csv")
+            fields = {}
+            for cfg in rows:
+                d = np.loadtxt(csvs[cfg], delimiter=",", skiprows=1)
+                fields[cfg] = (d[:, 0], d[:, 1], d[:, 2])
+                if cfg in ELMER_CFGS:
+                    rows[cfg].update(errors(fields[cfg]))
+            compare(name, fields, results)
+        with open(path, "w") as f:
+            json.dump(results, f, indent=1)
+        print(f"== {version}: accuracy recomputed", flush=True)
+        every += results
+    refresh.sync_code_results(HERE, MACHINE, every, ["maxErr", "rmsErr", "Ttip", "maxDiffVsElmerUMFPACK", "matchedNodes", "maxDiffVsFEAScript"])
+
+
 def run_codes():
     write_meta()
     # RESUME=1 keeps the cases already in results.json and runs only the missing ones
@@ -340,21 +409,7 @@ def run_codes():
                    "linsolve": statistics.median(r["linsolve"] for r in runs),
                    "nsolves": first["nsolves"], "nruns": len(runs), **errors(first["field"])}
             results.append(rec); print(json.dumps(rec), flush=True)
-        # Code-to-code agreement on identical nodes
-        ref = keyed(*fields["Elmer UMFPACK"])
-        for cfg, f in fields.items():  # (failed runs have no field)
-            k = keyed(*f)
-            common = ref.keys() & k.keys()
-            diff = max(abs(k[c] - ref[c]) for c in common)
-            for r in results:
-                if r["case"] == name and r["code"] == cfg:
-                    r["maxDiffVsElmerUMFPACK"] = diff; r["matchedNodes"] = len(common)
-        # Elmer writes 8 significant digits, so scikit-fem and FEAScript are also compared directly
-        if "FEAScript sparse LU" in fields:
-            A, B = keyed(*fields[SKFEM]), keyed(*fields["FEAScript sparse LU"])
-            for r in results:
-                if r["case"] == name and r["code"] == SKFEM:
-                    r["maxDiffVsFEAScript"] = max(abs(A[c] - B[c]) for c in A.keys() & B.keys())
+        compare(name, fields, results)
         print("   max |T - T_ElmerUMFPACK|: " + ", ".join(f"{r['code']}: {r['maxDiffVsElmerUMFPACK']:.2e}" for r in results if r["case"] == name and "maxDiffVsElmerUMFPACK" in r), flush=True)
         with open(os.path.join(RUN, os.environ.get("OUTNAME", "results.json")), "w") as f:
             json.dump(results, f, indent=1)
@@ -377,6 +432,8 @@ def browser_cases():
 
 
 def main():
+    if os.environ.get("REFRESH_ELMER"):
+        return refresh_elmer()
     # NO_BROWSERS=1 runs only the codes, e.g. for a release older than the browser benchmarks, and ONLY_BROWSERS=1 only the browsers
     if not os.environ.get("ONLY_BROWSERS"):
         run_codes()

@@ -40,6 +40,8 @@ heatConduction2DFin/
     <FEAScript version>/   README, plots, results table, meta.json, results.json, run.log
     by-version/            FEAScript's speed-up by version
 browser/              runs the cases of any benchmark in headless browsers
+elmer_vtu.py          reads Elmer's binary VTU results
+refresh_elmer.py      shared steps of REFRESH_ELMER=1
 ```
 
 The results of each code are kept under its own version, since Elmer and scikit-fem do not change with the FEAScript version. Every run measures all the codes again, so that their times come from the same session: the `results.json` in a code's folder holds its latest numbers, and the one in `reports/` the numbers of all the codes in that run. Machines come first because times can only be compared on the same machine. Nodal results (`.csv`) are not committed.
@@ -50,9 +52,18 @@ To run every benchmark for a FEAScript version, build FEAScript-core and run `ru
 FEASCRIPT_VERSION=0.4.0 ~/.venvs/feascript-benchmark/bin/python run_all.py
 ```
 
+To write Elmer's nodal results again without measuring any times, run a benchmark with `REFRESH_ELMER=1`. It runs Elmer once on each mesh, then recomputes the accuracy columns of every report of the machine from the nodal results stored there, and keeps all the times:
+
+```
+cd heatConduction2DFin && REFRESH_ELMER=1 FEASCRIPT_VERSION=0.4.0 ~/.venvs/feascript-benchmark/bin/python benchmark.py
+```
+
+The timed Elmer runs write no results, so how Elmer writes them does not change any time.
+
 ## How the benchmarks are run
 
 - **Same problem, same meshes:** the codes solve identical meshes, so their nodal results can be compared one to one
+- **Full precision:** every code writes its nodal results in double precision. Elmer writes binary VTU files, since its ASCII VTU files have 8 significant digits
 - **One core:** every timed process is pinned to one core, so neither code gains from multithreading
 - **Fresh processes:** each timing is the median of several fresh processes
 - **FEAScript as users load it:** the benchmarks load the built bundle `dist/feascript.esm.js` from a [FEAScript-core](https://github.com/FEAScript/FEAScript-core) checkout, by default the sibling folder `../FEAScript-core`

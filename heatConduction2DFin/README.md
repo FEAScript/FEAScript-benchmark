@@ -51,13 +51,13 @@ The codes solve the problem on the same structured quadrilateral meshes:
 The meshes have 231 to 51,681 nodes. On each mesh, the benchmark runs:
 
 - **FEAScript:** the `frontal` and `lusolve` direct solvers and the `jacobi` iterative solver (with its defaults: residual tolerance 1e-8 and at most 10,000 iterations, recorded as not converged when it does not reach the tolerance), loaded from the built bundle `dist/feascript.esm.js` as npm and browser users load it, in Node
-- **Elmer:** the BiCGStab (with ILU0), UMFPACK and MUMPS solvers, with 1 steady-state and 1 nonlinear iteration since the problem is linear. ElmerGrid generates the meshes
+- **Elmer:** the BiCGStab (with ILU0), UMFPACK and MUMPS solvers, with 1 steady-state and 1 nonlinear iteration since the problem is linear. ElmerGrid generates the meshes, and the benchmark gives them the exact node coordinates, since ElmerGrid writes them with 12 significant digits
 - **scikit-fem:** its default direct solver (SuperLU from SciPy), with Q1 and Q2 quadrilateral elements. It generates its own mesh, with the same nodes as the others
 - **FEAScript in browsers:** Chromium and Firefox, on the linear meshes 20×10, 80×40, 160×80 and 320×160, with `frontal` and `lusolve`: see [Browsers](../README.md#browsers)
 
 And compares:
 
-- **Accuracy:** the nodal temperatures of each code against the exact solution (RMS and max error) and against each other. scikit-fem is also compared directly with FEAScript, because Elmer writes its results with 8 significant digits, which limits the comparisons with it to about 5e-6
+- **Accuracy:** the nodal temperatures of each code against the exact solution (RMS and max error) and against each other, with Elmer UMFPACK as the reference. scikit-fem is also compared directly with FEAScript
 - **Assembly and solve time:**
   - FEAScript: the time of `model.solve()`, which includes mesh generation
   - Elmer: the `Solver time` of HeatSolver, at 0.01 s resolution

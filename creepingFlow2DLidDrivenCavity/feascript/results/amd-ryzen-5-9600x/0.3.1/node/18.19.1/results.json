@@ -13,7 +13,7 @@
   "psiMin": -0.09937137151499925,
   "psiMinY": 0.7318521843877981,
   "maxDiffVelocity": 1.0,
-  "maxDiffVelocityAwayFromCorners": 0.10938263158540852,
+  "maxDiffVelocityAwayFromCorners": 0.10938262911388529,
   "matchedNodes": 81
  },
  {
@@ -30,7 +30,7 @@
   "psiMin": -0.10032581349516201,
   "psiMinY": 0.7546761623465321,
   "maxDiffVelocity": 1.0,
-  "maxDiffVelocityAwayFromCorners": 0.062098923920850695,
+  "maxDiffVelocityAwayFromCorners": 0.06209892391880819,
   "matchedNodes": 289
  },
  {
@@ -47,7 +47,7 @@
   "psiMin": -0.10045758168208796,
   "psiMinY": 0.7599255218094345,
   "maxDiffVelocity": 1.0,
-  "maxDiffVelocityAwayFromCorners": 0.0620153143670944,
+  "maxDiffVelocityAwayFromCorners": 0.06201531436557485,
   "matchedNodes": 625
  },
  {
@@ -64,7 +64,7 @@
   "psiMin": -0.10045080440756338,
   "psiMinY": 0.762007638201716,
   "maxDiffVelocity": 1.0,
-  "maxDiffVelocityAwayFromCorners": 0.06201688254541501,
+  "maxDiffVelocityAwayFromCorners": 0.062016882548052044,
   "matchedNodes": 1089
  },
  {
@@ -81,7 +81,7 @@
   "psiMin": -0.10040500746829506,
   "psiMinY": 0.7632510843658515,
   "maxDiffVelocity": 1.0,
-  "maxDiffVelocityAwayFromCorners": 0.06201545721547281,
+  "maxDiffVelocityAwayFromCorners": 0.06201545721588698,
   "matchedNodes": 2401
  },
  {
@@ -98,7 +98,7 @@
   "psiMin": -0.10033850398068289,
   "psiMinY": 0.7637006561001608,
   "maxDiffVelocity": 1.0,
-  "maxDiffVelocityAwayFromCorners": 0.062014448938050824,
+  "maxDiffVelocityAwayFromCorners": 0.062014448937780055,
   "matchedNodes": 4225
  }
 ]

@@ -16,7 +16,7 @@
   "maxErr": 1.0230353884226417,
   "rmsErr": 0.11294034385890257,
   "Ttip": 81.29737600044352,
-  "maxDiffVsElmerUMFPACK": 4.963259044643564e-06,
+  "maxDiffVsElmerUMFPACK": 2.2737367544323206e-13,
   "matchedNodes": 231
  },
  {
@@ -36,7 +36,7 @@
   "maxErr": 1.023035388422727,
   "rmsErr": 0.11294034385890397,
   "Ttip": 81.2973760004435,
-  "maxDiffVsElmerUMFPACK": 4.9632589309567265e-06,
+  "maxDiffVsElmerUMFPACK": 3.126388037344441e-13,
   "matchedNodes": 231
  },
  {
@@ -56,7 +56,7 @@
   "maxErr": 1.0230330623556085,
   "rmsErr": 0.11294389713500522,
   "Ttip": 81.2973506884954,
-  "maxDiffVsElmerUMFPACK": 3.714616183003727e-05,
+  "maxDiffVsElmerUMFPACK": 3.353971943909073e-05,
   "matchedNodes": 231
  },
  {
@@ -75,7 +75,7 @@
   "maxErr": 1.0230353884228123,
   "rmsErr": 0.11294034385889748,
   "Ttip": 81.2973760004435,
-  "maxDiffVsElmerUMFPACK": 4.963259016221855e-06,
+  "maxDiffVsElmerUMFPACK": 2.5579538487363607e-13,
   "matchedNodes": 231,
   "maxDiffVsFEAScript": 2.2737367544323206e-13
  },
@@ -94,10 +94,10 @@
   "linsolve": 0.0,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 1.023030599827024,
-  "rmsErr": 0.11294045489891436,
-  "Ttip": 81.297376,
-  "maxDiffVsElmerUMFPACK": 9.999999974752427e-07,
+  "maxErr": 1.023035387036856,
+  "rmsErr": 0.11294034120880969,
+  "Ttip": 81.2973760407593,
+  "maxDiffVsElmerUMFPACK": 5.441202688416524e-08,
   "matchedNodes": 231
  },
  {
@@ -115,9 +115,9 @@
   "linsolve": 0.0,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 1.023030599827024,
-  "rmsErr": 0.11294045583708244,
-  "Ttip": 81.297376,
+  "maxErr": 1.0230353884226133,
+  "rmsErr": 0.11294034385888597,
+  "Ttip": 81.29737600044363,
   "maxDiffVsElmerUMFPACK": 0.0,
   "matchedNodes": 231
  },
@@ -136,10 +136,10 @@
   "linsolve": 0.0,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 1.023030599827024,
-  "rmsErr": 0.11294045583708244,
-  "Ttip": 81.297376,
-  "maxDiffVsElmerUMFPACK": 0.0,
+  "maxErr": 1.023035388422585,
+  "rmsErr": 0.11294034385889606,
+  "Ttip": 81.29737600044356,
+  "maxDiffVsElmerUMFPACK": 2.2737367544323206e-13,
   "matchedNodes": 231
  },
  {
@@ -159,7 +159,7 @@
   "maxErr": 0.5736546955005792,
   "rmsErr": 0.03164044863383125,
   "Ttip": 81.31306337435417,
-  "maxDiffVsElmerUMFPACK": 4.9925585017263074e-06,
+  "maxDiffVsElmerUMFPACK": 7.105427357601002e-13,
   "matchedNodes": 861
  },
  {
@@ -179,7 +179,7 @@
   "maxErr": 0.5736546955002382,
   "rmsErr": 0.031640448634046026,
   "Ttip": 81.31306337435336,
-  "maxDiffVsElmerUMFPACK": 4.992561230210413e-06,
+  "maxDiffVsElmerUMFPACK": 3.410605131648481e-12,
   "matchedNodes": 861
  },
  {
@@ -199,7 +199,7 @@
   "maxErr": 0.5736515710800347,
   "rmsErr": 0.03164959377869978,
   "Ttip": 81.31299057128537,
-  "maxDiffVsElmerUMFPACK": 9.989899244544631e-05,
+  "maxDiffVsElmerUMFPACK": 9.659077683465966e-05,
   "matchedNodes": 861
  },
  {
@@ -218,7 +218,7 @@
   "maxErr": 0.5736546955004087,
   "rmsErr": 0.0316404486338553,
   "Ttip": 81.31306337435433,
-  "maxDiffVsElmerUMFPACK": 4.992558729099983e-06,
+  "maxDiffVsElmerUMFPACK": 1.2221335055073723e-12,
   "matchedNodes": 861,
   "maxDiffVsFEAScript": 2.7000623958883807e-12
  },
@@ -237,10 +237,10 @@
   "linsolve": 0.0,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.5736510856083044,
-  "rmsErr": 0.03164043335116193,
-  "Ttip": 81.313063,
-  "maxDiffVsElmerUMFPACK": 1.0000000003174137e-05,
+  "maxErr": 0.5736547018125009,
+  "rmsErr": 0.03164045816959541,
+  "Ttip": 81.31306319195791,
+  "maxDiffVsElmerUMFPACK": 2.415713140635489e-07,
   "matchedNodes": 861
  },
  {
@@ -258,9 +258,9 @@
   "linsolve": 0.0,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.5736510856083044,
-  "rmsErr": 0.03164041914241928,
-  "Ttip": 81.313063,
+  "maxErr": 0.5736546955005508,
+  "rmsErr": 0.03164044863377741,
+  "Ttip": 81.31306337435463,
   "maxDiffVsElmerUMFPACK": 0.0,
   "matchedNodes": 861
  },
@@ -279,10 +279,10 @@
   "linsolve": 0.0,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.5736510856083044,
-  "rmsErr": 0.03164041914241928,
-  "Ttip": 81.313063,
-  "maxDiffVsElmerUMFPACK": 0.0,
+  "maxErr": 0.573654695500494,
+  "rmsErr": 0.031640448633863734,
+  "Ttip": 81.31306337435423,
+  "maxDiffVsElmerUMFPACK": 7.815970093361102e-13,
   "matchedNodes": 861
  },
  {
@@ -302,7 +302,7 @@
   "maxErr": 0.3066903533866423,
   "rmsErr": 0.008825357801311138,
   "Ttip": 81.31698331301546,
-  "maxDiffVsElmerUMFPACK": 4.999353336643253e-06,
+  "maxDiffVsElmerUMFPACK": 2.2453150450019166e-12,
   "matchedNodes": 3321
  },
  {
@@ -322,7 +322,7 @@
   "maxErr": 0.30669035338618755,
   "rmsErr": 0.008825357802066417,
   "Ttip": 81.31698331301075,
-  "maxDiffVsElmerUMFPACK": 4.999355610380007e-06,
+  "maxDiffVsElmerUMFPACK": 9.15179043659009e-12,
   "matchedNodes": 3321
  },
  {
@@ -342,7 +342,7 @@
   "maxErr": 0.30668612464145895,
   "rmsErr": 0.008849637103549728,
   "Ttip": 81.31677786237243,
-  "maxDiffVsElmerUMFPACK": 0.00027578603473443764,
+  "maxDiffVsElmerUMFPACK": 0.00027270928060829647,
   "matchedNodes": 3321
  },
  {
@@ -361,7 +361,7 @@
   "maxErr": 0.3066903533866139,
   "rmsErr": 0.008825357801404485,
   "Ttip": 81.3169833130144,
-  "maxDiffVsElmerUMFPACK": 4.9993529103176115e-06,
+  "maxDiffVsElmerUMFPACK": 1.8758328224066645e-12,
   "matchedNodes": 3321,
   "maxDiffVsFEAScript": 1.0771827874123119e-11
  },
@@ -380,10 +380,10 @@
   "linsolve": 0.01,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.30669478255737204,
-  "rmsErr": 0.008825415519524968,
-  "Ttip": 81.316983,
-  "maxDiffVsElmerUMFPACK": 1.0000000003174137e-05,
+  "maxErr": 0.3066903691961613,
+  "rmsErr": 0.008825348282227172,
+  "Ttip": 81.31698273864501,
+  "maxDiffVsElmerUMFPACK": 6.480124312702173e-07,
   "matchedNodes": 3321
  },
  {
@@ -401,9 +401,9 @@
   "linsolve": 0.0,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.30669478255737204,
-  "rmsErr": 0.008825427168562987,
-  "Ttip": 81.316983,
+  "maxErr": 0.3066903533862728,
+  "rmsErr": 0.00882535780137702,
+  "Ttip": 81.31698331301398,
   "maxDiffVsElmerUMFPACK": 0.0,
   "matchedNodes": 3321
  },
@@ -422,10 +422,10 @@
   "linsolve": 0.0,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.30669478255737204,
-  "rmsErr": 0.008825427168562987,
-  "Ttip": 81.316983,
-  "maxDiffVsElmerUMFPACK": 0.0,
+  "maxErr": 0.30669035338615913,
+  "rmsErr": 0.008825357801431328,
+  "Ttip": 81.316983313013,
+  "maxDiffVsElmerUMFPACK": 2.3874235921539366e-12,
   "matchedNodes": 3321
  },
  {
@@ -445,7 +445,7 @@
   "maxErr": 0.15921516271697556,
   "rmsErr": 0.002437832054765637,
   "Ttip": 81.31796317697449,
-  "maxDiffVsElmerUMFPACK": 4.999883174150455e-06,
+  "maxDiffVsElmerUMFPACK": 1.0345502232667059e-11,
   "matchedNodes": 13041
  },
  {
@@ -465,7 +465,7 @@
   "maxErr": 0.159215162716265,
   "rmsErr": 0.0024378320577940877,
   "Ttip": 81.31796317695094,
-  "maxDiffVsElmerUMFPACK": 4.999921628723314e-06,
+  "maxDiffVsElmerUMFPACK": 4.4366288420860656e-11,
   "matchedNodes": 13041
  },
  {
@@ -492,7 +492,7 @@
   "maxErr": 0.15921516271657765,
   "rmsErr": 0.0024378320544496783,
   "Ttip": 81.31796317697876,
-  "maxDiffVsElmerUMFPACK": 4.999881952016949e-06,
+  "maxDiffVsElmerUMFPACK": 1.4907186596246902e-11,
   "matchedNodes": 13041,
   "maxDiffVsFEAScript": 4.4508396968012676e-11
  },
@@ -511,10 +511,10 @@
   "linsolve": 0.04,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.15921313540044935,
-  "rmsErr": 0.0024381952836896917,
-  "Ttip": 81.317958,
-  "maxDiffVsElmerUMFPACK": 1.0000000003174137e-05,
+  "maxErr": 0.15921524390677178,
+  "rmsErr": 0.0024382194028129745,
+  "Ttip": 81.31795849532092,
+  "maxDiffVsElmerUMFPACK": 6.316923034432875e-06,
   "matchedNodes": 13041
  },
  {
@@ -532,9 +532,9 @@
   "linsolve": 0.02,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.15921313540044935,
-  "rmsErr": 0.0024378408524055027,
-  "Ttip": 81.317963,
+  "maxErr": 0.15921516271711766,
+  "rmsErr": 0.0024378320548648844,
+  "Ttip": 81.31796317696714,
   "maxDiffVsElmerUMFPACK": 0.0,
   "matchedNodes": 13041
  },
@@ -553,10 +553,10 @@
   "linsolve": 0.03,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.15921313540044935,
-  "rmsErr": 0.0024378408524055027,
-  "Ttip": 81.317963,
-  "maxDiffVsElmerUMFPACK": 0.0,
+  "maxErr": 0.1592151627170324,
+  "rmsErr": 0.0024378320554518775,
+  "Ttip": 81.31796317695935,
+  "maxDiffVsElmerUMFPACK": 1.0771827874123119e-11,
   "matchedNodes": 13041
  },
  {
@@ -576,7 +576,7 @@
   "maxErr": 0.08124382302986533,
   "rmsErr": 0.0006655628165478865,
   "Ttip": 81.31820813536315,
-  "maxDiffVsElmerUMFPACK": 5.000000527388693e-06,
+  "maxDiffVsElmerUMFPACK": 7.291589554370148e-11,
   "matchedNodes": 51681
  },
  {
@@ -596,7 +596,7 @@
   "maxErr": 0.08124382302898425,
   "rmsErr": 0.0006655628243948565,
   "Ttip": 81.3182081353089,
-  "maxDiffVsElmerUMFPACK": 5.00010570192444e-06,
+  "maxDiffVsElmerUMFPACK": 1.8570744941825978e-10,
   "matchedNodes": 51681
  },
  {
@@ -623,7 +623,7 @@
   "maxErr": 0.08124382303068955,
   "rmsErr": 0.0006655628133689321,
   "Ttip": 81.31820813541962,
-  "maxDiffVsElmerUMFPACK": 4.999963451268741e-06,
+  "maxDiffVsElmerUMFPACK": 3.2940761229838245e-11,
   "matchedNodes": 51681,
   "maxDiffVsFEAScript": 1.6919443623919506e-10
  },
@@ -642,10 +642,10 @@
   "linsolve": 0.3,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.08124686132526904,
-  "rmsErr": 0.0006664755672658365,
-  "Ttip": 81.318192,
-  "maxDiffVsElmerUMFPACK": 3.000000000952241e-05,
+  "maxErr": 0.08124393950649278,
+  "rmsErr": 0.0006664440952663963,
+  "Ttip": 81.31819218358325,
+  "maxDiffVsElmerUMFPACK": 2.09807932236572e-05,
   "matchedNodes": 51681
  },
  {
@@ -663,9 +663,9 @@
   "linsolve": 0.14,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.08124686132526904,
-  "rmsErr": 0.000665587705261072,
-  "Ttip": 81.318208,
+  "maxErr": 0.08124382303071798,
+  "rmsErr": 0.0006655628120199636,
+  "Ttip": 81.3182081354038,
   "maxDiffVsElmerUMFPACK": 0.0,
   "matchedNodes": 51681
  },
@@ -684,10 +684,10 @@
   "linsolve": 0.17,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.08124686132526904,
-  "rmsErr": 0.000665587705261072,
-  "Ttip": 81.318208,
-  "maxDiffVsElmerUMFPACK": 0.0,
+  "maxErr": 0.08124382303012112,
+  "rmsErr": 0.0006655628135018549,
+  "Ttip": 81.31820813538323,
+  "maxDiffVsElmerUMFPACK": 3.0240698833949864e-11,
   "matchedNodes": 51681
  },
  {
@@ -707,8 +707,8 @@
   "maxErr": 0.31243163497282467,
   "rmsErr": 0.009378390829584698,
   "Ttip": 81.31689251559877,
-  "maxDiffVsElmerUMFPACK": 4.997176830556782e-06,
-  "matchedNodes": 3042
+  "maxDiffVsElmerUMFPACK": 6.906475391588174e-12,
+  "matchedNodes": 3120
  },
  {
   "case": "linear-77x39",
@@ -727,8 +727,8 @@
   "maxErr": 0.3124316349725689,
   "rmsErr": 0.009378390829612393,
   "Ttip": 81.31689251559834,
-  "maxDiffVsElmerUMFPACK": 4.997177370569261e-06,
-  "matchedNodes": 3042
+  "maxDiffVsElmerUMFPACK": 7.815970093361102e-12,
+  "matchedNodes": 3120
  },
  {
   "case": "linear-77x39",
@@ -747,8 +747,8 @@
   "maxErr": 0.31242744000942935,
   "rmsErr": 0.009401842706327367,
   "Ttip": 81.31669657095355,
-  "maxDiffVsElmerUMFPACK": 0.0002650665986294598,
-  "matchedNodes": 3042
+  "maxDiffVsElmerUMFPACK": 0.00026015100877430086,
+  "matchedNodes": 3120
  },
  {
   "case": "linear-77x39",
@@ -766,8 +766,8 @@
   "maxErr": 0.31243163497251203,
   "rmsErr": 0.009378390829871951,
   "Ttip": 81.31689251559737,
-  "maxDiffVsElmerUMFPACK": 4.997179047450118e-06,
-  "matchedNodes": 3042,
+  "maxDiffVsElmerUMFPACK": 3.495870259939693e-12,
+  "matchedNodes": 3120,
   "maxDiffVsFEAScript": 5.059064278611913e-12
  },
  {
@@ -785,10 +785,10 @@
   "linsolve": 0.01,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.3124437951029506,
-  "rmsErr": 0.009378702228518217,
-  "Ttip": 81.316892,
-  "maxDiffVsElmerUMFPACK": 1.0000000003174137e-05,
+  "maxErr": 0.3124316110877885,
+  "rmsErr": 0.009378399182057021,
+  "Ttip": 81.31689211287859,
+  "maxDiffVsElmerUMFPACK": 4.397547144208147e-07,
   "matchedNodes": 3120
  },
  {
@@ -806,9 +806,9 @@
   "linsolve": 0.0,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.3124437951029506,
-  "rmsErr": 0.00937871225360693,
-  "Ttip": 81.316893,
+  "maxErr": 0.31243163497225623,
+  "rmsErr": 0.009378390830142835,
+  "Ttip": 81.31689251559634,
   "maxDiffVsElmerUMFPACK": 0.0,
   "matchedNodes": 3120
  },
@@ -827,10 +827,10 @@
   "linsolve": 0.0,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.3124437951029506,
-  "rmsErr": 0.00937871225360693,
-  "Ttip": 81.316893,
-  "maxDiffVsElmerUMFPACK": 0.0,
+  "maxErr": 0.31243163497225623,
+  "rmsErr": 0.00937839083018494,
+  "Ttip": 81.31689251559524,
+  "maxDiffVsElmerUMFPACK": 1.5489831639570184e-12,
   "matchedNodes": 3120
  },
  {
@@ -850,7 +850,7 @@
   "maxErr": 0.7997377452781507,
   "rmsErr": 0.06674347931839247,
   "Ttip": 81.31847013718317,
-  "maxDiffVsElmerUMFPACK": 4.992877876475177e-06,
+  "maxDiffVsElmerUMFPACK": 5.400124791776761e-13,
   "matchedNodes": 231
  },
  {
@@ -870,7 +870,7 @@
   "maxErr": 0.7997377452780654,
   "rmsErr": 0.06674347931838866,
   "Ttip": 81.31847013718343,
-  "maxDiffVsElmerUMFPACK": 4.99287773436663e-06,
+  "maxDiffVsElmerUMFPACK": 4.831690603168681e-13,
   "matchedNodes": 231
  },
  {
@@ -890,7 +890,7 @@
   "maxErr": 0.7997329417979415,
   "rmsErr": 0.0667432258663928,
   "Ttip": 81.31843943125278,
-  "maxDiffVsElmerUMFPACK": 4.437583002925294e-05,
+  "maxDiffVsElmerUMFPACK": 4.0530705916808074e-05,
   "matchedNodes": 231
  },
  {
@@ -909,7 +909,7 @@
   "maxErr": 0.7997377452782075,
   "rmsErr": 0.06674347931839185,
   "Ttip": 81.3184701371832,
-  "maxDiffVsElmerUMFPACK": 4.992878075427143e-06,
+  "maxDiffVsElmerUMFPACK": 4.547473508864641e-13,
   "matchedNodes": 231,
   "maxDiffVsFEAScript": 4.831690603168681e-13
  },
@@ -928,10 +928,10 @@
   "linsolve": 0.0,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.7997332875659993,
-  "rmsErr": 0.06674325179307708,
-  "Ttip": 81.31847,
-  "maxDiffVsElmerUMFPACK": 1.0000000003174137e-05,
+  "maxErr": 0.799737745066949,
+  "rmsErr": 0.06674347929567741,
+  "Ttip": 81.31847012761449,
+  "maxDiffVsElmerUMFPACK": 1.2867303667007945e-08,
   "matchedNodes": 231
  },
  {
@@ -949,9 +949,9 @@
   "linsolve": 0.0,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.7997332875659993,
-  "rmsErr": 0.06674325185813383,
-  "Ttip": 81.31847,
+  "maxErr": 0.7997377452781507,
+  "rmsErr": 0.06674347931839174,
+  "Ttip": 81.3184701371834,
   "maxDiffVsElmerUMFPACK": 0.0,
   "matchedNodes": 231
  },
@@ -970,10 +970,10 @@
   "linsolve": 0.0,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.7997332875659993,
-  "rmsErr": 0.06674325185813383,
-  "Ttip": 81.31847,
-  "maxDiffVsElmerUMFPACK": 0.0,
+  "maxErr": 0.7997377452782359,
+  "rmsErr": 0.0667434793183944,
+  "Ttip": 81.31847013718354,
+  "maxDiffVsElmerUMFPACK": 5.684341886080801e-13,
   "matchedNodes": 231
  },
  {
@@ -993,7 +993,7 @@
   "maxErr": 0.3942712168279172,
   "rmsErr": 0.016932909653191847,
   "Ttip": 81.31830094773186,
-  "maxDiffVsElmerUMFPACK": 4.992969820705184e-06,
+  "maxDiffVsElmerUMFPACK": 2.5011104298755527e-12,
   "matchedNodes": 861
  },
  {
@@ -1013,7 +1013,7 @@
   "maxErr": 0.3942712168280593,
   "rmsErr": 0.01693290965319516,
   "Ttip": 81.31830094773235,
-  "maxDiffVsElmerUMFPACK": 4.992969593331509e-06,
+  "maxDiffVsElmerUMFPACK": 1.7337242752546445e-12,
   "matchedNodes": 861
  },
  {
@@ -1033,7 +1033,7 @@
   "maxErr": 0.3942644394313106,
   "rmsErr": 0.016932830398464792,
   "Ttip": 81.31821456717415,
-  "maxDiffVsElmerUMFPACK": 0.00011845047332315062,
+  "maxDiffVsElmerUMFPACK": 0.00011457547698512371,
   "matchedNodes": 861
  },
  {
@@ -1052,7 +1052,7 @@
   "maxErr": 0.39427121682811617,
   "rmsErr": 0.016932909653196628,
   "Ttip": 81.31830094773184,
-  "maxDiffVsElmerUMFPACK": 4.992970161765697e-06,
+  "maxDiffVsElmerUMFPACK": 2.4158453015843406e-12,
   "matchedNodes": 861,
   "maxDiffVsFEAScript": 9.663381206337363e-13
  },
@@ -1071,10 +1071,10 @@
   "linsolve": 0.0,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.39427166699670124,
-  "rmsErr": 0.016932865850280702,
-  "Ttip": 81.318301,
-  "maxDiffVsElmerUMFPACK": 1.0000000116860974e-06,
+  "maxErr": 0.3942712149099066,
+  "rmsErr": 0.016932909617273718,
+  "Ttip": 81.31830092233454,
+  "maxDiffVsElmerUMFPACK": 3.3722272974046064e-08,
   "matchedNodes": 861
  },
  {
@@ -1092,9 +1092,9 @@
   "linsolve": 0.0,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.39427166699670124,
-  "rmsErr": 0.016932865870781896,
-  "Ttip": 81.318301,
+  "maxErr": 0.3942712168282583,
+  "rmsErr": 0.016932909653201666,
+  "Ttip": 81.31830094773333,
   "maxDiffVsElmerUMFPACK": 0.0,
   "matchedNodes": 861
  },
@@ -1113,10 +1113,10 @@
   "linsolve": 0.0,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.39427166699670124,
-  "rmsErr": 0.016932865870781896,
-  "Ttip": 81.318301,
-  "maxDiffVsElmerUMFPACK": 0.0,
+  "maxErr": 0.39427121682851407,
+  "rmsErr": 0.016932909653209302,
+  "Ttip": 81.31830094773387,
+  "maxDiffVsElmerUMFPACK": 1.1084466677857563e-12,
   "matchedNodes": 861
  },
  {
@@ -1136,7 +1136,7 @@
   "maxErr": 0.19569615621333014,
   "rmsErr": 0.004262272683836464,
   "Ttip": 81.31829048332266,
-  "maxDiffVsElmerUMFPACK": 4.9994045525636466e-06,
+  "maxDiffVsElmerUMFPACK": 6.281197784119286e-12,
   "matchedNodes": 3321
  },
  {
@@ -1156,7 +1156,7 @@
   "maxErr": 0.19569615621364278,
   "rmsErr": 0.004262272683840046,
   "Ttip": 81.31829048332395,
-  "maxDiffVsElmerUMFPACK": 4.999405774697152e-06,
+  "maxDiffVsElmerUMFPACK": 5.101696842757519e-12,
   "matchedNodes": 3321
  },
  {
@@ -1183,7 +1183,7 @@
   "maxErr": 0.19569615621358594,
   "rmsErr": 0.00426227268383882,
   "Ttip": 81.31829048332467,
-  "maxDiffVsElmerUMFPACK": 4.999405518901767e-06,
+  "maxDiffVsElmerUMFPACK": 4.774847184307873e-12,
   "matchedNodes": 3321,
   "maxDiffVsFEAScript": 1.5916157281026244e-12
  },
@@ -1202,10 +1202,10 @@
   "linsolve": 0.01,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.1956965953267229,
-  "rmsErr": 0.004262242131849232,
-  "Ttip": 81.31829,
-  "maxDiffVsElmerUMFPACK": 1.0000000003174137e-05,
+  "maxErr": 0.19569616799890355,
+  "rmsErr": 0.00426227289052154,
+  "Ttip": 81.31828991302078,
+  "maxDiffVsElmerUMFPACK": 6.517245054737941e-07,
   "matchedNodes": 3321
  },
  {
@@ -1223,9 +1223,9 @@
   "linsolve": 0.01,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.1956965953267229,
-  "rmsErr": 0.0042622420623541985,
-  "Ttip": 81.31829,
+  "maxErr": 0.1956961562140691,
+  "rmsErr": 0.004262272683843864,
+  "Ttip": 81.31829048332798,
   "maxDiffVsElmerUMFPACK": 0.0,
   "matchedNodes": 3321
  },
@@ -1244,10 +1244,10 @@
   "linsolve": 0.01,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.1956965953267229,
-  "rmsErr": 0.0042622420623541985,
-  "Ttip": 81.31829,
-  "maxDiffVsElmerUMFPACK": 0.0,
+  "maxErr": 0.195696156214467,
+  "rmsErr": 0.004262272683848802,
+  "Ttip": 81.3182904833315,
+  "maxDiffVsElmerUMFPACK": 6.480149750132114e-12,
   "matchedNodes": 3321
  },
  {
@@ -1267,7 +1267,7 @@
   "maxErr": 0.09749923413409078,
   "rmsErr": 0.0010692058638373106,
   "Ttip": 81.31828983097465,
-  "maxDiffVsElmerUMFPACK": 4.999059967758512e-06,
+  "maxDiffVsElmerUMFPACK": 2.5295321393059567e-11,
   "matchedNodes": 13041
  },
  {
@@ -1287,7 +1287,7 @@
   "maxErr": 0.0974992341335792,
   "rmsErr": 0.001069205863834439,
   "Ttip": 81.31828983097353,
-  "maxDiffVsElmerUMFPACK": 4.999065282618176e-06,
+  "maxDiffVsElmerUMFPACK": 2.8904878490720876e-11,
   "matchedNodes": 13041
  },
  {
@@ -1314,7 +1314,7 @@
   "maxErr": 0.09749923413301076,
   "rmsErr": 0.0010692058638308007,
   "Ttip": 81.31828983097641,
-  "maxDiffVsElmerUMFPACK": 4.999066533173391e-06,
+  "maxDiffVsElmerUMFPACK": 3.4049207897624e-11,
   "matchedNodes": 13041,
   "maxDiffVsFEAScript": 9.15179043659009e-12
  },
@@ -1333,10 +1333,10 @@
   "linsolve": 0.05,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.09749841517117375,
-  "rmsErr": 0.001069198059529211,
-  "Ttip": 81.318288,
-  "maxDiffVsElmerUMFPACK": 1.0000000003174137e-05,
+  "maxErr": 0.09749928632075466,
+  "rmsErr": 0.0010692067374246945,
+  "Ttip": 81.31828772611985,
+  "maxDiffVsElmerUMFPACK": 2.6416753371449886e-06,
   "matchedNodes": 13041
  },
  {
@@ -1354,9 +1354,9 @@
   "linsolve": 0.03,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.09749841517117375,
-  "rmsErr": 0.0010691974871835513,
-  "Ttip": 81.31829,
+  "maxErr": 0.0974992341350287,
+  "rmsErr": 0.0010692058638420254,
+  "Ttip": 81.31828983099287,
   "maxDiffVsElmerUMFPACK": 0.0,
   "matchedNodes": 13041
  },
@@ -1375,10 +1375,10 @@
   "linsolve": 0.04,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.09749841517117375,
-  "rmsErr": 0.0010691974871835513,
-  "Ttip": 81.31829,
-  "maxDiffVsElmerUMFPACK": 0.0,
+  "maxErr": 0.09749923413534134,
+  "rmsErr": 0.0010692058638443497,
+  "Ttip": 81.31828983100253,
+  "maxDiffVsElmerUMFPACK": 1.3102408047416247e-11,
   "matchedNodes": 13041
  },
  {
@@ -1398,7 +1398,7 @@
   "maxErr": 0.04866541569128913,
   "rmsErr": 0.00026776257868609064,
   "Ttip": 81.31828979019396,
-  "maxDiffVsElmerUMFPACK": 4.999430956331707e-06,
+  "maxDiffVsElmerUMFPACK": 9.964651326299645e-11,
   "matchedNodes": 51681
  },
  {
@@ -1418,7 +1418,7 @@
   "maxErr": 0.04866541569052174,
   "rmsErr": 0.0002677625786835982,
   "Ttip": 81.31828979019801,
-  "maxDiffVsElmerUMFPACK": 4.999432121621794e-06,
+  "maxDiffVsElmerUMFPACK": 9.976020010071807e-11,
   "matchedNodes": 51681
  },
  {
@@ -1445,7 +1445,7 @@
   "maxErr": 0.0486654156889017,
   "rmsErr": 0.00026776257867914275,
   "Ttip": 81.31828979018634,
-  "maxDiffVsElmerUMFPACK": 4.999466369781658e-06,
+  "maxDiffVsElmerUMFPACK": 1.566888840898173e-10,
   "matchedNodes": 51681,
   "maxDiffVsFEAScript": 7.182165973063093e-11
  },
@@ -1464,10 +1464,10 @@
   "linsolve": 0.34,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.048665996283574486,
-  "rmsErr": 0.0002678648859562122,
-  "Ttip": 81.318276,
-  "maxDiffVsElmerUMFPACK": 2.0000000006348273e-05,
+  "maxErr": 0.048665552272154855,
+  "rmsErr": 0.00026785505189754985,
+  "Ttip": 81.31827570840711,
+  "maxDiffVsElmerUMFPACK": 1.8663436364363406e-05,
   "matchedNodes": 51681
  },
  {
@@ -1485,9 +1485,9 @@
   "linsolve": 0.21,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.048665996283574486,
-  "rmsErr": 0.0002677724678874403,
-  "Ttip": 81.31829,
+  "maxErr": 0.048665415692113356,
+  "rmsErr": 0.0002677625786883176,
+  "Ttip": 81.31828979026157,
   "maxDiffVsElmerUMFPACK": 0.0,
   "matchedNodes": 51681
  },
@@ -1506,10 +1506,10 @@
   "linsolve": 0.19,
   "nsolves": 1,
   "nruns": 5,
-  "maxErr": 0.048665996283574486,
-  "rmsErr": 0.0002677724678876167,
-  "Ttip": 81.31829,
-  "maxDiffVsElmerUMFPACK": 9.999999974752427e-07,
+  "maxErr": 0.04866541569265337,
+  "rmsErr": 0.0002677625786901657,
+  "Ttip": 81.3182897903212,
+  "maxDiffVsElmerUMFPACK": 8.560618880437687e-11,
   "matchedNodes": 51681
  }
 ]
