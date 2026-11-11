@@ -12,11 +12,18 @@
 export function makeModel({ FEAScriptModel }, { nx, ny, order, method, constantTemperature = "constantTemperature" }) {
   const model = new FEAScriptModel();
   model.setModelConfig("heatConductionScript");
-  model.setMeshConfig({ meshDimension: "2D", elementOrder: order, numElementsX: nx, numElementsY: ny, maxX: 4, maxY: 2 });
-  model.addBoundaryCondition("0", [constantTemperature, 200]); // Bottom
-  model.addBoundaryCondition("1", ["symmetry"]); // Left
-  model.addBoundaryCondition("2", ["convection", 1, 20]); // Top
-  model.addBoundaryCondition("3", [constantTemperature, 200]); // Right
+  // From 0.4.0 the domain is set with setGeometry and the boundaries are keyed by name; before, by numbers
+  const named = typeof model.setGeometry === "function";
+  if (named) {
+    model.setGeometry({ rectangle: [4, 2] });
+    model.setMeshConfig({ elements: "quadrilaterals", elementOrder: order, divisions: [nx, ny] });
+  } else {
+    model.setMeshConfig({ meshDimension: "2D", elementOrder: order, numElementsX: nx, numElementsY: ny, maxX: 4, maxY: 2 });
+  }
+  model.addBoundaryCondition(named ? "bottom" : "0", [constantTemperature, 200]);
+  model.addBoundaryCondition(named ? "left" : "1", ["symmetry"]);
+  model.addBoundaryCondition(named ? "top" : "2", ["convection", 1, 20]);
+  model.addBoundaryCondition(named ? "right" : "3", [constantTemperature, 200]);
   model.setSolverMethod(method);
   return model;
 }

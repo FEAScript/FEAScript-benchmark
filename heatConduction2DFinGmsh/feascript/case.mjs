@@ -12,11 +12,16 @@ export async function makeModel({ FEAScriptModel, importGmshMesh }, { mesh, meth
   const content = await readMesh(mesh);
   const model = new FEAScriptModel();
   model.setModelConfig("heatConductionScript");
-  model.setMeshConfig({ parsedMesh: await importGmshMesh({ text: async () => content }) });
-  model.addBoundaryCondition("0", ["constantTemperature", 200]); // Physical curve "bottom", tag 1
-  model.addBoundaryCondition("1", ["symmetry"]); // Physical curve "left", tag 2
-  model.addBoundaryCondition("2", ["convection", 1, 20]); // Physical curve "top", tag 3
-  model.addBoundaryCondition("3", ["constantTemperature", 200]); // Physical curve "right", tag 4
+  const parsedMesh = await importGmshMesh({ text: async () => content });
+  // From 0.4.0 a mesh is set with setMesh and its boundaries are keyed by the names of the physical curves;
+  // before, by their tag minus one (bottom 1, left 2, top 3, right 4)
+  const named = typeof model.setMesh === "function";
+  if (named) model.setMesh(parsedMesh);
+  else model.setMeshConfig({ parsedMesh });
+  model.addBoundaryCondition(named ? "bottom" : "0", ["constantTemperature", 200]);
+  model.addBoundaryCondition(named ? "left" : "1", ["symmetry"]);
+  model.addBoundaryCondition(named ? "top" : "2", ["convection", 1, 20]);
+  model.addBoundaryCondition(named ? "right" : "3", ["constantTemperature", 200]);
   model.setSolverMethod(method);
   return model;
 }
