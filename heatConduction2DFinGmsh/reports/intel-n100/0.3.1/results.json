@@ -77,9 +77,9 @@
   "process": 2.032998740000039,
   "peakMemoryMB": 30.64453125,
   "nruns": 5,
-  "maxErr": 0.681492197767966,
-  "rmsErr": 0.06597854060476002,
-  "maxDiffVsFEAScript": 4.990047756336935e-06
+  "maxErr": 0.681491170209199,
+  "rmsErr": 0.06597855869776503,
+  "maxDiffVsFEAScript": 4.263256414560601e-13
  },
  {
   "case": "tri-linear-h0.1",
@@ -159,9 +159,9 @@
   "process": 2.043786986000214,
   "peakMemoryMB": 31.875,
   "nruns": 5,
-  "maxErr": 0.4206265953267234,
-  "rmsErr": 0.025575098339721748,
-  "maxDiffVsFEAScript": 4.9898598888376e-06
+  "maxErr": 0.420623096788205,
+  "rmsErr": 0.025575110809127062,
+  "maxDiffVsFEAScript": 7.389644451905042e-13
  },
  {
   "case": "tri-linear-h0.05",
@@ -177,7 +177,7 @@
   "nruns": 1,
   "maxErr": 0.28155294231717676,
   "rmsErr": 0.00879164167102955,
-  "warmWall": null,
+  "warmWall": 27.837368704998866,
   "maxDiffVsFEAScript": 5.974243322270922e-11
  },
  {
@@ -241,9 +241,9 @@
   "process": 2.0745474430000286,
   "peakMemoryMB": 37.1875,
   "nruns": 5,
-  "maxErr": 0.2815484151711871,
-  "rmsErr": 0.008791617731323554,
-  "maxDiffVsFEAScript": 4.999165653885029e-06
+  "maxErr": 0.28155294231979155,
+  "rmsErr": 0.008791641670106444,
+  "maxDiffVsFEAScript": 5.314859663485549e-12
  },
  {
   "case": "tri-linear-h0.025",
@@ -314,9 +314,9 @@
   "process": 2.255637375000333,
   "peakMemoryMB": 61.12890625,
   "nruns": 5,
-  "maxErr": 0.15259599628356568,
-  "rmsErr": 0.002678300381217317,
-  "maxDiffVsFEAScript": 4.999954398954287e-06
+  "maxErr": 0.15259577293366533,
+  "rmsErr": 0.0026782509275139654,
+  "maxDiffVsFEAScript": 2.0833113012486137e-11
  },
  {
   "case": "tri-quadratic-h0.2",
@@ -396,9 +396,9 @@
   "process": 2.04234337600019,
   "peakMemoryMB": 31.81640625,
   "nruns": 5,
-  "maxErr": 0.481786595326696,
-  "rmsErr": 0.018526733787515494,
-  "maxDiffVsFEAScript": 4.9875347656325175e-06
+  "maxErr": 0.48178844059529524,
+  "rmsErr": 0.018526717163557277,
+  "maxDiffVsFEAScript": 1.3358203432289883e-12
  },
  {
   "case": "tri-quadratic-h0.1",
@@ -414,7 +414,7 @@
   "nruns": 1,
   "maxErr": 0.2681214839259667,
   "rmsErr": 0.005254554246133407,
-  "warmWall": null,
+  "warmWall": 27.705398561000823,
   "maxDiffVsFEAScript": 8.418510333285667e-11
  },
  {
@@ -478,9 +478,9 @@
   "process": 2.0845366160001504,
   "peakMemoryMB": 36.16796875,
   "nruns": 5,
-  "maxErr": 0.2681184151711875,
-  "rmsErr": 0.00525444188477687,
-  "maxDiffVsFEAScript": 4.999977647912601e-06
+  "maxErr": 0.26812148393076995,
+  "rmsErr": 0.005254554246199854,
+  "maxDiffVsFEAScript": 2.5011104298755527e-12
  },
  {
   "case": "tri-quadratic-h0.05",
@@ -551,9 +551,9 @@
   "process": 2.26315225999997,
   "peakMemoryMB": 55.5546875,
   "nruns": 5,
-  "maxErr": 0.14174599628356077,
-  "rmsErr": 0.0013960140252628637,
-  "maxDiffVsFEAScript": 4.998766485186934e-06
+  "maxErr": 0.14174176503757963,
+  "rmsErr": 0.0013959373345610647,
+  "maxDiffVsFEAScript": 1.0544454198679887e-11
  },
  {
   "case": "tri-quadratic-h0.025",
@@ -624,9 +624,9 @@
   "process": 3.29613635800024,
   "peakMemoryMB": 141.90234375,
   "nruns": 5,
-  "maxErr": 0.07276832262255084,
-  "rmsErr": 0.0003586759071617561,
-  "maxDiffVsFEAScript": 4.999937431193757e-06
+  "maxErr": 0.07276516581126202,
+  "rmsErr": 0.00035868558721055484,
+  "maxDiffVsFEAScript": 1.6200374375330284e-11
  },
  {
   "case": "quad-linear-h0.4",
@@ -706,9 +706,9 @@
   "process": 2.036831534999692,
   "peakMemoryMB": 30.6953125,
   "nruns": 5,
-  "maxErr": 1.7414683330032972,
-  "rmsErr": 0.11955564263707459,
-  "maxDiffVsFEAScript": 4.989690552292814e-06
+  "maxErr": 1.741471004965888,
+  "rmsErr": 0.11955589914797864,
+  "maxDiffVsFEAScript": 4.547473508864641e-13
  },
  {
   "case": "quad-linear-h0.2",
@@ -788,9 +788,9 @@
   "process": 2.042167198000243,
   "peakMemoryMB": 32.578125,
   "nruns": 5,
-  "maxErr": 0.8204534046732874,
-  "rmsErr": 0.03550416516873985,
-  "maxDiffVsFEAScript": 4.9966384096933325e-06
+  "maxErr": 0.8204554257469567,
+  "rmsErr": 0.03550426897720247,
+  "maxDiffVsFEAScript": 7.958078640513122e-13
  },
  {
   "case": "quad-linear-h0.1",
@@ -870,9 +870,9 @@
   "process": 2.086599184000079,
   "peakMemoryMB": 38.32421875,
   "nruns": 5,
-  "maxErr": 0.3960215848288158,
-  "rmsErr": 0.010421560618169864,
-  "maxDiffVsFEAScript": 4.99920130891951e-06
+  "maxErr": 0.39602446813771053,
+  "rmsErr": 0.010421585044241717,
+  "maxDiffVsFEAScript": 1.8189894035458565e-12
  },
  {
   "case": "quad-linear-h0.05",
@@ -943,9 +943,9 @@
   "process": 2.277655450000111,
   "peakMemoryMB": 67.70703125,
   "nruns": 5,
-  "maxErr": 0.19104400371642782,
-  "rmsErr": 0.0029596903256849045,
-  "maxDiffVsFEAScript": 4.998773988518224e-06
+  "maxErr": 0.19104533844765115,
+  "rmsErr": 0.002959625790444915,
+  "maxDiffVsFEAScript": 1.5631940186722204e-11
  },
  {
   "case": "quad-quadratic-h0.4",
@@ -1025,9 +1025,9 @@
   "process": 2.058020807000048,
   "peakMemoryMB": 32.9765625,
   "nruns": 5,
-  "maxErr": 0.36398166699672174,
-  "rmsErr": 0.014172415968723302,
-  "maxDiffVsFEAScript": 4.998544937961924e-06
+  "maxErr": 0.3639816081864069,
+  "rmsErr": 0.014172507818891069,
+  "maxDiffVsFEAScript": 1.9610979506978765e-12
  },
  {
   "case": "quad-quadratic-h0.2",
@@ -1043,7 +1043,7 @@
   "nruns": 1,
   "maxErr": 0.1770174158805844,
   "rmsErr": 0.0036498570424106534,
-  "warmWall": null,
+  "warmWall": 160.27426996800116,
   "maxDiffVsFEAScript": 2.2254198484006338e-10
  },
  {
@@ -1107,9 +1107,9 @@
   "process": 2.1290352189998885,
   "peakMemoryMB": 40.48828125,
   "nruns": 5,
-  "maxErr": 0.17701659532670533,
-  "rmsErr": 0.0036498204634998026,
-  "maxDiffVsFEAScript": 4.999229958002616e-06
+  "maxErr": 0.17701741590303754,
+  "rmsErr": 0.003649857042529386,
+  "maxDiffVsFEAScript": 2.8137492336099967e-12
  },
  {
   "case": "quad-quadratic-h0.1",
@@ -1180,9 +1180,9 @@
   "process": 2.4093692859996736,
   "peakMemoryMB": 69.07421875,
   "nruns": 5,
-  "maxErr": 0.08716841517119178,
-  "rmsErr": 0.0009341067111745011,
-  "maxDiffVsFEAScript": 4.999489647161681e-06
+  "maxErr": 0.08717227579916198,
+  "rmsErr": 0.0009341434729275936,
+  "maxDiffVsFEAScript": 1.3386625141720288e-11
  },
  {
   "case": "quad-quadratic-h0.05",
@@ -1253,8 +1253,8 @@
   "process": 3.7482347749996734,
   "peakMemoryMB": 179.36328125,
   "nruns": 5,
-  "maxErr": 0.04324599628355941,
-  "rmsErr": 0.00023525898554485,
-  "maxDiffVsFEAScript": 4.999758871804261e-06
+  "maxErr": 0.04324618674311864,
+  "rmsErr": 0.00023522083577229996,
+  "maxDiffVsFEAScript": 1.5049295143398922e-11
  }
 ]

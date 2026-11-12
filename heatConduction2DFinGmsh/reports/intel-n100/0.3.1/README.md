@@ -17,7 +17,7 @@
 
 All the numbers are in [results_table.md](results_table.md) and [results.json](results.json).
 
-On every mesh it solved, with triangles and quadrilaterals, FEAScript's nodal temperatures match scikit-fem's to within 1.2e-10 when scikit-fem uses the same Gauss rules, and Elmer's (UMFPACK) to within 5.0e-06. The `frontal` and `lusolve` solvers agree to within 2.2e-10.
+On every mesh it solved, with triangles and quadrilaterals, FEAScript's nodal temperatures match scikit-fem's to within 1.2e-10 when scikit-fem uses the same Gauss rules, and Elmer's (UMFPACK) to within 2.1e-11. The `frontal` and `lusolve` solvers agree to within 2.2e-10.
 
 On distorted quadrilaterals these Gauss rules are not exact. With a much finer rule, scikit-fem's RMS error is lower than FEAScript's by 1.2% to 2.1%. On triangles the rules are exact, so the finer rule changes nothing.
 
@@ -29,12 +29,6 @@ Runs that could not be measured:
 - **FEAScript frontal, quad-linear-h0.05:** out of memory
 - **FEAScript frontal, quad-quadratic-h0.1:** out of memory
 - **FEAScript frontal, quad-quadratic-h0.05:** out of memory
-
-Repeated solves not measured yet (a case with a first solve over 20 s used to be timed without one):
-
-- **FEAScript frontal, tri-linear-h0.05**
-- **FEAScript frontal, tri-quadratic-h0.1**
-- **FEAScript frontal, quad-quadratic-h0.2**
 
 ## Accuracy
 

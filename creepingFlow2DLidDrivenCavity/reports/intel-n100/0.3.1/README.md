@@ -24,8 +24,6 @@ scikit-fem sets the lid velocity the same way as FEAScript, so the two are compa
 
 Repeated solves not measured yet (a case with a first solve over 20 s used to be timed without one):
 
-- **FEAScript sparse LU, 32x32**
-- **FEAScript sparse LU, 48x48**
 - **FEAScript sparse LU, 64x64**
 
 ## Primary vortex strength

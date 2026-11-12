@@ -13,7 +13,7 @@
   "psiMin": -0.09937137151499931,
   "psiMinY": 0.7318521843877978,
   "maxDiffVelocity": 1.0,
-  "maxDiffVelocityAwayFromCorners": 0.10938263158540852,
+  "maxDiffVelocityAwayFromCorners": 0.10938262911388529,
   "matchedNodes": 81
  },
  {
@@ -30,7 +30,7 @@
   "psiMin": -0.10032581349516223,
   "psiMinY": 0.7546761623465337,
   "maxDiffVelocity": 1.0,
-  "maxDiffVelocityAwayFromCorners": 0.062098923920850695,
+  "maxDiffVelocityAwayFromCorners": 0.06209892391880819,
   "matchedNodes": 289
  },
  {
@@ -47,7 +47,7 @@
   "psiMin": -0.10045758168208774,
   "psiMinY": 0.7599255218094351,
   "maxDiffVelocity": 1.0,
-  "maxDiffVelocityAwayFromCorners": 0.0620153143670944,
+  "maxDiffVelocityAwayFromCorners": 0.06201531436557485,
   "matchedNodes": 625
  },
  {
@@ -59,12 +59,12 @@
   "linsolve": 26.01598818799993,
   "process": 26.518906112999957,
   "peakMemoryMB": 368.0859375,
-  "warmWall": null,
+  "warmWall": 49.90715782500058,
   "nruns": 1,
   "psiMin": -0.10045080440756304,
   "psiMinY": 0.7620076382017166,
   "maxDiffVelocity": 1.0,
-  "maxDiffVelocityAwayFromCorners": 0.06201688254541501,
+  "maxDiffVelocityAwayFromCorners": 0.062016882548052044,
   "matchedNodes": 1089
  },
  {
@@ -76,12 +76,12 @@
   "linsolve": 163.21437995599956,
   "process": 163.99185224700022,
   "peakMemoryMB": 752.6328125,
-  "warmWall": null,
+  "warmWall": 390.1069511079993,
   "nruns": 1,
   "psiMin": -0.10040500746829528,
   "psiMinY": 0.7632510843658511,
   "maxDiffVelocity": 1.0,
-  "maxDiffVelocityAwayFromCorners": 0.06201545721547281,
+  "maxDiffVelocityAwayFromCorners": 0.06201545721588698,
   "matchedNodes": 2401
  },
  {
@@ -98,7 +98,7 @@
   "psiMin": -0.100338503980683,
   "psiMinY": 0.7637006561001635,
   "maxDiffVelocity": 1.0,
-  "maxDiffVelocityAwayFromCorners": 0.062014448938050824,
+  "maxDiffVelocityAwayFromCorners": 0.062014448937780055,
   "matchedNodes": 4225
  }
 ]

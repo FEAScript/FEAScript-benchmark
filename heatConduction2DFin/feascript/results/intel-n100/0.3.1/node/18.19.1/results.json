@@ -16,7 +16,7 @@
   "maxErr": 1.023035388422727,
   "rmsErr": 0.11294034385889977,
   "Ttip": 81.2973760004436,
-  "maxDiffVsElmerUMFPACK": 4.9632589309567265e-06,
+  "maxDiffVsElmerUMFPACK": 2.8421709430404007e-13,
   "matchedNodes": 231
  },
  {
@@ -36,7 +36,7 @@
   "maxErr": 1.023035388422727,
   "rmsErr": 0.1129403438589036,
   "Ttip": 81.29737600044358,
-  "maxDiffVsElmerUMFPACK": 4.963258902535017e-06,
+  "maxDiffVsElmerUMFPACK": 2.8421709430404007e-13,
   "matchedNodes": 231
  },
  {
@@ -56,7 +56,7 @@
   "maxErr": 1.022998045425311,
   "rmsErr": 0.11299772140757812,
   "Ttip": 81.29696965026397,
-  "maxDiffVsElmerUMFPACK": 0.000539157127946055,
+  "maxDiffVsElmerUMFPACK": 0.000538436278262111,
   "matchedNodes": 231
  },
  {
@@ -76,7 +76,7 @@
   "maxErr": 0.5736546955004087,
   "rmsErr": 0.031640448633815765,
   "Ttip": 81.31306337435431,
-  "maxDiffVsElmerUMFPACK": 4.992558473304598e-06,
+  "maxDiffVsElmerUMFPACK": 6.110667527536862e-13,
   "matchedNodes": 861
  },
  {
@@ -96,7 +96,7 @@
   "maxErr": 0.5736546955002382,
   "rmsErr": 0.031640448634128605,
   "Ttip": 81.3130633743527,
-  "maxDiffVsElmerUMFPACK": 4.99256188390973e-06,
+  "maxDiffVsElmerUMFPACK": 3.836930773104541e-12,
   "matchedNodes": 861
  },
  {
@@ -116,7 +116,7 @@
   "maxErr": 0.5736180688599006,
   "rmsErr": 0.03175295933299776,
   "Ttip": 81.3122099700872,
-  "maxDiffVsElmerUMFPACK": 0.0011314630894077027,
+  "maxDiffVsElmerUMFPACK": 0.001132245965990819,
   "matchedNodes": 861
  },
  {
@@ -136,7 +136,7 @@
   "maxErr": 0.30669035338672757,
   "rmsErr": 0.008825357801263914,
   "Ttip": 81.31698331301591,
-  "maxDiffVsElmerUMFPACK": 4.999352938739321e-06,
+  "maxDiffVsElmerUMFPACK": 3.836930773104541e-12,
   "matchedNodes": 3321
  },
  {
@@ -156,7 +156,7 @@
   "maxErr": 0.30669035338618755,
   "rmsErr": 0.00882535780201529,
   "Ttip": 81.31698331301068,
-  "maxDiffVsElmerUMFPACK": 4.999355411428041e-06,
+  "maxDiffVsElmerUMFPACK": 8.58335624798201e-12,
   "matchedNodes": 3321
  },
  {
@@ -176,7 +176,7 @@
   "maxErr": 0.30665464918982366,
   "rmsErr": 0.009105676130352307,
   "Ttip": 81.31524880640102,
-  "maxDiffVsElmerUMFPACK": 0.0023050907190054204,
+  "maxDiffVsElmerUMFPACK": 0.00230233426441373,
   "matchedNodes": 3321
  },
  {
@@ -191,12 +191,12 @@
   "process": 33.60482440399983,
   "peakMemoryMB": 1667.5625,
   "linsolve": 33.09655491800001,
-  "warmWall": null,
+  "warmWall": 27.85767678000033,
   "nruns": 1,
   "maxErr": 0.15921516271666292,
   "rmsErr": 0.002437832054753779,
   "Ttip": 81.31796317697342,
-  "maxDiffVsElmerUMFPACK": 4.999884964718149e-06,
+  "maxDiffVsElmerUMFPACK": 9.180212146020494e-12,
   "matchedNodes": 13041
  },
  {
@@ -216,7 +216,7 @@
   "maxErr": 0.15921516271640712,
   "rmsErr": 0.00243783205775699,
   "Ttip": 81.31796317695066,
-  "maxDiffVsElmerUMFPACK": 4.999921372927929e-06,
+  "maxDiffVsElmerUMFPACK": 4.3939962779404595e-11,
   "matchedNodes": 13041
  },
  {
@@ -252,7 +252,7 @@
   "maxErr": 0.08124382302889899,
   "rmsErr": 0.0006655628251101104,
   "Ttip": 81.31820813530229,
-  "maxDiffVsElmerUMFPACK": 5.00011317683402e-06,
+  "maxDiffVsElmerUMFPACK": 1.9258550310041755e-10,
   "matchedNodes": 51681
  },
  {
@@ -280,8 +280,8 @@
   "maxErr": 0.3124316349723699,
   "rmsErr": 0.009378390829743873,
   "Ttip": 81.31689251559712,
-  "maxDiffVsElmerUMFPACK": 4.997177683208065e-06,
-  "matchedNodes": 3042
+  "maxDiffVsElmerUMFPACK": 5.5422333389287814e-12,
+  "matchedNodes": 3120
  },
  {
   "case": "linear-77x39",
@@ -300,8 +300,8 @@
   "maxErr": 0.3124316349724836,
   "rmsErr": 0.009378390829644312,
   "Ttip": 81.31689251559894,
-  "maxDiffVsElmerUMFPACK": 4.997177768473193e-06,
-  "matchedNodes": 3042
+  "maxDiffVsElmerUMFPACK": 6.139089236967266e-12,
+  "matchedNodes": 3120
  },
  {
   "case": "linear-77x39",
@@ -320,8 +320,8 @@
   "maxErr": 0.3123956643817962,
   "rmsErr": 0.009646208945491664,
   "Ttip": 81.31521249548267,
-  "maxDiffVsElmerUMFPACK": 0.002235438058775685,
-  "matchedNodes": 3042
+  "maxDiffVsElmerUMFPACK": 0.002230522468920526,
+  "matchedNodes": 3120
  },
  {
   "case": "quadratic-10x5",
@@ -340,7 +340,7 @@
   "maxErr": 0.7997377452780086,
   "rmsErr": 0.06674347931839085,
   "Ttip": 81.31847013718328,
-  "maxDiffVsElmerUMFPACK": 4.99287773436663e-06,
+  "maxDiffVsElmerUMFPACK": 7.673861546209082e-13,
   "matchedNodes": 231
  },
  {
@@ -360,7 +360,7 @@
   "maxErr": 0.7997377452779801,
   "rmsErr": 0.06674347931838627,
   "Ttip": 81.31847013718345,
-  "maxDiffVsElmerUMFPACK": 4.99287773436663e-06,
+  "maxDiffVsElmerUMFPACK": 5.968558980384842e-13,
   "matchedNodes": 231
  },
  {
@@ -380,7 +380,7 @@
   "maxErr": 0.7996399228228483,
   "rmsErr": 0.06673971968561024,
   "Ttip": 81.31784483627831,
-  "maxDiffVsElmerUMFPACK": 0.000824762533767398,
+  "maxDiffVsElmerUMFPACK": 0.0008253743692563376,
   "matchedNodes": 231
  },
  {
@@ -400,7 +400,7 @@
   "maxErr": 0.3942712168281446,
   "rmsErr": 0.016932909653195365,
   "Ttip": 81.3183009477325,
-  "maxDiffVsElmerUMFPACK": 4.992969280692705e-06,
+  "maxDiffVsElmerUMFPACK": 2.3163693185779266e-12,
   "matchedNodes": 861
  },
  {
@@ -420,7 +420,7 @@
   "maxErr": 0.39427121682780353,
   "rmsErr": 0.01693290965319015,
   "Ttip": 81.31830094773254,
-  "maxDiffVsElmerUMFPACK": 4.992969337536124e-06,
+  "maxDiffVsElmerUMFPACK": 2.9558577807620168e-12,
   "matchedNodes": 861
  },
  {
@@ -440,7 +440,7 @@
   "maxErr": 0.3941703404785244,
   "rmsErr": 0.016955427080252654,
   "Ttip": 81.31701533334304,
-  "maxDiffVsElmerUMFPACK": 0.0017012057259790936,
+  "maxDiffVsElmerUMFPACK": 0.001705243461117334,
   "matchedNodes": 861
  },
  {
@@ -455,12 +455,12 @@
   "process": 31.016524482000023,
   "peakMemoryMB": 646.96875,
   "linsolve": 30.69237775300001,
-  "warmWall": null,
+  "warmWall": 25.22606490799971,
   "nruns": 1,
   "maxErr": 0.19569615621310277,
   "rmsErr": 0.004262272683834671,
   "Ttip": 81.31829048332179,
-  "maxDiffVsElmerUMFPACK": 4.999401937766379e-06,
+  "maxDiffVsElmerUMFPACK": 1.304556462855544e-11,
   "matchedNodes": 3321
  },
  {
@@ -480,7 +480,7 @@
   "maxErr": 0.19569615621364278,
   "rmsErr": 0.004262272683839166,
   "Ttip": 81.318290483323,
-  "maxDiffVsElmerUMFPACK": 4.999404268346552e-06,
+  "maxDiffVsElmerUMFPACK": 1.1056044968427159e-11,
   "matchedNodes": 3321
  },
  {
@@ -516,7 +516,7 @@
   "maxErr": 0.09749923413349393,
   "rmsErr": 0.00106920586383377,
   "Ttip": 81.3182898309734,
-  "maxDiffVsElmerUMFPACK": 4.999065282618176e-06,
+  "maxDiffVsElmerUMFPACK": 3.774403012357652e-11,
   "matchedNodes": 13041
  },
  {
@@ -552,7 +552,7 @@
   "maxErr": 0.04866541569032279,
   "rmsErr": 0.0002677625786829528,
   "Ttip": 81.31828979019939,
-  "maxDiffVsElmerUMFPACK": 4.999430387897519e-06,
+  "maxDiffVsElmerUMFPACK": 1.07775122160092e-10,
   "matchedNodes": 51681
  },
  {

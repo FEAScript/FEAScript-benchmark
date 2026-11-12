@@ -23,14 +23,14 @@
   "h": 0.2,
   "nodes": 274,
   "code": "FEAScript sparse LU",
-  "solve": 0.17628060400113463,
-  "linsolve": 0.12554911400005223,
-  "process": 0.37557296650084027,
-  "peakMemoryMB": 65.76953125,
+  "solve": 0.1800219440003857,
+  "linsolve": 0.1295996719999239,
+  "process": 0.38461273199982315,
+  "peakMemoryMB": 65.921875,
   "nruns": 5,
   "maxErr": 0.6814911702092274,
   "rmsErr": 0.06597855869775307,
-  "warmWall": 0.0752188210003078,
+  "warmWall": 0.06551864000037312,
   "maxDiffVsFEAScript": 0.0
  },
  {
@@ -77,9 +77,9 @@
   "process": 2.0457081259992265,
   "peakMemoryMB": 30.7421875,
   "nruns": 5,
-  "maxErr": 0.681492197767966,
-  "rmsErr": 0.06597854060476002,
-  "maxDiffVsFEAScript": 4.990047756336935e-06
+  "maxErr": 0.681491170209199,
+  "rmsErr": 0.06597855869776503,
+  "maxDiffVsFEAScript": 5.400124791776761e-13
  },
  {
   "case": "tri-linear-h0.1",
@@ -105,14 +105,14 @@
   "h": 0.1,
   "nodes": 995,
   "code": "FEAScript sparse LU",
-  "solve": 0.3515848000012338,
-  "linsolve": 0.21424522000178695,
-  "process": 0.5480784074998155,
-  "peakMemoryMB": 68.671875,
+  "solve": 0.3702164599997923,
+  "linsolve": 0.2246093899998814,
+  "process": 0.5821177425000315,
+  "peakMemoryMB": 68.126953125,
   "nruns": 5,
   "maxErr": 0.42062309678817655,
   "rmsErr": 0.025575110809144312,
-  "warmWall": 0.22133692199923097,
+  "warmWall": 0.22289448099955916,
   "maxDiffVsFEAScript": 0.0
  },
  {
@@ -159,9 +159,9 @@
   "process": 2.050109091000195,
   "peakMemoryMB": 31.98828125,
   "nruns": 5,
-  "maxErr": 0.4206265953267234,
-  "rmsErr": 0.025575098339721748,
-  "maxDiffVsFEAScript": 4.989859604620506e-06
+  "maxErr": 0.420623096788205,
+  "rmsErr": 0.025575110809127062,
+  "maxDiffVsFEAScript": 1.1652900866465643e-12
  },
  {
   "case": "tri-linear-h0.05",
@@ -187,14 +187,14 @@
   "h": 0.05,
   "nodes": 3818,
   "code": "FEAScript sparse LU",
-  "solve": 0.69477362800017,
-  "linsolve": 0.40782729900069536,
-  "process": 0.9126249105011084,
-  "peakMemoryMB": 90.919921875,
+  "solve": 0.7323274739999324,
+  "linsolve": 0.42813325200043617,
+  "process": 0.9565975845002868,
+  "peakMemoryMB": 91.271484375,
   "nruns": 5,
   "maxErr": 0.2815529423194505,
   "rmsErr": 0.008791641670135217,
-  "warmWall": 0.7109383659996092,
+  "warmWall": 0.6747298110006377,
   "maxDiffVsFEAScript": 0.0
  },
  {
@@ -241,9 +241,9 @@
   "process": 2.075848489001146,
   "peakMemoryMB": 37.24609375,
   "nruns": 5,
-  "maxErr": 0.2815484151711871,
-  "rmsErr": 0.008791617731323554,
-  "maxDiffVsFEAScript": 4.9991659949455425e-06
+  "maxErr": 0.28155294231979155,
+  "rmsErr": 0.008791641670106444,
+  "maxDiffVsFEAScript": 4.362732397567015e-12
  },
  {
   "case": "tri-linear-h0.025",
@@ -269,14 +269,14 @@
   "h": 0.025,
   "nodes": 15092,
   "code": "FEAScript sparse LU",
-  "solve": 3.152668012998998,
-  "linsolve": 1.3338463150002062,
-  "process": 3.439267373999428,
-  "peakMemoryMB": 141.1328125,
+  "solve": 3.425048291999847,
+  "linsolve": 1.4072463419996202,
+  "process": 3.7219796379999934,
+  "peakMemoryMB": 138.810546875,
   "nruns": 5,
   "maxErr": 0.152595772933239,
   "rmsErr": 0.002678250927833128,
-  "warmWall": 3.8182285519987347,
+  "warmWall": 3.404616640000604,
   "maxDiffVsFEAScript": 0.0
  },
  {
@@ -323,9 +323,9 @@
   "process": 2.2527582879993133,
   "peakMemoryMB": 61.234375,
   "nruns": 5,
-  "maxErr": 0.15259599628356568,
-  "rmsErr": 0.002678300381217317,
-  "maxDiffVsFEAScript": 4.999954228424031e-06
+  "maxErr": 0.15259577293366533,
+  "rmsErr": 0.0026782509275139654,
+  "maxDiffVsFEAScript": 2.2566837287740782e-11
  },
  {
   "case": "tri-quadratic-h0.2",
@@ -351,14 +351,14 @@
   "h": 0.2,
   "nodes": 1033,
   "code": "FEAScript sparse LU",
-  "solve": 0.28038986299932,
-  "linsolve": 0.21285240399837493,
-  "process": 0.5261741069998607,
-  "peakMemoryMB": 67.681640625,
+  "solve": 0.2878317390000448,
+  "linsolve": 0.22212167399935423,
+  "process": 0.4951585734997934,
+  "peakMemoryMB": 67.564453125,
   "nruns": 5,
   "maxErr": 0.4817884405952668,
   "rmsErr": 0.018526717163555643,
-  "warmWall": 0.19692595200054347,
+  "warmWall": 0.2444102699998766,
   "maxDiffVsFEAScript": 0.0
  },
  {
@@ -405,9 +405,9 @@
   "process": 2.0531883540006675,
   "peakMemoryMB": 31.96875,
   "nruns": 5,
-  "maxErr": 0.481786595326696,
-  "rmsErr": 0.018526733787515494,
-  "maxDiffVsFEAScript": 4.987535277223287e-06
+  "maxErr": 0.48178844059529524,
+  "rmsErr": 0.018526717163557277,
+  "maxDiffVsFEAScript": 2.0179413695586845e-12
  },
  {
   "case": "tri-quadratic-h0.1",
@@ -433,14 +433,14 @@
   "h": 0.1,
   "nodes": 3857,
   "code": "FEAScript sparse LU",
-  "solve": 0.552895604999736,
-  "linsolve": 0.4192892870008946,
-  "process": 0.7578511450001315,
-  "peakMemoryMB": 88.826171875,
+  "solve": 0.5799915720000863,
+  "linsolve": 0.4413117639999837,
+  "process": 0.7768751759999759,
+  "peakMemoryMB": 90.943359375,
   "nruns": 5,
   "maxErr": 0.26812148393105417,
   "rmsErr": 0.005254554246204592,
-  "warmWall": 0.5737975510004908,
+  "warmWall": 0.42296108900010587,
   "maxDiffVsFEAScript": 0.0
  },
  {
@@ -487,9 +487,9 @@
   "process": 2.0835407359991223,
   "peakMemoryMB": 36.18359375,
   "nruns": 5,
-  "maxErr": 0.2681184151711875,
-  "rmsErr": 0.00525444188477687,
-  "maxDiffVsFEAScript": 4.999977477382345e-06
+  "maxErr": 0.26812148393076995,
+  "rmsErr": 0.005254554246199854,
+  "maxDiffVsFEAScript": 2.0463630789890885e-12
  },
  {
   "case": "tri-quadratic-h0.05",
@@ -515,14 +515,14 @@
   "h": 0.05,
   "nodes": 15029,
   "code": "FEAScript sparse LU",
-  "solve": 1.9577008369993418,
-  "linsolve": 1.619768825000152,
-  "process": 2.2020539140003166,
-  "peakMemoryMB": 154.984375,
+  "solve": 1.907317742999643,
+  "linsolve": 1.568071479000151,
+  "process": 2.1489299785002913,
+  "peakMemoryMB": 159.763671875,
   "nruns": 5,
   "maxErr": 0.14174176503775016,
   "rmsErr": 0.0013959373345622584,
-  "warmWall": 2.909082441000268,
+  "warmWall": 1.7870804929994046,
   "maxDiffVsFEAScript": 0.0
  },
  {
@@ -569,9 +569,9 @@
   "process": 2.2658290029994532,
   "peakMemoryMB": 55.6015625,
   "nruns": 5,
-  "maxErr": 0.14174599628356077,
-  "rmsErr": 0.0013960140252628637,
-  "maxDiffVsFEAScript": 4.998764524088983e-06
+  "maxErr": 0.14174176503757963,
+  "rmsErr": 0.0013959373345610647,
+  "maxDiffVsFEAScript": 4.575895218295045e-12
  },
  {
   "case": "tri-quadratic-h0.025",
@@ -597,14 +597,14 @@
   "h": 0.025,
   "nodes": 59885,
   "code": "FEAScript sparse LU",
-  "solve": 11.2083103769999,
-  "linsolve": 9.276490307999774,
-  "process": 11.654981411499648,
-  "peakMemoryMB": 397.251953125,
+  "solve": 10.78939719799999,
+  "linsolve": 8.731343119999394,
+  "process": 11.372983012999612,
+  "peakMemoryMB": 396.916015625,
   "nruns": 5,
   "maxErr": 0.07276516581089254,
   "rmsErr": 0.0003586855872090687,
-  "warmWall": 24.57715847299993,
+  "warmWall": 11.459229670000262,
   "maxDiffVsFEAScript": 0.0
  },
  {
@@ -651,9 +651,9 @@
   "process": 3.36368359899825,
   "peakMemoryMB": 141.93359375,
   "nruns": 5,
-  "maxErr": 0.07276832262255084,
-  "rmsErr": 0.0003586759071617561,
-  "maxDiffVsFEAScript": 4.999936550120765e-06
+  "maxErr": 0.07276516581126202,
+  "rmsErr": 0.00035868558721055484,
+  "maxDiffVsFEAScript": 1.432454155292362e-11
  },
  {
   "case": "quad-linear-h0.4",
@@ -679,14 +679,14 @@
   "h": 0.4,
   "nodes": 415,
   "code": "FEAScript sparse LU",
-  "solve": 0.18271663000062108,
-  "linsolve": 0.13988887500017883,
-  "process": 0.37642563300050824,
-  "peakMemoryMB": 65.974609375,
+  "solve": 0.18466019100043923,
+  "linsolve": 0.13912300199922173,
+  "process": 0.37551322000035725,
+  "peakMemoryMB": 65.5546875,
   "nruns": 5,
   "maxErr": 1.7414710049658026,
   "rmsErr": 0.11955589914797793,
-  "warmWall": 0.08406641099974513,
+  "warmWall": 0.08127002800069749,
   "maxDiffVsFEAScript": 0.0
  },
  {
@@ -733,9 +733,9 @@
   "process": 2.0406138469988946,
   "peakMemoryMB": 30.7578125,
   "nruns": 5,
-  "maxErr": 1.7414683330032972,
-  "rmsErr": 0.11955564263707459,
-  "maxDiffVsFEAScript": 4.989690495449395e-06
+  "maxErr": 1.741471004965888,
+  "rmsErr": 0.11955589914797864,
+  "maxDiffVsFEAScript": 5.115907697472721e-13
  },
  {
   "case": "quad-linear-h0.2",
@@ -761,14 +761,14 @@
   "h": 0.2,
   "nodes": 1519,
   "code": "FEAScript sparse LU",
-  "solve": 0.3630292029995471,
-  "linsolve": 0.2687754260003567,
-  "process": 0.5892174970003907,
-  "peakMemoryMB": 72.140625,
+  "solve": 0.37798663999978455,
+  "linsolve": 0.2826541640004143,
+  "process": 0.5822497379999731,
+  "peakMemoryMB": 72.5546875,
   "nruns": 5,
   "maxErr": 0.8204554257470704,
   "rmsErr": 0.0355042689772056,
-  "warmWall": 0.33539307200163604,
+  "warmWall": 0.27717855700012295,
   "maxDiffVsFEAScript": 0.0
  },
  {
@@ -815,9 +815,9 @@
   "process": 2.0433455239999603,
   "peakMemoryMB": 32.6171875,
   "nruns": 5,
-  "maxErr": 0.8204534046732874,
-  "rmsErr": 0.03550416516873985,
-  "maxDiffVsFEAScript": 4.9966384096933325e-06
+  "maxErr": 0.8204554257469567,
+  "rmsErr": 0.03550426897720247,
+  "maxDiffVsFEAScript": 5.542233338928781e-13
  },
  {
   "case": "quad-linear-h0.1",
@@ -843,14 +843,14 @@
   "h": 0.1,
   "nodes": 5725,
   "code": "FEAScript sparse LU",
-  "solve": 0.6512689969986677,
-  "linsolve": 0.5108237939998508,
-  "process": 0.8633628959996713,
-  "peakMemoryMB": 93.396484375,
+  "solve": 0.9069722140002996,
+  "linsolve": 0.6775508030001074,
+  "process": 1.165503535499738,
+  "peakMemoryMB": 92.568359375,
   "nruns": 5,
   "maxErr": 0.3960244681376537,
   "rmsErr": 0.010421585044254793,
-  "warmWall": 0.6956603069994599,
+  "warmWall": 0.6471540370006115,
   "maxDiffVsFEAScript": 0.0
  },
  {
@@ -897,9 +897,9 @@
   "process": 2.0867899439999746,
   "peakMemoryMB": 38.51171875,
   "nruns": 5,
-  "maxErr": 0.3960215848288158,
-  "rmsErr": 0.010421560618169864,
-  "maxDiffVsFEAScript": 4.99920079732874e-06
+  "maxErr": 0.39602446813771053,
+  "rmsErr": 0.010421585044241717,
+  "maxDiffVsFEAScript": 2.9558577807620168e-12
  },
  {
   "case": "quad-linear-h0.05",
@@ -925,14 +925,14 @@
   "h": 0.05,
   "nodes": 22423,
   "code": "FEAScript sparse LU",
-  "solve": 1.799920476999134,
-  "linsolve": 1.4499820959996432,
-  "process": 2.116441899500387,
-  "peakMemoryMB": 153.29296875,
+  "solve": 1.8812514960002154,
+  "linsolve": 1.5199691850002854,
+  "process": 2.2107874954999716,
+  "peakMemoryMB": 154.404296875,
   "nruns": 5,
   "maxErr": 0.191045338447708,
   "rmsErr": 0.0029596257905745217,
-  "warmWall": 2.2996945049986244,
+  "warmWall": 2.0308429780006407,
   "maxDiffVsFEAScript": 0.0
  },
  {
@@ -979,9 +979,9 @@
   "process": 2.276827289000721,
   "peakMemoryMB": 67.7578125,
   "nruns": 5,
-  "maxErr": 0.19104400371642782,
-  "rmsErr": 0.0029596903256849045,
-  "maxDiffVsFEAScript": 4.998771572672922e-06
+  "maxErr": 0.19104533844765115,
+  "rmsErr": 0.002959625790444915,
+  "maxDiffVsFEAScript": 1.801936377887614e-11
  },
  {
   "case": "quad-quadratic-h0.4",
@@ -1007,14 +1007,14 @@
   "h": 0.4,
   "nodes": 1597,
   "code": "FEAScript sparse LU",
-  "solve": 0.32430280099995434,
-  "linsolve": 0.25561888700164853,
-  "process": 0.5178499815001487,
-  "peakMemoryMB": 69.705078125,
+  "solve": 0.3481586179994047,
+  "linsolve": 0.2805059060007334,
+  "process": 0.5519214390001252,
+  "peakMemoryMB": 68.74609375,
   "nruns": 5,
   "maxErr": 0.3639816081866911,
   "rmsErr": 0.014172507818897569,
-  "warmWall": 0.2610595689993352,
+  "warmWall": 0.21290354200080036,
   "maxDiffVsFEAScript": 0.0
  },
  {
@@ -1061,9 +1061,9 @@
   "process": 2.053296035999665,
   "peakMemoryMB": 32.9609375,
   "nruns": 5,
-  "maxErr": 0.36398166699672174,
-  "rmsErr": 0.014172415968723302,
-  "maxDiffVsFEAScript": 4.998545051648762e-06
+  "maxErr": 0.3639816081864069,
+  "rmsErr": 0.014172507818891069,
+  "maxDiffVsFEAScript": 1.4779288903810084e-12
  },
  {
   "case": "quad-quadratic-h0.2",
@@ -1089,14 +1089,14 @@
   "h": 0.2,
   "nodes": 5953,
   "code": "FEAScript sparse LU",
-  "solve": 0.573990374000743,
-  "linsolve": 0.47614655099995434,
-  "process": 0.797353512501104,
-  "peakMemoryMB": 105.57421875,
+  "solve": 0.6867423310000449,
+  "linsolve": 0.5645969939995557,
+  "process": 0.9131686165001156,
+  "peakMemoryMB": 101.875,
   "nruns": 5,
   "maxErr": 0.177017415902327,
   "rmsErr": 0.0036498570425282056,
-  "warmWall": 0.62418595200032,
+  "warmWall": 0.5597457570005209,
   "maxDiffVsFEAScript": 0.0
  },
  {
@@ -1143,9 +1143,9 @@
   "process": 2.1232004269986646,
   "peakMemoryMB": 40.53125,
   "nruns": 5,
-  "maxErr": 0.17701659532670533,
-  "rmsErr": 0.0036498204634998026,
-  "maxDiffVsFEAScript": 4.999229958002616e-06
+  "maxErr": 0.17701741590303754,
+  "rmsErr": 0.003649857042529386,
+  "maxDiffVsFEAScript": 3.296918293926865e-12
  },
  {
   "case": "quad-quadratic-h0.1",
@@ -1171,14 +1171,14 @@
   "h": 0.1,
   "nodes": 22657,
   "code": "FEAScript sparse LU",
-  "solve": 1.8232998660001905,
-  "linsolve": 1.6147763129994273,
-  "process": 2.1206599480001387,
-  "peakMemoryMB": 207.28125,
+  "solve": 2.4102928649997337,
+  "linsolve": 2.0834019049992785,
+  "process": 2.9465607219999583,
+  "peakMemoryMB": 206.310546875,
   "nruns": 5,
   "maxErr": 0.08717227579953146,
   "rmsErr": 0.0009341434729293472,
-  "warmWall": 2.399251889999956,
+  "warmWall": 2.341679583000019,
   "maxDiffVsFEAScript": 0.0
  },
  {
@@ -1225,9 +1225,9 @@
   "process": 2.4315946679998888,
   "peakMemoryMB": 69.15625,
   "nruns": 5,
-  "maxErr": 0.08716841517119178,
-  "rmsErr": 0.0009341067111745011,
-  "maxDiffVsFEAScript": 4.999488822932108e-06
+  "maxErr": 0.08717227579916198,
+  "rmsErr": 0.0009341434729275936,
+  "maxDiffVsFEAScript": 1.2363443602225743e-11
  },
  {
   "case": "quad-quadratic-h0.05",
@@ -1253,14 +1253,14 @@
   "h": 0.05,
   "nodes": 89209,
   "code": "FEAScript sparse LU",
-  "solve": 8.541443870998918,
-  "linsolve": 7.951955311000347,
-  "process": 9.032334804499442,
-  "peakMemoryMB": 624.123046875,
+  "solve": 7.551364031999372,
+  "linsolve": 7.024897330000066,
+  "process": 8.083952890000091,
+  "peakMemoryMB": 623.240234375,
   "nruns": 5,
   "maxErr": 0.04324618674363023,
   "rmsErr": 0.00023522083577366242,
-  "warmWall": 13.715946733999997,
+  "warmWall": 7.6231962780002505,
   "maxDiffVsFEAScript": 0.0
  },
  {
@@ -1307,8 +1307,8 @@
   "process": 3.718229998001334,
   "peakMemoryMB": 179.35546875,
   "nruns": 5,
-  "maxErr": 0.04324599628355941,
-  "rmsErr": 0.00023525898554485,
-  "maxDiffVsFEAScript": 4.999759099177936e-06
+  "maxErr": 0.04324618674311864,
+  "rmsErr": 0.00023522083577229996,
+  "maxDiffVsFEAScript": 1.5447199075424578e-11
  }
 ]

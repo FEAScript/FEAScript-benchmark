@@ -16,7 +16,7 @@
   "maxErr": 1.0230353884226417,
   "rmsErr": 0.11294034385890257,
   "Ttip": 81.29737600044352,
-  "maxDiffVsElmerUMFPACK": 4.963259044643564e-06,
+  "maxDiffVsElmerUMFPACK": 2.2737367544323206e-13,
   "matchedNodes": 231
  },
  {
@@ -26,17 +26,17 @@
   "ny": 10,
   "nodes": 231,
   "code": "FEAScript sparse LU",
-  "wall": 0.1412604179996997,
-  "solve": 0.1412604179996997,
-  "process": 0.32598099850110884,
-  "peakMemoryMB": 65.083984375,
-  "linsolve": 0.12126545500010252,
-  "warmWall": 0.05559566699899733,
+  "wall": 0.1465261140000075,
+  "solve": 0.1465261140000075,
+  "process": 0.3574417834997803,
+  "peakMemoryMB": 65.400390625,
+  "linsolve": 0.1256852540001273,
+  "warmWall": 0.046635745000094174,
   "nruns": 5,
   "maxErr": 1.023035388422727,
   "rmsErr": 0.11294034385890397,
   "Ttip": 81.2973760004435,
-  "maxDiffVsElmerUMFPACK": 4.9632589309567265e-06,
+  "maxDiffVsElmerUMFPACK": 3.126388037344441e-13,
   "matchedNodes": 231
  },
  {
@@ -56,7 +56,7 @@
   "maxErr": 1.0230330623556085,
   "rmsErr": 0.11294389713500522,
   "Ttip": 81.2973506884954,
-  "maxDiffVsElmerUMFPACK": 3.714616183003727e-05,
+  "maxDiffVsElmerUMFPACK": 3.353971943909073e-05,
   "matchedNodes": 231
  },
  {
@@ -76,7 +76,7 @@
   "maxErr": 0.5736546955005792,
   "rmsErr": 0.03164044863383115,
   "Ttip": 81.31306337435417,
-  "maxDiffVsElmerUMFPACK": 4.9925585017263074e-06,
+  "maxDiffVsElmerUMFPACK": 7.105427357601002e-13,
   "matchedNodes": 861
  },
  {
@@ -86,17 +86,17 @@
   "ny": 20,
   "nodes": 861,
   "code": "FEAScript sparse LU",
-  "wall": 0.2465190469995141,
-  "solve": 0.2465190469995141,
-  "process": 0.4369681785001376,
-  "peakMemoryMB": 66.9453125,
-  "linsolve": 0.19539412200078368,
-  "warmWall": 0.15677086600102486,
+  "wall": 0.2976282989997417,
+  "solve": 0.2976282989997417,
+  "process": 0.4960854249998192,
+  "peakMemoryMB": 66.865234375,
+  "linsolve": 0.23081873899977653,
+  "warmWall": 0.16210615200083703,
   "nruns": 5,
   "maxErr": 0.5736546955002382,
   "rmsErr": 0.03164044863404593,
   "Ttip": 81.31306337435336,
-  "maxDiffVsElmerUMFPACK": 4.992561230210413e-06,
+  "maxDiffVsElmerUMFPACK": 3.410605131648481e-12,
   "matchedNodes": 861
  },
  {
@@ -116,7 +116,7 @@
   "maxErr": 0.5736515710800347,
   "rmsErr": 0.03164959377869968,
   "Ttip": 81.31299057128537,
-  "maxDiffVsElmerUMFPACK": 9.989899244544631e-05,
+  "maxDiffVsElmerUMFPACK": 9.659077683465966e-05,
   "matchedNodes": 861
  },
  {
@@ -136,7 +136,7 @@
   "maxErr": 0.3066903533866423,
   "rmsErr": 0.008825357801311114,
   "Ttip": 81.31698331301546,
-  "maxDiffVsElmerUMFPACK": 4.999353336643253e-06,
+  "maxDiffVsElmerUMFPACK": 2.2453150450019166e-12,
   "matchedNodes": 3321
  },
  {
@@ -146,17 +146,17 @@
   "ny": 40,
   "nodes": 3321,
   "code": "FEAScript sparse LU",
-  "wall": 0.4572409290000796,
-  "solve": 0.4572409290000796,
-  "process": 0.6479668160000074,
-  "peakMemoryMB": 81.734375,
-  "linsolve": 0.3876442920006812,
-  "warmWall": 0.46189741099998355,
+  "wall": 0.47951387900020925,
+  "solve": 0.47951387900020925,
+  "process": 0.6680505295003059,
+  "peakMemoryMB": 82.408203125,
+  "linsolve": 0.40599042699951676,
+  "warmWall": 0.4622322569992393,
   "nruns": 5,
   "maxErr": 0.30669035338618755,
   "rmsErr": 0.008825357802066393,
   "Ttip": 81.31698331301075,
-  "maxDiffVsElmerUMFPACK": 4.999355610380007e-06,
+  "maxDiffVsElmerUMFPACK": 9.15179043659009e-12,
   "matchedNodes": 3321
  },
  {
@@ -176,7 +176,7 @@
   "maxErr": 0.30668612464145895,
   "rmsErr": 0.008849637103549702,
   "Ttip": 81.31677786237243,
-  "maxDiffVsElmerUMFPACK": 0.00027578603473443764,
+  "maxDiffVsElmerUMFPACK": 0.00027270928060829647,
   "matchedNodes": 3321
  },
  {
@@ -196,7 +196,7 @@
   "maxErr": 0.15921516271697556,
   "rmsErr": 0.002437832054765627,
   "Ttip": 81.31796317697449,
-  "maxDiffVsElmerUMFPACK": 4.999883174150455e-06,
+  "maxDiffVsElmerUMFPACK": 1.0345502232667059e-11,
   "matchedNodes": 13041
  },
  {
@@ -206,17 +206,17 @@
   "ny": 80,
   "nodes": 13041,
   "code": "FEAScript sparse LU",
-  "wall": 1.2270142350010573,
-  "solve": 1.2270142350010573,
-  "process": 1.4201946074999796,
-  "peakMemoryMB": 139.0703125,
-  "linsolve": 1.1017254310008138,
-  "warmWall": 1.5830736259985716,
+  "wall": 1.287384423000738,
+  "solve": 1.287384423000738,
+  "process": 1.5164383894998537,
+  "peakMemoryMB": 139.6015625,
+  "linsolve": 1.1472688680002465,
+  "warmWall": 1.2029581650001928,
   "nruns": 5,
   "maxErr": 0.159215162716265,
   "rmsErr": 0.002437832057794078,
   "Ttip": 81.31796317695094,
-  "maxDiffVsElmerUMFPACK": 4.999921628723314e-06,
+  "maxDiffVsElmerUMFPACK": 4.4366288420860656e-11,
   "matchedNodes": 13041
  },
  {
@@ -244,7 +244,7 @@
   "maxErr": 0.08124382302986533,
   "rmsErr": 0.0006655628165479361,
   "Ttip": 81.31820813536315,
-  "maxDiffVsElmerUMFPACK": 5.000000527388693e-06,
+  "maxDiffVsElmerUMFPACK": 7.291589554370148e-11,
   "matchedNodes": 51681
  },
  {
@@ -254,17 +254,17 @@
   "ny": 160,
   "nodes": 51681,
   "code": "FEAScript sparse LU",
-  "wall": 4.68263966500014,
-  "solve": 4.68263966500014,
-  "process": 4.888442016000226,
-  "peakMemoryMB": 346.923828125,
-  "linsolve": 4.433506551001221,
-  "warmWall": 8.086935362000018,
+  "wall": 4.5585235100006685,
+  "solve": 4.5585235100006685,
+  "process": 4.7978902675004065,
+  "peakMemoryMB": 333.490234375,
+  "linsolve": 4.299397501999512,
+  "warmWall": 4.645143985000439,
   "nruns": 5,
   "maxErr": 0.08124382302898425,
   "rmsErr": 0.0006655628243949061,
   "Ttip": 81.3182081353089,
-  "maxDiffVsElmerUMFPACK": 5.00010570192444e-06,
+  "maxDiffVsElmerUMFPACK": 1.8570744941825978e-10,
   "matchedNodes": 51681
  },
  {
@@ -292,8 +292,8 @@
   "maxErr": 0.31243163497282467,
   "rmsErr": 0.009378390829584686,
   "Ttip": 81.31689251559877,
-  "maxDiffVsElmerUMFPACK": 4.997176830556782e-06,
-  "matchedNodes": 3042
+  "maxDiffVsElmerUMFPACK": 6.906475391588174e-12,
+  "matchedNodes": 3120
  },
  {
   "case": "linear-77x39",
@@ -302,18 +302,18 @@
   "ny": 39,
   "nodes": 3120,
   "code": "FEAScript sparse LU",
-  "wall": 0.44143279200047253,
-  "solve": 0.44143279200047253,
-  "process": 0.6234956409989536,
-  "peakMemoryMB": 80.849609375,
-  "linsolve": 0.3749537829998881,
-  "warmWall": 0.4461577930003405,
+  "wall": 0.44999241499975323,
+  "solve": 0.44999241499975323,
+  "process": 0.6425274245002583,
+  "peakMemoryMB": 80.796875,
+  "linsolve": 0.3824445949997753,
+  "warmWall": 0.4248190270001069,
   "nruns": 5,
   "maxErr": 0.3124316349725689,
   "rmsErr": 0.009378390829612379,
   "Ttip": 81.31689251559834,
-  "maxDiffVsElmerUMFPACK": 4.997177370569261e-06,
-  "matchedNodes": 3042
+  "maxDiffVsElmerUMFPACK": 7.815970093361102e-12,
+  "matchedNodes": 3120
  },
  {
   "case": "linear-77x39",
@@ -332,8 +332,8 @@
   "maxErr": 0.31242744000942935,
   "rmsErr": 0.009401842706327348,
   "Ttip": 81.31669657095355,
-  "maxDiffVsElmerUMFPACK": 0.0002650665986294598,
-  "matchedNodes": 3042
+  "maxDiffVsElmerUMFPACK": 0.00026015100877430086,
+  "matchedNodes": 3120
  },
  {
   "case": "quadratic-10x5",
@@ -352,7 +352,7 @@
   "maxErr": 0.7997377452781507,
   "rmsErr": 0.06674347931839247,
   "Ttip": 81.31847013718317,
-  "maxDiffVsElmerUMFPACK": 4.992877876475177e-06,
+  "maxDiffVsElmerUMFPACK": 7.958078640513122e-13,
   "matchedNodes": 231
  },
  {
@@ -362,17 +362,17 @@
   "ny": 5,
   "nodes": 231,
   "code": "FEAScript sparse LU",
-  "wall": 0.14699938599951565,
-  "solve": 0.14699938599951565,
-  "process": 0.3313344770003823,
-  "peakMemoryMB": 64.822265625,
-  "linsolve": 0.12440426499955357,
-  "warmWall": 0.053597888000309464,
+  "wall": 0.16106613600067796,
+  "solve": 0.16106613600067796,
+  "process": 0.3493866904996139,
+  "peakMemoryMB": 64.8515625,
+  "linsolve": 0.1343222610000521,
+  "warmWall": 0.05813692000042647,
   "nruns": 5,
   "maxErr": 0.7997377452780654,
   "rmsErr": 0.06674347931838866,
   "Ttip": 81.31847013718343,
-  "maxDiffVsElmerUMFPACK": 4.99287773436663e-06,
+  "maxDiffVsElmerUMFPACK": 7.105427357601002e-13,
   "matchedNodes": 231
  },
  {
@@ -392,7 +392,7 @@
   "maxErr": 0.7997329417979415,
   "rmsErr": 0.0667432258663928,
   "Ttip": 81.31843943125278,
-  "maxDiffVsElmerUMFPACK": 4.437583002925294e-05,
+  "maxDiffVsElmerUMFPACK": 4.0530706158392604e-05,
   "matchedNodes": 231
  },
  {
@@ -412,7 +412,7 @@
   "maxErr": 0.3942712168279172,
   "rmsErr": 0.01693290965319185,
   "Ttip": 81.31830094773186,
-  "maxDiffVsElmerUMFPACK": 4.992969820705184e-06,
+  "maxDiffVsElmerUMFPACK": 3.211653165635653e-12,
   "matchedNodes": 861
  },
  {
@@ -422,17 +422,17 @@
   "ny": 10,
   "nodes": 861,
   "code": "FEAScript sparse LU",
-  "wall": 0.2570186570007354,
-  "solve": 0.2570186570007354,
-  "process": 0.4426272175005579,
-  "peakMemoryMB": 67.16015625,
-  "linsolve": 0.20966167999990284,
-  "warmWall": 0.15784733099862933,
+  "wall": 0.2722904970003292,
+  "solve": 0.2722904970003292,
+  "process": 0.46090844199943604,
+  "peakMemoryMB": 66.494140625,
+  "linsolve": 0.2240803230004385,
+  "warmWall": 0.14587792699970306,
   "nruns": 5,
   "maxErr": 0.3942712168280593,
   "rmsErr": 0.01693290965319516,
   "Ttip": 81.31830094773235,
-  "maxDiffVsElmerUMFPACK": 4.992969593331509e-06,
+  "maxDiffVsElmerUMFPACK": 2.5579538487363607e-12,
   "matchedNodes": 861
  },
  {
@@ -452,7 +452,7 @@
   "maxErr": 0.3942644394313106,
   "rmsErr": 0.01693283039846479,
   "Ttip": 81.31821456717415,
-  "maxDiffVsElmerUMFPACK": 0.00011845047332315062,
+  "maxDiffVsElmerUMFPACK": 0.00011457547806514867,
   "matchedNodes": 861
  },
  {
@@ -472,7 +472,7 @@
   "maxErr": 0.19569615621333014,
   "rmsErr": 0.004262272683836464,
   "Ttip": 81.31829048332266,
-  "maxDiffVsElmerUMFPACK": 4.9994045525636466e-06,
+  "maxDiffVsElmerUMFPACK": 1.0729195309977513e-11,
   "matchedNodes": 3321
  },
  {
@@ -482,17 +482,17 @@
   "ny": 20,
   "nodes": 3321,
   "code": "FEAScript sparse LU",
-  "wall": 0.4529449969995767,
-  "solve": 0.4529449969995767,
-  "process": 0.6359896044996276,
-  "peakMemoryMB": 82.501953125,
-  "linsolve": 0.3915982409995049,
-  "warmWall": 0.4527688229996711,
+  "wall": 0.5074705410003663,
+  "solve": 0.5074705410003663,
+  "process": 0.7267563130003509,
+  "peakMemoryMB": 81.03125,
+  "linsolve": 0.42728142499923705,
+  "warmWall": 0.5854874910004437,
   "nruns": 5,
   "maxErr": 0.19569615621364278,
   "rmsErr": 0.004262272683840046,
   "Ttip": 81.31829048332395,
-  "maxDiffVsElmerUMFPACK": 4.999405774697152e-06,
+  "maxDiffVsElmerUMFPACK": 9.322320693172514e-12,
   "matchedNodes": 3321
  },
  {
@@ -520,7 +520,7 @@
   "maxErr": 0.09749923413409078,
   "rmsErr": 0.0010692058638373104,
   "Ttip": 81.31828983097465,
-  "maxDiffVsElmerUMFPACK": 4.999059967758512e-06,
+  "maxDiffVsElmerUMFPACK": 3.362288225616794e-11,
   "matchedNodes": 13041
  },
  {
@@ -530,17 +530,17 @@
   "ny": 40,
   "nodes": 13041,
   "code": "FEAScript sparse LU",
-  "wall": 1.3348349210005253,
-  "solve": 1.3348349210005253,
-  "process": 1.5365016015002766,
-  "peakMemoryMB": 136.359375,
-  "linsolve": 1.22868151400052,
-  "warmWall": 1.780421480000019,
+  "wall": 1.3574251539995894,
+  "solve": 1.3574251539995894,
+  "process": 1.5586244850001094,
+  "peakMemoryMB": 148.328125,
+  "linsolve": 1.244602092999965,
+  "warmWall": 1.2604058170001955,
   "nruns": 5,
   "maxErr": 0.0974992341335792,
   "rmsErr": 0.0010692058638344388,
   "Ttip": 81.31828983097353,
-  "maxDiffVsElmerUMFPACK": 4.999065282618176e-06,
+  "maxDiffVsElmerUMFPACK": 3.7488234738702886e-11,
   "matchedNodes": 13041
  },
  {
@@ -568,7 +568,7 @@
   "maxErr": 0.04866541569128913,
   "rmsErr": 0.0002677625786860906,
   "Ttip": 81.31828979019396,
-  "maxDiffVsElmerUMFPACK": 4.999430956331707e-06,
+  "maxDiffVsElmerUMFPACK": 1.1297629498585593e-10,
   "matchedNodes": 51681
  },
  {
@@ -578,17 +578,17 @@
   "ny": 80,
   "nodes": 51681,
   "code": "FEAScript sparse LU",
-  "wall": 5.561912420000881,
-  "solve": 5.561912420000881,
-  "process": 5.7463278370005355,
-  "peakMemoryMB": 343.68359375,
-  "linsolve": 5.329610869999975,
-  "warmWall": 10.096749026998877,
+  "wall": 5.515053191000596,
+  "solve": 5.515053191000596,
+  "process": 5.737131506499736,
+  "peakMemoryMB": 342.619140625,
+  "linsolve": 5.2807324129994955,
+  "warmWall": 5.551832649999298,
   "nruns": 5,
   "maxErr": 0.04866541569052174,
   "rmsErr": 0.00026776257868359817,
   "Ttip": 81.31828979019801,
-  "maxDiffVsElmerUMFPACK": 4.999432121621794e-06,
+  "maxDiffVsElmerUMFPACK": 1.1019096746167634e-10,
   "matchedNodes": 51681
  },
  {

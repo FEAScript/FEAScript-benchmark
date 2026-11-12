@@ -13,6 +13,7 @@
 | Cores | taskset -c 0, OMP_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1 |
 | Repeats | median of 5 fresh processes |
 | Run on | 2026-11-06 |
+| Note | The sparse LU (`lusolve`) cases were rerun on 2026-11-12 with the fix of FEAScript-core issue #136 (af82e09) added to this commit's bundle. Their solutions are unchanged, bit for bit |
 
 All the numbers are in [results_table.md](results_table.md) and [results.json](results.json).
 
@@ -21,10 +22,6 @@ On every mesh it solved, FEAScript's primary vortex strength ψ_min matches Elme
 At the nodes farther than 0.2 from the two lid corners, the velocities of the two codes differ by at most 4.9e-05 on the 64×64 mesh, against 8.0e-02 on the 8×8 mesh, so both converge to the same solution. Next to the lid corners they differ by up to 0.17 on every mesh: there FEAScript applies the full lid velocity along the top edge of the corner element, while Elmer interpolates it linearly from the corner, where the velocity is 0.
 
 scikit-fem sets the lid velocity the same way as FEAScript, so the two are compared directly at all their nodes, lid corners included: on every mesh the velocities differ by at most 3.7e-13 and the pressures, at the mesh vertices, by at most 4.9e-10.
-
-Repeated solves not measured yet (a case with a first solve over 20 s used to be timed without one):
-
-- **FEAScript sparse LU, 64x64**
 
 ## Primary vortex strength
 
@@ -52,7 +49,7 @@ Chromium 156.0.8078.79, Firefox 159.0, each run in a fresh headless browser on o
 
 | Case | Nodes | Node.js | Chromium | Firefox |
 |---|---|---|---|---|
-| Lid-driven cavity, sparse LU | 16,641 | 24.11 s | 43.37 s (1.8×) | 603.04 s (25.0×) |
+| Lid-driven cavity, sparse LU | 16,641 | 21.75 s | 18.52 s (0.9×) | 62.49 s (2.9×) |
 
 The browsers give the same solutions as Node.js, bit for bit. Cases with a first solve over 20 s are timed once, with one repeated solve, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
 

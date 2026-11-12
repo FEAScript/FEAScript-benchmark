@@ -16,9 +16,9 @@
 
 All the numbers are in [results_table.md](results_table.md) and [results.json](results.json).
 
-On every mesh it solved, FEAScript's nodal temperatures match Elmer's (UMFPACK) to within 5.0e-06 with the direct solvers (`frontal` and `lusolve`).
+On every mesh it solved, FEAScript's nodal temperatures match Elmer's (UMFPACK) to within 1.9e-10 with the direct solvers (`frontal` and `lusolve`).
 
-scikit-fem's nodal temperatures match FEAScript's (`lusolve`) to within 1.8e-10 and Elmer's (UMFPACK) to within 5.0e-06.
+scikit-fem's nodal temperatures match FEAScript's (`lusolve`) to within 1.8e-10 and Elmer's (UMFPACK) to within 1.5e-10.
 
 Where the Jacobi solver converged (residual tolerance 1e-8 within 10,000 iterations), its temperatures match Elmer's to within 2.3e-03: it stops at a residual tolerance, so its error grows with the mesh.
 
@@ -32,11 +32,6 @@ Runs that could not be measured:
 - **FEAScript Jacobi, quadratic-80x40:** not converged
 - **FEAScript frontal, quadratic-160x80:** out of memory
 - **FEAScript Jacobi, quadratic-160x80:** not converged
-
-Repeated solves not measured yet (a case with a first solve over 20 s used to be timed without one):
-
-- **FEAScript frontal, linear-160x80**
-- **FEAScript frontal, quadratic-40x20**
 
 ## Accuracy
 

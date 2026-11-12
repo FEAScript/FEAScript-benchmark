@@ -81,7 +81,7 @@
   "nruns": 1,
   "maxErr": 0.28155294231717676,
   "rmsErr": 0.00879164167102955,
-  "warmWall": null,
+  "warmWall": 27.837368704998866,
   "maxDiffVsFEAScript": 5.974243322270922e-11
  },
  {
@@ -174,7 +174,7 @@
   "nruns": 1,
   "maxErr": 0.2681214839259667,
   "rmsErr": 0.005254554246133407,
-  "warmWall": null,
+  "warmWall": 27.705398561000823,
   "maxDiffVsFEAScript": 8.418510333285667e-11
  },
  {
@@ -419,7 +419,7 @@
   "nruns": 1,
   "maxErr": 0.1770174158805844,
   "rmsErr": 0.0036498570424106534,
-  "warmWall": null,
+  "warmWall": 160.27426996800116,
   "maxDiffVsFEAScript": 2.2254198484006338e-10
  },
  {

@@ -19,9 +19,9 @@
   "runtime": "firefox",
   "runtimeVersion": "159.0",
   "nodes": 231,
-  "solve": 0.16056000000000017,
-  "process": 2.6434671479998997,
-  "warmWall": 0.035199999999999815,
+  "solve": 0.15851999999999986,
+  "process": 2.704555211999832,
+  "warmWall": 0.026059999999999944,
   "nruns": 5,
   "maxDiffVsNode": 0.0
  },
@@ -45,9 +45,9 @@
   "runtime": "firefox",
   "runtimeVersion": "159.0",
   "nodes": 3321,
-  "solve": 2.83812,
-  "process": 5.555846976000112,
-  "warmWall": 0.5998799999999992,
+  "solve": 0.6978,
+  "process": 3.3335932190002495,
+  "warmWall": 0.55222,
   "nruns": 5,
   "maxDiffVsNode": 0.0
  },
@@ -71,9 +71,9 @@
   "runtime": "firefox",
   "runtimeVersion": "159.0",
   "nodes": 13041,
-  "solve": 11.73432,
-  "process": 19.6257269109999,
-  "warmWall": 4.966260000000002,
+  "solve": 3.8437,
+  "process": 6.649373740000556,
+  "warmWall": 1.1398599999999988,
   "nruns": 5,
   "maxDiffVsNode": 0.0
  },
@@ -97,10 +97,10 @@
   "runtime": "firefox",
   "runtimeVersion": "159.0",
   "nodes": 51681,
-  "solve": 71.09934,
-  "process": 78.07658728199999,
-  "warmWall": 44.27466,
-  "nruns": 1,
+  "solve": 11.041799999999999,
+  "process": 14.681129243999749,
+  "warmWall": 8.45218,
+  "nruns": 5,
   "maxDiffVsNode": 0.0
  }
 ]

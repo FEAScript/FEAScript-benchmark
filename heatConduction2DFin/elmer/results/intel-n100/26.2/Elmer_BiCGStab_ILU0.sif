@@ -52,12 +52,12 @@ Solver 1
 End
 
 Solver 2
-  Exec Solver = Never
+  Exec Solver = Always
   Equation = Result Output
   Procedure = "ResultOutputSolve" "ResultOutputSolver"
   Output File Name = Elmer_BiCGStab_ILU0
   Output Format = Vtu
-  Ascii Output = True
+  Binary Output = True  ! full double precision (the ASCII output has 8 significant digits)
   Single Precision = False
 End
 
