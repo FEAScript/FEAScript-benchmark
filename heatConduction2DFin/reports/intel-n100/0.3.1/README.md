@@ -12,7 +12,7 @@
 | Machine | Intel(R) N100, 7.5 GB RAM (Linux Mint 22.3, Linux 7.0.0-42-generic) |
 | Cores | taskset -c 0, OMP_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1 |
 | Repeats | median of 5 fresh processes |
-| Run on | 2026-11-06 |
+| Run on | 2026-11-13 |
 
 All the numbers are in [results_table.md](results_table.md) and [results.json](results.json).
 
@@ -57,8 +57,8 @@ Chromium 156.0.8078.79, Firefox 159.0, each run in a fresh headless browser on o
 
 | Case | Nodes | Node.js | Chromium | Firefox |
 |---|---|---|---|---|
-| FEAScript frontal, linear quads | 13,041 | 33.21 s | 18.27 s (0.5×) | 57.71 s (1.7×) |
-| FEAScript sparse LU, linear quads | 51,681 | 5.63 s | 4.04 s (0.7×) | 62.40 s (11.1×) |
+| FEAScript frontal, linear quads | 13,041 | 29.57 s | 13.32 s (0.5×) | 19.25 s (0.7×) |
+| FEAScript sparse LU, linear quads | 51,681 | 4.93 s | 3.77 s (0.8×) | 57.69 s (11.7×) |
 
 The browsers give the same solutions as Node.js, bit for bit. Cases with a first solve over 20 s are timed once, with one repeated solve, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
 

@@ -1,9 +1,9 @@
 {
  "feascriptVersion": "0.4.0",
- "feascriptPackageVersion": "0.4.0-rc.1",
- "feascriptCommit": "367d095",
+ "feascriptPackageVersion": "0.4.0",
+ "feascriptCommit": "eabcf1a",
  "feascriptUncommittedChanges": false,
- "feascriptReleaseDate": null,
+ "feascriptReleaseDate": "2026-11-13",
  "feascriptEntry": "dist/feascript.esm.js",
  "elmerVersion": "26.2",
  "elmerCommit": null,
@@ -18,9 +18,8 @@
  "ramGB": 7.5,
  "distribution": "Linux Mint 22.3",
  "os": "Linux 7.0.0-42-generic",
- "date": "2026-11-06",
+ "date": "2026-11-13",
  "pinning": "taskset -c 0, OMP_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1",
  "reps": 5,
- "warm": 3,
- "feascriptNote": "The sparse LU (`lusolve`) cases were rerun on 2026-11-12 with the fix of FEAScript-core issue #136 (af82e09) added to this commit's bundle. Their solutions are unchanged, bit for bit"
+ "warm": 3
 }

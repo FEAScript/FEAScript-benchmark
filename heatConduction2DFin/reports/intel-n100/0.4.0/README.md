@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | FEAScript version | 0.4.0 |
-| FEAScript commit | 367d095 |
-| Released | not released |
+| FEAScript commit | 9819f38 |
+| Released | 2026-11-13 |
 | Loaded from | `dist/feascript.esm.js` |
 | Elmer | 26.2 |
 | scikit-fem | 12.0.2 (SciPy 1.18.1, NumPy 2.5.4, Python 3.12.3) |
@@ -12,14 +12,13 @@
 | Machine | Intel(R) N100, 7.5 GB RAM (Linux Mint 22.3, Linux 7.0.0-42-generic) |
 | Cores | taskset -c 0, OMP_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1 |
 | Repeats | median of 5 fresh processes |
-| Run on | 2026-11-06 |
-| Note | The sparse LU (`lusolve`) cases were rerun on 2026-11-12 with the fix of FEAScript-core issue #136 (af82e09) added to this commit's bundle. Their solutions are unchanged, bit for bit |
+| Run on | 2026-11-13 |
 
 All the numbers are in [results_table.md](results_table.md) and [results.json](results.json).
 
-On every mesh it solved, FEAScript's nodal temperatures match Elmer's (UMFPACK) to within 1.9e-10 with the direct solvers (`frontal` and `lusolve`).
+On every mesh it solved, FEAScript's nodal temperatures match Elmer's (UMFPACK) to within 2.0e-10 with the direct solvers (`frontal` and `lusolve`).
 
-scikit-fem's nodal temperatures match FEAScript's (`lusolve`) to within 1.7e-10 and Elmer's (UMFPACK) to within 1.5e-10.
+scikit-fem's nodal temperatures match FEAScript's (`lusolve`) to within 1.9e-10 and Elmer's (UMFPACK) to within 1.5e-10.
 
 Where the Jacobi solver converged (residual tolerance 1e-8 within 10,000 iterations), its temperatures match Elmer's to within 2.7e-04: it stops at a residual tolerance, so its error grows with the mesh.
 
@@ -55,8 +54,8 @@ Chromium 156.0.8078.79, Firefox 159.0, each run in a fresh headless browser on o
 
 | Case | Nodes | Node.js | Chromium | Firefox |
 |---|---|---|---|---|
-| FEAScript frontal, linear quads | 51,681 | 6.20 s | 5.32 s (0.9×) | 9.42 s (1.5×) |
-| FEAScript sparse LU, linear quads | 51,681 | 4.56 s | 3.45 s (0.8×) | 11.04 s (2.4×) |
+| FEAScript frontal, linear quads | 51,681 | 6.22 s | 4.95 s (0.8×) | 8.63 s (1.4×) |
+| FEAScript sparse LU, linear quads | 51,681 | 4.73 s | 3.51 s (0.7×) | 9.54 s (2.0×) |
 
 The browsers give the same solutions as Node.js, bit for bit. Cases with a first solve over 20 s are timed once, with one repeated solve, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
 

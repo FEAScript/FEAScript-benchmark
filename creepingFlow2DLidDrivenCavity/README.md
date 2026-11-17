@@ -2,7 +2,7 @@
 
 # FEAScript vs Elmer and scikit-fem benchmark: lid-driven cavity
 
-This folder compares [FEAScript](https://feascript.com/) with the [Elmer](https://www.elmerfem.org/) finite element solver and the [scikit-fem](https://github.com/kinnala/scikit-fem) finite element library on Stokes (creeping) flow in the lid-driven cavity, a standard test of incompressible flow solvers and the problem of the [creeping flow example](https://github.com/FEAScript/FEAScript-core/tree/main/examples/creepingFlowScript) of FEAScript-core. The codes solve it with the same elements on identical meshes and are compared on the flow they compute and on run time. Each machine and FEAScript version gets its own set of results, so the comparison can be repeated as FEAScript develops.
+This folder compares [FEAScript](https://feascript.com/) with the [Elmer](https://www.elmerfem.org/) finite element solver and the [scikit-fem](https://github.com/kinnala/scikit-fem) finite element library on Stokes (creeping) flow in the lid-driven cavity, a standard test of incompressible flow solvers and the problem of the [creeping flow example](https://github.com/FEAScript/FEAScript-core/tree/main/examples/creepingFlow/lidDrivenCavity2DCreepingFlow) of FEAScript-core. The codes solve it with the same elements on identical meshes and are compared on the flow they compute and on run time. Each machine and FEAScript version gets its own set of results, so the comparison can be repeated as FEAScript develops.
 
 ## Contents
 

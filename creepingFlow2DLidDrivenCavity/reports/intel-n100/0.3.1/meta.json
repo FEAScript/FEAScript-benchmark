@@ -18,7 +18,7 @@
  "ramGB": 7.5,
  "distribution": "Linux Mint 22.3",
  "os": "Linux 7.0.0-42-generic",
- "date": "2026-11-06",
+ "date": "2026-11-13",
  "pinning": "taskset -c 0, OMP_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1",
  "reps": 5,
  "warm": 3

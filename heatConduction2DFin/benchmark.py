@@ -218,6 +218,10 @@ def run_fea(order, nx, ny, method, csv=None, warm=0):
         raise RuntimeError(f"timeout after {FEA_TIMEOUT} s")
     proc = time.perf_counter() - t0
     if p.returncode:
+        # From 0.4.0 an iterative solve that does not converge throws a FEAScriptError with the code NOT_CONVERGED,
+        # where 0.3 returned a result whose errors say "did not converge"
+        if "NOT_CONVERGED" in p.stderr:
+            raise RuntimeError(f"not converged: {p.stderr[-300:]}")
         raise RuntimeError(p.stderr[-3000:])
     r = json.loads(p.stdout.strip().splitlines()[-1])
     if any("did not converge" in e for e in r.get("errors", [])):

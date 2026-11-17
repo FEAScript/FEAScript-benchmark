@@ -176,6 +176,10 @@ def run_timed(cmd, timeout=None):
         raise RuntimeError(f"timeout after {timeout} s")
     proc = time.perf_counter() - t0
     if p.returncode:
+        # From 0.4.0 an iterative solve that does not converge throws a FEAScriptError with the code NOT_CONVERGED,
+        # where 0.3 returned a result whose errors say "did not converge"
+        if "NOT_CONVERGED" in p.stderr:
+            raise RuntimeError(f"not converged: {p.stderr[-300:]}")
         raise RuntimeError(p.stderr[-3000:])
     r = json.loads(p.stdout.strip().splitlines()[-1])
     r["process"] = proc
@@ -305,7 +309,8 @@ def run_codes():
                 first = run_fea(msh, method, csv)
             except RuntimeError as e:
                 why = ("out of memory" if "heap out of memory" in str(e) else
-                       f"timeout (> {FEA_TIMEOUT} s)" if "timeout after" in str(e) else "failed")
+                       f"timeout (> {FEA_TIMEOUT} s)" if "timeout after" in str(e) else
+                       "not converged" if "not converged" in str(e) else "failed")
                 results.append({"case": name, "shape": shape, "order": order, "h": h, "code": cfg, "failed": why})
                 print(f"{cfg} {why}\n{str(e)[-400:]}", flush=True); continue
             # Slow cases (over 20 s) are timed once, with a single repeated solve in a run of its own, as in the browsers

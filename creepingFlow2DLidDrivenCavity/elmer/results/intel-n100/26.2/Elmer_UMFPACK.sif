@@ -38,7 +38,7 @@ Solver 1
   Linear System Direct Method = UMFPACK
 End
 Solver 2
-  Exec Solver = Always
+  Exec Solver = Never
   Equation = Result Output
   Procedure = "ResultOutputSolve" "ResultOutputSolver"
   Output File Name = Elmer_UMFPACK

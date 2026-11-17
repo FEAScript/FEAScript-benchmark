@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | FEAScript version | 0.4.0 |
-| FEAScript commit | 367d095 |
-| Released | not released |
+| FEAScript commit | eabcf1a |
+| Released | 2026-11-13 |
 | Loaded from | `dist/feascript.esm.js` |
 | Elmer | 26.2 |
 | scikit-fem | 12.0.2 (SciPy 1.18.1, NumPy 2.5.4, Python 3.12.3) |
@@ -12,8 +12,7 @@
 | Machine | Intel(R) N100, 7.5 GB RAM (Linux Mint 22.3, Linux 7.0.0-42-generic) |
 | Cores | taskset -c 0, OMP_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1 |
 | Repeats | median of 5 fresh processes |
-| Run on | 2026-11-06 |
-| Note | The sparse LU (`lusolve`) cases were rerun on 2026-11-12 with the fix of FEAScript-core issue #136 (af82e09) added to this commit's bundle. Their solutions are unchanged, bit for bit |
+| Run on | 2026-11-13 |
 
 All the numbers are in [results_table.md](results_table.md) and [results.json](results.json).
 
@@ -49,7 +48,7 @@ Chromium 156.0.8078.79, Firefox 159.0, each run in a fresh headless browser on o
 
 | Case | Nodes | Node.js | Chromium | Firefox |
 |---|---|---|---|---|
-| Lid-driven cavity, sparse LU | 16,641 | 21.75 s | 18.52 s (0.9×) | 62.49 s (2.9×) |
+| Lid-driven cavity, sparse LU | 16,641 | 22.14 s | 18.70 s (0.8×) | 52.26 s (2.4×) |
 
 The browsers give the same solutions as Node.js, bit for bit. Cases with a first solve over 20 s are timed once, with one repeated solve, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
 
