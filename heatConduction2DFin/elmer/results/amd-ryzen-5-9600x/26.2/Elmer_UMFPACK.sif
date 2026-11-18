@@ -48,7 +48,7 @@ Solver 1
 End
 
 Solver 2
-  Exec Solver = Always
+  Exec Solver = Never
   Equation = Result Output
   Procedure = "ResultOutputSolve" "ResultOutputSolver"
   Output File Name = Elmer_UMFPACK

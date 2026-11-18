@@ -4,7 +4,7 @@
 |---|---|
 | FEAScript version | 0.3.1 |
 | FEAScript commit | 083fc8c |
-| Released | 2026-10-30 |
+| Released | not released |
 | Loaded from | `dist/feascript.esm.js` |
 | Elmer | 26.2 (build of commit `56b16bd49`, 2026-11-02) |
 | scikit-fem | 12.0.2 (SciPy 1.18.1, NumPy 2.5.4, meshio 5.3.5, Python 3.12.3) |
@@ -13,7 +13,7 @@
 | Machine | AMD Ryzen 5 9600X 6-Core Processor, 14.7 GB RAM (Linux Mint 22.3, Linux 7.0.0-42-generic) |
 | Cores | taskset -c 0, OMP_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1 |
 | Repeats | median of 5 fresh processes |
-| Run on | 2026-11-06 |
+| Run on | 2026-11-17 |
 
 All the numbers are in [results_table.md](results_table.md) and [results.json](results.json).
 
@@ -55,10 +55,10 @@ Chromium 156.0.8078.79, Firefox 159.0, each run in a fresh headless browser on o
 
 | Case | Nodes | Node.js | Chromium | Firefox |
 |---|---|---|---|---|
-| FEAScript frontal, quadratic triangles | 3,857 | 11.19 s | 10.24 s (0.9×) | 15.66 s (1.4×) |
-| FEAScript sparse LU, quadratic triangles | 59,885 | 5.07 s | 4.00 s (0.8×) | 78.45 s (15.5×) |
-| FEAScript frontal, quadratic quadrilaterals | 5,953 | 60.80 s | 63.44 s (1.0×) | 90.98 s (1.5×) |
-| FEAScript sparse LU, quadratic quadrilaterals | 89,209 | 3.50 s | 2.63 s (0.8×) | 33.99 s (9.7×) |
+| FEAScript frontal, quadratic triangles | 3,857 | 12.61 s | 11.68 s (0.9×) | 16.80 s (1.3×) |
+| FEAScript sparse LU, quadratic triangles | 59,885 | 5.50 s | 4.46 s (0.8×) | 82.58 s (15.0×) |
+| FEAScript frontal, quadratic quadrilaterals | 5,953 | 66.92 s | 66.42 s (1.0×) | 94.98 s (1.4×) |
+| FEAScript sparse LU, quadratic quadrilaterals | 89,209 | 3.76 s | 2.92 s (0.8×) | 36.40 s (9.7×) |
 
 The browsers give the same solutions as Node.js, bit for bit. Cases with a first solve over 20 s are timed once, with one repeated solve, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
 

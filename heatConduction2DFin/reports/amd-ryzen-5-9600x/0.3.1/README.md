@@ -4,7 +4,7 @@
 |---|---|
 | FEAScript version | 0.3.1 |
 | FEAScript commit | 083fc8c |
-| Released | 2026-10-30 |
+| Released | not released |
 | Loaded from | `dist/feascript.esm.js` |
 | Elmer | 26.2 (build of commit `56b16bd49`, 2026-11-02) |
 | scikit-fem | 12.0.2 (SciPy 1.18.1, NumPy 2.5.4, Python 3.12.3) |
@@ -12,7 +12,7 @@
 | Machine | AMD Ryzen 5 9600X 6-Core Processor, 14.7 GB RAM (Linux Mint 22.3, Linux 7.0.0-42-generic) |
 | Cores | taskset -c 0, OMP_NUM_THREADS=1, OPENBLAS_NUM_THREADS=1 |
 | Repeats | median of 5 fresh processes |
-| Run on | 2026-11-06 |
+| Run on | 2026-11-17 |
 
 All the numbers are in [results_table.md](results_table.md) and [results.json](results.json).
 
@@ -57,8 +57,8 @@ Chromium 156.0.8078.79, Firefox 159.0, each run in a fresh headless browser on o
 
 | Case | Nodes | Node.js | Chromium | Firefox |
 |---|---|---|---|---|
-| FEAScript frontal, linear quads | 13,041 | 3.13 s | 1.98 s (0.6×) | 4.12 s (1.3×) |
-| FEAScript sparse LU, linear quads | 51,681 | 2.04 s | 1.60 s (0.8×) | 22.45 s (11.0×) |
+| FEAScript frontal, linear quads | 13,041 | 3.57 s | 2.17 s (0.6×) | 4.34 s (1.2×) |
+| FEAScript sparse LU, linear quads | 51,681 | 2.05 s | 1.64 s (0.8×) | 24.11 s (11.7×) |
 
 The browsers give the same solutions as Node.js, bit for bit. Cases with a first solve over 20 s are timed once, with one repeated solve, instead of five times with three repeated solves. A case without a point on a plot was not measured, and each such case is listed in this report.
 

@@ -1,4 +1,4 @@
-"FEAScript sparse LU" 0.536 0.131
-"Elmer UMFPACK" 0.020 0.467
-"Elmer MUMPS" 0.010 0.473
-"scikit-fem SuperLU" 0.020 0.170
+"FEAScript sparse LU" 0.563 0.129
+"Elmer UMFPACK" 0.010 0.431
+"Elmer MUMPS" 0.010 0.424
+"scikit-fem SuperLU" 0.020 0.176
