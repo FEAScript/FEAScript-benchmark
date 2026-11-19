@@ -101,7 +101,7 @@ The machine defaults to a name made from the CPU model, e.g. `amd-ryzen-5-9600x`
 
 - **`FEASCRIPT_CORE`:** the path of another FEAScript-core checkout, e.g. a released version
 - **`FEASCRIPT_VERSION`:** the name of the results folder, e.g. `FEASCRIPT_VERSION=0.4.0`
-- **`FEASCRIPT_COMMIT` and `FEASCRIPT_RELEASE_DATE`:** the commit and release date to record, when `FEASCRIPT_CORE` is not a git checkout
+- **`FEASCRIPT_COMMIT` and `FEASCRIPT_RELEASE_DATE`:** the commit and release date to record, when `FEASCRIPT_CORE` is not a git checkout. In a checkout at the tag of the version, the release date is the date of that tag
 - **`FEASCRIPT_ENTRY=src`:** loads the source files instead of the built bundle
 - **`CORE_ID`:** the CPU core to pin the runs to (default 0)
 - **`REPS` and `WARM`:** the number of repeats and warm repeats

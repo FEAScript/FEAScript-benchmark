@@ -4,7 +4,7 @@
 |---|---|
 | FEAScript version | 0.3.1 |
 | FEAScript commit | 083fc8c |
-| Released | not released |
+| Released | 2026-10-30 |
 | Loaded from | `dist/feascript.esm.js` |
 | Elmer | 26.2 (build of commit `56b16bd49`, 2026-11-02) |
 | scikit-fem | 12.0.2 (SciPy 1.18.1, NumPy 2.5.4, Python 3.12.3) |

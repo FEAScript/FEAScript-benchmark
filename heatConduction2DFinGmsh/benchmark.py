@@ -218,6 +218,14 @@ def max_difference(field, ref):
     return float(np.max(np.abs(field[2] - ref[2][nearest])))
 
 
+def release_date():
+    """The date of the release tag of VERSION, when the FEAScript-core checkout is at that tag; None otherwise."""
+    tag = sh("git", "-C", CORE, "rev-parse", "--verify", "--quiet", f"refs/tags/{VERSION}^{{commit}}")
+    if tag and tag == sh("git", "-C", CORE, "rev-parse", "HEAD"):
+        return sh("git", "-C", CORE, "log", "-1", "--format=%cs", tag)
+    return None
+
+
 def write_meta():
     """Record the versions and machine the results were produced with."""
     sh = lambda *c: subprocess.run(c, capture_output=True, text=True).stdout.strip()
@@ -225,7 +233,7 @@ def write_meta():
             "feascriptPackageVersion": json.load(open(os.path.join(CORE, "package.json")))["version"],
             "feascriptCommit": os.environ.get("FEASCRIPT_COMMIT") or sh("git", "-C", CORE, "rev-parse", "--short", "HEAD"),
             "feascriptUncommittedChanges": False if os.environ.get("FEASCRIPT_COMMIT") else bool(sh("git", "-C", CORE, "status", "--porcelain", "src")),
-            "feascriptReleaseDate": os.environ.get("FEASCRIPT_RELEASE_DATE"),
+            "feascriptReleaseDate": os.environ.get("FEASCRIPT_RELEASE_DATE") or release_date(),
             "elmerVersion": ELMER_VERSION, "elmerCommit": ELMER_BUILD and ELMER_BUILD.group(4), "elmerBuildDate": ELMER_BUILD and "-".join(ELMER_BUILD.group(1, 2, 3)), "node": sh("node", "-v"),
             "skfemVersion": SKFEM_VERSION, "scipyVersion": version("scipy"), "numpyVersion": version("numpy"), "meshioVersion": version("meshio"), "python": platform.python_version(),
             "gmshVersion": sh("gmsh", "--version"), "machine": MACHINE, "cpu": CPU, "ramGB": RAM_GB, "distribution": platform.freedesktop_os_release().get("PRETTY_NAME"), "os": sh("uname", "-sr"), "date": time.strftime("%Y-%m-%d"),
